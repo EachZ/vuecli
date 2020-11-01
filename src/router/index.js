@@ -4,9 +4,10 @@ import Home from '../views/Home.vue'
 import Page1 from '../views/page1'
 import Page2 from '../views/page2'
 import Page3 from '../views/page3'
+import Page4 from '../views/page4'
 
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -36,11 +37,16 @@ const routes = [
     path:'/page3',
     name:'Page3',
     component:Page3
+  },
+  {
+    path:'/page4',
+    name:'Page4',
+    component:Page4
   }
-]
+];
 
 const router = new VueRouter({
   routes
-})
+});
 
 export default router

@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">资源负载图</router-link> |
 <!--      <router-link to="/about">About</router-link> |-->
-      <router-link to="/page1">页面1</router-link> |
-      <router-link to="/page2">页面2</router-link> |
-      <router-link to="/page3">页面3</router-link>
+      <router-link to="/page1">订单甘特图</router-link> |
+      <router-link to="/page2">资源甘特图</router-link> |
+      <router-link to="/page3">增删改查</router-link>
+      <router-link to="/page4"> | page4</router-link>
 
     </div>
     <router-view/>
