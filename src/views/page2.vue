@@ -16,7 +16,6 @@
     export default {
         name: "page2",
         // components: {Gantt},
-
         data() {
             return {
                 // tasks: {
@@ -33,10 +32,16 @@
             };
         },
         mounted(){
-            this.drawLine();
+            this.getData();
         },
         methods: {
-            drawLine() {
+            getData(){
+                let data1=["sss"];
+                //上面的小方块的数组、y轴的数组、产品的series数组
+                this.drawLine(data1);
+            },
+            drawLine(data1) {
+                console.log(data1);
                 let Gantt=this.$echarts.init(document.getElementById('Gantt'));
                 Gantt.setOption({
                     backgroundColor: "#fff",
