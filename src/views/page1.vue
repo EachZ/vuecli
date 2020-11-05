@@ -27,116 +27,8 @@
         <br/>
         <br/>
         <br/>
-<!--        <div class="date">-->
-<!--            <el-row>-->
-<!--                <el-col :span="24">-->
-<!--                    <div class="weeks">-->
-<!--                        &lt;!&ndash; 日期 &ndash;&gt;-->
-<!--                        <ul class="days">-->
-<!--                            <li @click="weekPre" class="prev-btn">-->
-<!--                                <i class="fa fa-angle-left fa-icon" aria-hidden="true"/>-->
-<!--                                <span class="hidden-sm-and-down" style="margin-left: 5px;">上一周</span>-->
-<!--                            </li>-->
-<!--                            <li-->
-<!--                                    class="date-item"-->
-<!--                                    @click="pick(day, index)"-->
-<!--                                    v-for="(day, index) in days"-->
-<!--                                    :key="index"-->
-<!--                                    :class="{selected: index === tabIndex}"-->
-<!--                            >-->
-<!--                                &lt;!&ndash;本月&ndash;&gt;-->
-<!--                                <span v-if="day.getMonth()+1 !== currentMonth" class="other-month item-wrapper">-->
-<!--                <span>{{day | getWeekFormat}}</span>-->
-<!--                <span class="hidden-sm-and-down">{{ day | dateFormat }}</span>-->
-<!--              </span>-->
-<!--                                <span v-else>-->
-<!--                &lt;!&ndash;今天&ndash;&gt;-->
-<!--                <span-->
-<!--                        v-if="day.getFullYear() === new Date().getFullYear() && day.getMonth() === new Date().getMonth() && day.getDate() == new Date().getDate()"-->
-<!--                        class="today-item"-->
-<!--                >今天</span>-->
-<!--                <span class="item-wrapper" v-else>-->
-<!--                  <span>{{day | getWeekFormat}}</span>-->
-<!--                  <span class="hidden-sm-and-down">{{ day | dateFormat }}</span>-->
-<!--                </span>-->
-<!--              </span>-->
-<!--                            </li>-->
-<!--                            <li @click="weekNext" class="next-btn">-->
-<!--                                <span class="hidden-sm-and-down" style="margin-right: 5px;">下一周</span>-->
-<!--                                <i class="fa fa-angle-right fa-icon" aria-hidden="true"/>-->
-<!--                            </li>-->
-<!--&lt;!&ndash;                            <li>&ndash;&gt;-->
-<!--&lt;!&ndash;              <span>&ndash;&gt;-->
-<!--&lt;!&ndash;                <el-date-picker&ndash;&gt;-->
-<!--&lt;!&ndash;                        class="right-pick-btn"&ndash;&gt;-->
-<!--&lt;!&ndash;                        style="width: 100%"&ndash;&gt;-->
-<!--&lt;!&ndash;                        :clearable="false"&ndash;&gt;-->
-<!--&lt;!&ndash;                        @change="pickDate"&ndash;&gt;-->
-<!--&lt;!&ndash;                        v-model="newDate"&ndash;&gt;-->
-<!--&lt;!&ndash;                        type="date"&ndash;&gt;-->
-<!--&lt;!&ndash;                        placeholder="按日期查询"&ndash;&gt;-->
-<!--&lt;!&ndash;                />&ndash;&gt;-->
-<!--&lt;!&ndash;              </span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
-<!--                        </ul>-->
 
-
-<!--                    </div>-->
-<!--                </el-col>-->
-<!--            </el-row>-->
-<!--        </div>-->
-
-        <div class="order">
-            <el-row>
-                <el-col :span="6" class="title">
-                    <h3>订单号</h3>
-                </el-col>
-                <el-col :span="18" class="title">
-                    <h3>订单进度</h3>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    418575
-                </el-col>
-                <el-col :span="16">
-                    <a-tooltip title="订单进度为60%，已完成30%，正在完成30%">
-                        <a-progress :percent="60" :success-percent="30" />
-                    </a-tooltip>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    418577
-                </el-col>
-                <el-col :span="16">
-                    <a-tooltip title="订单已完成">
-                        <a-progress :percent="100" />
-                    </a-tooltip>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    764486
-                </el-col>
-                <el-col :span="16">
-                    <a-tooltip title="订单进度为80%，已完成30%，正在完成50%">
-                        <a-progress :percent="80" :success-percent="30" />
-                    </a-tooltip>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="6">
-                    762904
-                </el-col>
-                <el-col :span="16">
-                    <a-tooltip  title="订单异常">
-                        <a-progress :percent="60" status="exception"/>
-                    </a-tooltip>
-                </el-col>
-            </el-row>
-
-        </div>
+        <div id="Gantt" :style="{width: '1000px', height: '500px'}"></div>
 
     </div>
 </template>
@@ -228,19 +120,199 @@
                 return weeksObj[weekNumber];
             }
         },
-        mounted() {
-            const index = _.findIndex(this.days, function(o) {
-                // console.log('o: ', o.getDate());
-                // console.log('new Date().getDate(): ', new Date().getDate());
-                return o.getDate() === new Date().getDate();
-            });
-            console.log("index: ", index);
-            this.tabIndex = index;
+        mounted(){
+            this.getData();
         },
         created() {
             this.initData(null);
         },
         methods: {
+            getData(){
+                let data={
+                    order:["100000001","100000002","100000003","100000004","100000005","100000006"],
+                    data1:[100000001],
+                    data2:[],
+                    data3:[]
+                };
+                //上面的小方块的数组、y轴的数组、产品的series数组
+                this.drawLine(data);
+            },
+            drawLine(data1) {
+                console.log(data1);
+                let Gantt=this.$echarts.init(document.getElementById('Gantt'));
+                Gantt.setOption({
+                    title: {
+                        text: "订单甘特图",
+                        padding: 20,
+                        textStyle: {
+                            fontSize: 17,
+                            fontWeight: "bolder",
+                            color: "#333"
+                        },
+                        subtext:"该表展示订单编号及其对应的完成状态",
+                        subtextStyle: {
+                            fontSize: 13,
+                            fontWeight: "bolder"
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    grid: {
+                        left: '10%',
+                        right: '4%',
+                    },
+                    xAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'category',
+                            axisTick: {
+                                show: false
+                            },
+                            data: data1.order
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '延期',
+                            type: 'bar',
+                            label: {
+                                show: true,
+                                position: 'inside'
+                            },
+                            data: [200, 170, 240, 244, 200, 220, 210]
+                        },
+                        {
+                            name: '未完成',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                show: true
+                            },
+                            data: [320, 302, 341, 374, 390, 450, 420]
+                        },
+                        {
+                            name: '已完成',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                show: true,
+                                position: 'left'
+                            },
+                            data: [-120, -132, -101, -134, -190, -230, -210]
+                        }
+                    ]
+                }
+            );
+
+
+
+                // 基于准备好的dom，初始化echarts实例
+                let myChart = this.$echarts.init(document.getElementById('myChart'));
+                // 绘制图表
+                myChart.setOption({
+                    // title: {text: '在Vue中使用echarts'},
+                    // tooltip: {},
+                    // xAxis: {
+                    //     data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+                    // },
+                    // yAxis: {},
+                    // series: [{
+                    //     name: '销量',
+                    //     type: 'bar',
+                    //     data: [5, 20, 36, 10, 10, 20]
+                    // }]
+                    title: {
+                        text: '阶梯瀑布图',
+                        subtext: 'From ExcelHome',
+                        sublink: 'http://e.weibo.com/1341556070/Aj1J2x5a5'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        },
+                        formatter: function (params) {
+                            var tar;
+                            if (params[1].value !== '-') {
+                                tar = params[1];
+                            }
+                            else {
+                                tar = params[0];
+                            }
+                            return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+                        }
+                    },
+                    legend: {
+                        data: ['支出', '收入']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        splitLine: {show: false},
+                        data: function () {
+                            var list = [];
+                            for (var i = 1; i <= 11; i++) {
+                                list.push('11月' + i + '日');
+                            }
+                            return list;
+                        }()
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name: '辅助',
+                            type: 'bar',
+                            stack: '总量',
+                            itemStyle: {
+                                barBorderColor: 'rgba(0,0,0,0)',
+                                color: 'rgba(0,0,0,0)'
+                            },
+                            emphasis: {
+                                itemStyle: {
+                                    barBorderColor: 'rgba(0,0,0,0)',
+                                    color: 'rgba(0,0,0,0)'
+                                }
+                            },
+                            data: [0, 900, 1245, 1530, 1376, 1376, 1511, 1689, 1856, 1495, 1292]
+                        },
+                        {
+                            name: '收入',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                show: true,
+                                position: 'top'
+                            },
+                            data: [900, 345, 393, '-', '-', 135, 178, 286, '-', '-', '-']
+                        },
+                        {
+                            name: '支出',
+                            type: 'bar',
+                            stack: '总量',
+                            label: {
+                                show: true,
+                                position: 'bottom'
+                            },
+                            data: ['-', '-', '-', 108, 154, '-', '-', '-', 119, 361, 203]
+                        }
+                    ]
+                });
+            },
             increase() {
                 this.percentage += 10;
                 if (this.percentage > 100) {
