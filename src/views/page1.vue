@@ -4,7 +4,7 @@
             <!--            按期交货率-->
             <h4>按期交货率</h4>
             <h5>2020年10月1日之前</h5>
-            <a-progress id="jiaohuolv" type="circle" :percent="25" />
+            <a-progress type="circle" :percent="25" />
 
         </div>
         <br/>
@@ -144,13 +144,6 @@
 <script>
     /* eslint-disable */
     import moment from "moment";
-
-    var app = new Vue({
-        el: '#jiaohuolv',
-        data: {
-            "percent":"20"
-        }
-    });
     export default {
         name: "page1",
         props: {
