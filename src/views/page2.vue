@@ -16,7 +16,6 @@
     export default {
         name: "page2",
         // components: {Gantt},
-
         data() {
             return {
                 // tasks: {
@@ -33,99 +32,14 @@
             };
         },
         mounted(){
-            this.drawLine();
+            this.getData();
         },
         methods: {
-            drawLine() {
-                let Gantt=this.$echarts.init(document.getElementById('Gantt'));
-                Gantt.setOption({
-                    backgroundColor: "#fff",
-                    title: {
-                        text: "资源甘特图",
-                        padding: 20,
-                        textStyle: {
-                            fontSize: 17,
-                            fontWeight: "bolder",
-                            color: "#333"
-                        },
-                        subtextStyle: {
-                            fontSize: 13,
-                            fontWeight: "bolder"
-                        }
-                    },
-                    legend: {
-                        data: ["产品1", "产品2", "产品3", "产品4", "产品5", "产品6"],
-                        align: "right",
-                        right: 80,
-                        top: 50
-                    },
-                    grid: {
-                        containLabel: true,
-                        show: false,
-                        right: 130,
-                        left: 40,
-                        bottom: 40,
-                        top: 90
-                    },
-                    xAxis: {
-                        type: "time",
-                        axisLabel: {
-                            "show": true,
-                            "interval": 0
-                        }
-                    },
-                    yAxis: {
-                        axisLabel: {
-                            show: true,
-                            interval: 0,
-                            formatter: function(value) {
-                                var last = "";
-                                var max = 5;
-                                var len = value.length;
-                                var hang = Math.ceil(len / max);
-                                if (hang > 1) {
-                                    for (var i = 0; i < hang; i++) {
-                                        var start = i * max;
-                                        var end = start + max;
-                                        var temp = value.substring(start, end) + "\n";
-                                        last += temp; //凭借最终的字符串
-                                    }
-                                    return last;
-                                } else {
-                                    return value;
-                                }
-                            }
-                        },
-                        data: ["line1", "line2", "张三"]
-                    },
-                    tooltip: {
-                        trigger: "axis",
-                        formatter: function(params) {
-                            var res = "";
-                            var name = "";
-                            var start0 = "";
-                            var start = "";
-                            var end0 = "";
-                            var end = "";
-                            for (var i in params) {
-                                var k = i % 2;
-                                if (!k) { //偶数
-                                    start0 = params[i].data;
-                                    console.log(start0)
-                                    start = start0.getFullYear() + "-" + (start0.getMonth() + 1) + "-" + start0.getDate();
-                                }
-                                if (k) { //奇数
-                                    name = params[i].seriesName;
-                                    end0 = params[i].data;
-                                    end = end0.getFullYear() + "-" + (end0.getMonth() + 1) + "-" + end0.getDate();
-                                    res += name + " : " + end + "~" + start + "</br>";
-
-                                }
-                            }
-                            return res;
-                        }
-                    },
-                    series: [{
+            getData(){
+                let data1={
+                    product:["产品1", "产品2", "产品3", "产品4", "产品5", "产品6"],
+                    yAxis:["line1", "line2", "张三"],
+                    series:[{
                         name: "产品1",
                         type: "bar",
                         stack: "总量0",
@@ -386,6 +300,101 @@
                                 new Date("2020-04-30")]
                         },
                     ]
+            };
+                //上面的小方块的数组、y轴的数组、产品的series数组
+                this.drawLine(data1);
+            },
+            drawLine(data1) {
+                console.log(data1);
+                let Gantt=this.$echarts.init(document.getElementById('Gantt'));
+                Gantt.setOption({
+                    backgroundColor: "#fff",
+                    title: {
+                        text: "资源甘特图",
+                        padding: 20,
+                        textStyle: {
+                            fontSize: 17,
+                            fontWeight: "bolder",
+                            color: "#333"
+                        },
+                        subtextStyle: {
+                            fontSize: 13,
+                            fontWeight: "bolder"
+                        }
+                    },
+                    legend: {
+                        data: data1.product,
+                        align: "right",
+                        right: 80,
+                        top: 50
+                    },
+                    grid: {
+                        containLabel: true,
+                        show: false,
+                        right: 130,
+                        left: 40,
+                        bottom: 40,
+                        top: 90
+                    },
+                    xAxis: {
+                        type: "time",
+                        axisLabel: {
+                            "show": true,
+                            "interval": 0
+                        }
+                    },
+                    yAxis: {
+                        axisLabel: {
+                            show: true,
+                            interval: 0,
+                            formatter: function(value) {
+                                var last = "";
+                                var max = 5;
+                                var len = value.length;
+                                var hang = Math.ceil(len / max);
+                                if (hang > 1) {
+                                    for (var i = 0; i < hang; i++) {
+                                        var start = i * max;
+                                        var end = start + max;
+                                        var temp = value.substring(start, end) + "\n";
+                                        last += temp; //凭借最终的字符串
+                                    }
+                                    return last;
+                                } else {
+                                    return value;
+                                }
+                            }
+                        },
+                        data: data1.yAxis
+                    },
+                    tooltip: {
+                        trigger: "axis",
+                        formatter: function(params) {
+                            var res = "";
+                            var name = "";
+                            var start0 = "";
+                            var start = "";
+                            var end0 = "";
+                            var end = "";
+                            for (var i in params) {
+                                var k = i % 2;
+                                if (!k) { //偶数
+                                    start0 = params[i].data;
+                                    console.log(start0)
+                                    start = start0.getFullYear() + "-" + (start0.getMonth() + 1) + "-" + start0.getDate();
+                                }
+                                if (k) { //奇数
+                                    name = params[i].seriesName;
+                                    end0 = params[i].data;
+                                    end = end0.getFullYear() + "-" + (end0.getMonth() + 1) + "-" + end0.getDate();
+                                    res += name + " : " + end + "~" + start + "</br>";
+
+                                }
+                            }
+                            return res;
+                        }
+                    },
+                    series: data1.series
 
                 });
 
