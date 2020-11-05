@@ -4,8 +4,8 @@ import Home from '../views/Home.vue'
 import Page1 from '../views/page1'
 import Page2 from '../views/page2'
 import Page3 from '../views/page3'
-import Page4 from '../views/page4'
-
+import Page5 from '../views/page5'
+import Page6 from '../views/page6'
 
 Vue.use(VueRouter);
 
@@ -39,9 +39,14 @@ const routes = [
     component:Page3
   },
   {
-    path:'/page4',
-    name:'Page4',
-    component:Page4
+    path:'/page5',
+    name:'Page5',
+    component:Page5
+  },
+  {
+    path:'/page6',
+    name:'Page6',
+    component:Page6
   }
 ];
 

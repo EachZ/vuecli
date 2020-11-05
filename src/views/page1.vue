@@ -165,7 +165,7 @@
                 days: [],
                 value1: "",
                 tabIndex: null,
-                newDate: moment(new Date()).format("YYYY-MM-DD"),
+                newDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
                 tabTimeIndex: 4,
                 times: [
                     { time: "00:00:00~06:00:00", label: "00:00~06:00" },

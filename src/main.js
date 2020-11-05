@@ -9,16 +9,19 @@ import router from './router'
 
 // 引入echarts
 import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
+Vue.prototype.$echarts = echarts;
 
-
+//引入axios
 import axios from 'axios'
 
+Vue.config.productionTip = false;
+
 //配置请求的根路径
-axios.defaults.baseURL="http://localhost:8080/";
+axios.defaults.baseURL="/api";
 Vue.prototype.$axios=axios;
 
-Vue.config.productionTip = false;
+import VueResource from 'vue-resource'
+Vue.use(VueResource);
 
 new Vue({
   router,
