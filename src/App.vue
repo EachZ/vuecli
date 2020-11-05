@@ -1,18 +1,50 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">资源负载图</router-link> |
+      <router-link :to="{path:'/',query:{year:this.year,month:this.month,day:this.day}}">资源负载图</router-link> |
 <!--      <router-link to="/about">About</router-link> |-->
-      <router-link to="/page1">订单甘特图</router-link> |
-      <router-link to="/page2">资源甘特图</router-link> |
-      <router-link to="/page3">增删改查</router-link>
-      <router-link to="/page4"> | page4</router-link>
+      <router-link :to="{path:'/page1',query:{year:this.year,month:this.month,day:this.day}}">订单甘特图</router-link> |
+      <router-link :to="{path:'/page2',query:{year:this.year,month:this.month,day:this.day}}">资源甘特图</router-link> |
+      <router-link :to="{path:'/page3',query:{year:this.year,month:this.month,day:this.day}}">增删改查</router-link> |
+      <router-link :to="{path:'/page4',query:{year:this.year,month:this.month,day:this.day}}">设置时间</router-link> |
+      <router-link to="/page5">表单输出</router-link> |
+      <router-link to="/page6">实验页面</router-link>
+      <Time @current-virtual-time="getTime"></Time>
 
     </div>
+<!--    <div class="time">-->
+<!--      <clock :time="time"></clock>-->
+<!--    </div>-->
+
     <router-view/>
+
   </div>
 </template>
 
+<script>
+  // import Clock from 'vue-clock2';
+  import Time from './components/time'
+  export default{
+    // components: {Clock},
+    components:{Time},
+    data(){
+      return{
+        currentVirtualTime: new Date(),
+        year: new Date().getFullYear,
+        month: new Date().getMonth()+1,
+        day: new Date().getDate(),
+      }
+    },
+    methods:{
+      getTime(data){
+        this.currentVirtualTime=data;
+        this.year=data.getFullYear();
+        this.month=data.getMonth()+1;
+        this.day=data.getDate();
+      }
+    },
+  }
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -34,4 +66,9 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+Time{
+  float: right;
+}
+
 </style>

@@ -1,6 +1,10 @@
 <template>
     <div class="home">
         <div id="container">
+<!--            {{this.$route.query.year}}-->
+<!--            {{this.$route.query.month}}-->
+<!--            {{this.$route.query.day}}-->
+
             <div class="device item">
                 <!--              设备总负载-->
                 <h4>设备总负载</h4>
@@ -35,27 +39,29 @@
                             </li>
                             <li
                                     class="date-item"
-                                    @click="pick(day, index)"
                                     v-for="(day, index) in days"
                                     :key="index"
                                     :class="{selected: index === tabIndex}"
                             >
                                 <!--本月-->
-                                <span v-if="day.getMonth()+1 !== currentMonth" class="other-month item-wrapper">
+<!--                                <span v-if="day.getMonth()+1 !== currentMonth" class="other-month item-wrapper">-->
+                                <span class="item-wrapper">
                                     <span>{{day | getWeekFormat}}</span>
                                     <span class="hidden-sm-and-down">{{ day | dateFormat }}</span>
                                 </span>
-                                <span v-else>
-                                    <!--今天-->
-                                    <span
-                                            v-if="day.getFullYear() === new Date().getFullYear() && day.getMonth() === new Date().getMonth() && day.getDate() == new Date().getDate()"
-                                            class="today-item"
-                                    >今天</span>
-                                    <span class="item-wrapper" v-else>
-                                      <span>{{day | getWeekFormat}}</span>
-                                      <span class="hidden-sm-and-down">{{ day | dateFormat }}</span>
-                                    </span>
-                                </span>
+
+<!--                                </span>-->
+<!--                                <span v-else>-->
+<!--                                    &lt;!&ndash;今天&ndash;&gt;-->
+<!--                                    <span-->
+<!--                                            v-if="day.getFullYear() === new Date().getFullYear() && day.getMonth() === new Date().getMonth() && day.getDate() === new Date().getDate()"-->
+<!--                                            class="today-item"-->
+<!--                                    >今天</span>-->
+<!--                                    <span class="item-wrapper" v-else>-->
+<!--                                      <span>{{day | getWeekFormat}}</span>-->
+<!--                                      <span class="hidden-sm-and-down">{{ day | dateFormat }}</span>-->
+<!--                                    </span>-->
+<!--                                </span>-->
                             </li>
                             <li @click="weekNext" class="next-btn">
                                 <span class="hidden-sm-and-down" style="margin-right: 5px;">下一周</span>
@@ -292,7 +298,7 @@
                 days: [],
                 value1: "",
                 tabIndex: null,
-                newDate: moment(new Date()).format("YYYY-MM-DD"),
+                newDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
                 tabTimeIndex: 4,
                 times: [
                     { time: "00:00:00~06:00:00", label: "00:00~06:00" },
@@ -309,31 +315,6 @@
                     {color: '#1989fa', percentage: 80},
                     {color: '#6f7ad3', percentage: 100}
                 ],
-                pickerOptions: {
-                    disabledDate(time) {
-                        return time.getTime() > Date.now();
-                    },
-                    shortcuts: [{
-                        text: '今天',
-                        onClick(picker) {
-                            picker.$emit('pick', new Date());
-                        }
-                    }, {
-                        text: '昨天',
-                        onClick(picker) {
-                            const date = new Date();
-                            date.setTime(date.getTime() - 3600 * 1000 * 24);
-                            picker.$emit('pick', date);
-                        }
-                    }, {
-                        text: '一周前',
-                        onClick(picker) {
-                            const date = new Date();
-                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-                            picker.$emit('pick', date);
-                        }
-                    }]
-                },
 
             };
         },
@@ -405,7 +386,7 @@
                 if (cur) {
                     date = new Date(cur);
                 } else {
-                    date = new Date();
+                    date = new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day);
                 }
                 this.currentDay = date.getDate(); // 今日日期 几号
                 this.currentYear = date.getFullYear(); // 当前年份
