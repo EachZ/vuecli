@@ -1,9 +1,9 @@
 <template>
     <div class="page2">
-<!--        <div class="container" >-->
-<!--            <gantt style="height: 1000px" :tasks="tasks"/>-->
-<!--        </div>-->
-<!--        <div id="myChart" :style="{width: '80%', height: '500%'}"></div>-->
+        <!--        <div class="container" >-->
+        <!--            <gantt style="height: 1000px" :tasks="tasks"/>-->
+        <!--        </div>-->
+        <!--        <div id="myChart" :style="{width: '80%', height: '500%'}"></div>-->
         <div id="Gantt" :style="{width: '1000px', height: '500px'}"></div>
 
 
@@ -107,7 +107,7 @@
                             data: [
                                 new Date("2020-01-10"),
                                 new Date("2020-01-10"),
-                                new Date("2020-04-10")]
+                                new Date("2020-03-30")]
                         },
                         {
                             name: "产品2",
@@ -300,7 +300,7 @@
                                 new Date("2020-04-30")]
                         },
                     ]
-            };
+                };
                 //上面的小方块的数组、y轴的数组、产品的series数组
                 this.drawLine(data1);
             },
