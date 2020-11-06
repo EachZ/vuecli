@@ -130,9 +130,10 @@
             getData(){
                 let data={
                     order:["100000001","100000002","100000003","100000004","100000005","100000006"],
-                    data1:[100000001],
-                    data2:[],
-                    data3:[]
+                    data2:[0.3,0.3,1,0.5,0.7,0.5],//装配
+                    data3:[0.1,0.3,0.5,0,0.2,0.3],//测试
+                    //data4:[1,1.5,0.5,1,1.5,1.5]//状态
+                    data4:[1,1.5,0.5,1,1.5,1.5]
                 };
                 //上面的小方块的数组、y轴的数组、产品的series数组
                 this.drawLine(data);
@@ -161,6 +162,9 @@
                             type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                         }
                     },
+                    legend:{
+                        data:["装配完成度","测试完成度"]
+                    },
                     grid: {
                         left: '10%',
                         right: '4%',
@@ -181,32 +185,83 @@
                     ],
                     series: [
                         {
-                            name: '延期',
+                            name: '装配完成度',
                             type: 'bar',
+                            stack:'数据',
+                            itemStyle: {
+                                normal: {
+                                    //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                    color:'#87c3ba'
+                                }
+                                },
+
                             label: {
                                 show: true,
-                                position: 'inside'
                             },
-                            data: [200, 170, 240, 244, 200, 220, 210]
+                            data: data1.data3
                         },
                         {
-                            name: '未完成',
+                            name: '测试完成度',
                             type: 'bar',
-                            stack: '总量',
+                            itemStyle: {
+                                normal: {
+                                    //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                    color:'#7e9ac3'
+                                }
+                            },
+                            stack:'数据',
                             label: {
                                 show: true
                             },
-                            data: [320, 302, 341, 374, 390, 450, 420]
+                            data: data1.data2
                         },
                         {
-                            name: '已完成',
+                            name: '状态',
                             type: 'bar',
-                            stack: '总量',
+                            stack:'状态',
                             label: {
-                                show: true,
-                                position: 'left'
+                                show: true
                             },
-                            data: [-120, -132, -101, -134, -190, -230, -210]
+                            itemStyle: {
+                                normal: {
+                                    //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                    color: function(params) {
+                                        var colorList = [
+                                            '#C1232B','#B5C334','#FCCE10'
+                                        ];
+                                        console.log(params);
+                                        if(params.data==1){
+                                            return colorList[1];
+                                        }else if(params.data==0.5){
+                                            return colorList[2]
+                                        }
+                                        return colorList[0]
+
+                                    },
+                                    //以下为是否显示，显示位置和显示格式的设置了
+                                    // label: {
+                                    //     show: true,
+                                    //     position: 'top',
+                                    //     formatter: '{b}\n{c}'
+                                    // }
+                                    label: {
+                                            show: true,
+                                            position: 'inside',
+                                            formatter: function(params) {
+                                                console.log(params);
+                                                if(params.data==1){
+                                                    return '已完成';
+                                                }else if(params.data==0.5){
+                                                    return '未完成';
+                                                }
+                                                return '延期';
+
+                                            }
+                                    }
+                                }
+
+                            },
+                            data: data1.data4
                         }
                     ]
                 }
