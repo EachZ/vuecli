@@ -18,16 +18,6 @@
         // components: {Gantt},
         data() {
             return {
-                // tasks: {
-                //     data: [
-                //         {id: 1, text: 'Task #1', start_date: '2020-01-17', duration: 3, progress: 0.6},
-                //         {id: 2, text: 'Task #2', start_date: '2020-01-20', duration: 3, progress: 0.4}
-                //     ],
-                //     links: [
-                //         {id: 1, source: 1, target: 2, type: '0'}
-                //     ]
-                // },
-
 
             };
         },
@@ -326,7 +316,7 @@
                         data: data1.product,
                         align: "right",
                         right: 80,
-                        top: 50
+                        top: 50,
                     },
                     grid: {
                         containLabel: true,
@@ -348,15 +338,15 @@
                             show: true,
                             interval: 0,
                             formatter: function(value) {
-                                var last = "";
-                                var max = 5;
-                                var len = value.length;
-                                var hang = Math.ceil(len / max);
+                                let last = "";
+                                let max = 5;
+                                let len = value.length;
+                                let hang = Math.ceil(len / max);
                                 if (hang > 1) {
-                                    for (var i = 0; i < hang; i++) {
-                                        var start = i * max;
-                                        var end = start + max;
-                                        var temp = value.substring(start, end) + "\n";
+                                    for (let i = 0; i < hang; i++) {
+                                        let start = i * max;
+                                        let end = start + max;
+                                        let temp = value.substring(start, end) + "\n";
                                         last += temp; //凭借最终的字符串
                                     }
                                     return last;
@@ -370,17 +360,17 @@
                     tooltip: {
                         trigger: "axis",
                         formatter: function(params) {
-                            var res = "";
-                            var name = "";
-                            var start0 = "";
-                            var start = "";
-                            var end0 = "";
-                            var end = "";
-                            for (var i in params) {
-                                var k = i % 2;
+                            let res = "";
+                            let name = "";
+                            let start0 = "";
+                            let start = "";
+                            let end0 = "";
+                            let end = "";
+                            for (let i in params) {
+                                let k = i % 2;
                                 if (!k) { //偶数
                                     start0 = params[i].data;
-                                    console.log(start0)
+                                    // console.log(start0)
                                     start = start0.getFullYear() + "-" + (start0.getMonth() + 1) + "-" + start0.getDate();
                                 }
                                 if (k) { //奇数
@@ -398,108 +388,117 @@
 
                 });
 
+                console.log("qqq");
+                //点了图例才会调用以下方法
+                Gantt.on('legendselectchanged', function(obj) {
+                    //所有的图例的被点击情况
+                    let selected = obj.selected;
+                    //点的图例的名字
+                    let name = obj.name; // current clicked one
+                    // if all legends are selected, only enable clicked legend, others are toggled to false.
+                    // other situation, do what is default.
+                    console.log("name:");
+                    console.log(name);
+                    console.log("selected:");
+                    console.log(selected);
 
-
-                // 基于准备好的dom，初始化echarts实例
-                let myChart = this.$echarts.init(document.getElementById('myChart'));
-                // 绘制图表
-                myChart.setOption({
-                    // title: {text: '在Vue中使用echarts'},
-                    // tooltip: {},
-                    // xAxis: {
-                    //     data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-                    // },
-                    // yAxis: {},
-                    // series: [{
-                    //     name: '销量',
-                    //     type: 'bar',
-                    //     data: [5, 20, 36, 10, 10, 20]
-                    // }]
-                    title: {
-                        text: '阶梯瀑布图',
-                        subtext: 'From ExcelHome',
-                        sublink: 'http://e.weibo.com/1341556070/Aj1J2x5a5'
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                        },
-                        formatter: function (params) {
-                            var tar;
-                            if (params[1].value !== '-') {
-                                tar = params[1];
-                            }
-                            else {
-                                tar = params[0];
-                            }
-                            return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+                    //一个都没选，就是true
+                    let allIsFalse=true;
+                    let setLegend={};
+                    //有一个图例被选中了，就设置allIsFalse为false
+                    for (let item in selected) {
+                        if (selected[item]) {
+                            allIsFalse=false;
                         }
-                    },
-                    legend: {
-                        data: ['支出', '收入']
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'category',
-                        splitLine: {show: false},
-                        data: function () {
-                            var list = [];
-                            for (var i = 1; i <= 11; i++) {
-                                list.push('11月' + i + '日');
-                            }
-                            return list;
-                        }()
-                    },
-                    yAxis: {
-                        type: 'value'
-                    },
-                    series: [
-                        {
-                            name: '辅助',
-                            type: 'bar',
-                            stack: '总量',
-                            itemStyle: {
-                                barBorderColor: 'rgba(0,0,0,0)',
-                                color: 'rgba(0,0,0,0)'
-                            },
-                            emphasis: {
-                                itemStyle: {
-                                    barBorderColor: 'rgba(0,0,0,0)',
-                                    color: 'rgba(0,0,0,0)'
+                    }
+                    //一个图例没都选，就默认选全部图例
+                    if(allIsFalse){
+                        for(let item in selected){
+                            setLegend[item]=true;
+                            Gantt.setOption({
+                                legend: {
+                                    selected:setLegend
                                 }
-                            },
-                            data: [0, 900, 1245, 1530, 1376, 1376, 1511, 1689, 1856, 1495, 1292]
-                        },
-                        {
-                            name: '收入',
-                            type: 'bar',
-                            stack: '总量',
-                            label: {
-                                show: true,
-                                position: 'top'
-                            },
-                            data: [900, 345, 393, '-', '-', 135, 178, 286, '-', '-', '-']
-                        },
-                        {
-                            name: '支出',
-                            type: 'bar',
-                            stack: '总量',
-                            label: {
-                                show: true,
-                                position: 'bottom'
-                            },
-                            data: ['-', '-', '-', 108, 154, '-', '-', '-', 119, 361, 203]
+                            })
                         }
-                    ]
+                    }
+
+                    //如果点击了图例
+                    if (selected !== undefined) {
+
+                        if ((isOnlyClickedOneIsUnSelected(name, selected))) {
+                            // all legend are selected except current clicked one
+                            onlyEnableCurrentSelectedLegend(name, selected, Gantt);
+                        }
+                    }
+
+                    function isOnlyClickedOneIsUnSelected(name, selected){
+                        console.log('onlyClickOne');
+                        let unSelectedCount = 0;
+                        for ( let item in selected) {
+                            // console.log("item:");
+                            // console.log(item);
+                            // console.log("hasOwnProperty");
+                            // console.log(Object.prototype.hasOwnProperty.call(selected, item));
+                            // console.log("================");
+                            //例如，foo.hasOwnProperty("bar") 应该替换为 Object.prototype.hasOwnProperty.call(foo, "bar")。
+                            // if (!selected.hasOwnProperty(item)) {
+                            //     continue;
+                            // }
+
+                            //如果，就跳出循环，从下一个item开始
+                            // if (!Object.prototype.hasOwnProperty.call(selected, item)) {
+                            //     continue;
+                            // }
+
+                            if (selected[item] === false) {
+                                ++unSelectedCount;
+                            }
+                        }
+                        console.log("~~~~~~~~~");
+                        console.log(unSelectedCount);
+                        //只点击了name的图例
+                        return unSelectedCount===1 && selected[name] === false;
+                    }
+                    function onlyEnableCurrentSelectedLegend(name, selected, echartInstance) {
+                        console.log("onlyEnable");
+                        console.log(name);
+                        console.log(selected);
+                        let legend = {};
+                        for (let item in selected) {
+                            if (selected[item]) {
+                                legend[item]=false;
+                                continue;
+                            }
+
+                            legend[item]=true;
+
+                            console.log("&&&&&&&&&&&&&");
+                            console.log(legend);
+                            // if (!Object.prototype.hasOwnProperty.call(selected, item)) {
+                            //     continue;
+                            // }
+                            //只显示选中的图例
+                            // legend.push({'name': item});
+                            //
+                            //
+                            // echartInstance.dispatchAction({
+                            //     type: 'legendToggleSelect',
+                            //     batch: legend
+                            // });
+                        }
+                        echartInstance.setOption({
+                            legend: {
+                                selected:legend
+                            }
+                        })
+                    }
                 });
-            }
-        }
+
+
+            },
+        },
+
     };
 
 </script>
