@@ -29,24 +29,30 @@
                         groupItem: [
                             {
                                 id: '11',
+                                secondaryProductionNumber: 'po',
+                                orderId: '21',
                                 orderNumber: '2014',
                                 startTime: '2014-12-24 23:12:00',
                                 endTime: '2014-12-26 21:00:00',
-                                completedResourceNumber: '12'
+                                materialCoding: '12'
                             },
                             {
                                 id: '12',
+                                secondaryProductionNumber: 'po',
+                                orderId: '21',
                                 orderNumber: '2015',
                                 startTime: '2015-12-24 23:12:00',
                                 endTime: '2015-12-26 21:00:00',
-                                completedResourceNumber: '12'
+                                materialCoding: '12'
                             },
                             {
                                 id: '13',
+                                secondaryProductionNumber: 'po',
+                                orderId: '21',
                                 orderNumber: '2016',
                                 startTime: '2016-12-24 23:12:00',
                                 endTime: '2016-12-26 21:00:00',
-                                completedResourceNumber: '12'
+                                materialCoding: '12'
                             },
                         ],
                     },
@@ -56,24 +62,30 @@
                         groupItem: [
                             {
                                 id: '21',
+                                secondaryProductionNumber: 'po',
+                                orderId: '21',
                                 orderNumber: '2017',
                                 startTime: '2017-12-24 23:12:00',
                                 endTime: '2017-12-26 21:00:00',
-                                completedResourceNumber: '34'
+                                materialCoding: '34'
                             },
                             {
                                 id: '22',
+                                secondaryProductionNumber: 'po',
+                                orderId: '21',
                                 orderNumber: '2018',
                                 startTime: '2018-12-24 23:12:00',
                                 endTime: '2018-12-26 21:00:00',
-                                completedResourceNumber: '34'
+                                materialCoding: '34'
                             },
                             {
                                 id: '23',
+                                secondaryProductionNumber: 'po',
+                                orderId: '21',
                                 orderNumber: '2019',
                                 startTime: '2019-12-24 23:12:00',
                                 endTime: '2019-12-26 21:00:00',
-                                completedResourceNumber: '34'
+                                materialCoding: '34'
                             },
                         ],
                     },
@@ -86,6 +98,14 @@
                 ],
                 columns: [
                     {
+                        title:'二级生产单ID',
+                        dataIndex: 'secondaryProductionNumber',
+                    },
+                    {
+                        title: '订单ID',
+                        dataIndex: 'orderId'
+                    },
+                    {
                         title: '订单号',
                         dataIndex: 'orderNumber',
                     }, {
@@ -96,8 +116,8 @@
                         title: '结束时间',
                         dataIndex: 'endTime',
                     },{
-                        title: '完成资源数',
-                        dataIndex: 'completedResourceNumber'
+                        title: 'materialCoding',
+                        dataIndex: 'materialCoding'
                     }
                 ],
             }
@@ -108,6 +128,21 @@
                 if (index % 2 === 1) className = "dark-row";
                 return className;
             }
+        },
+        mounted() {
+            //请求后端的获取生产单
+            //要需要传首尾日期？？？
+            this.$axios.get('/resource/gantt/running').then(response => {
+                console.log("GET请求发出了");
+                if (response.data) {
+                    console.log("生产单数据:");
+                    console.log(response.data);
+                    this.dataGroups=response.data.data;
+                    console.log(response.data.data);
+                }
+            }).catch(err => {
+                alert('生产单请求失败')
+            })
         }
     }
 </script>

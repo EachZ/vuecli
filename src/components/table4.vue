@@ -3,8 +3,8 @@
         <h1>4. 生产单-资源关系表</h1>
         <a-table :columns="columns" :data-source="data" :rowClassName="rowClassName">
 <!--            ↓是每一行第一列的内容-->
-            <span slot="resource" slot-scope="text">{{ text }}</span>
-            <span slot="customTitle">资源</span>
+            <span slot="orderID" slot-scope="text">{{ text }}</span>
+            <span slot="customTitle">二级生产单号</span>
             <span slot="manpower" slot-scope="manpower">{{manpower}}</span>
 
         </a-table>
@@ -16,60 +16,61 @@
     const columns = [
         //第一列:资源
         {
-            dataIndex: 'resource',
-            key: 'resource',
+            dataIndex: 'orderID',
+            key: 'orderID',
             slots: { title: 'customTitle' },
-            scopedSlots: { customRender: 'resource' },
+            scopedSlots: { customRender: 'orderID' },
         },
-        //第二列:资源种类
+        //第二列:资源名称
         {
-            title: '资源种类',
-            dataIndex: 'resourceSort',
-            key: 'resourceSort',
+            title: '资源名称',
+            dataIndex: 'resourceName',
+            key: 'resourceName',
         },
-        //第三列:资源编号
-        {
-            title: '资源编号',
-            dataIndex: 'resourceNumber',
-            key: 'resourceNumber',
-        },
-        //第四列:人力???
+        //第三列:人力
         {
             title: '人力',
             key: 'manpower',
             dataIndex: 'manpower',
             scopedSlots: { customRender: 'manpower' },
         },
+        //第四列:资源类型
+        {
+            title: '资源类型',
+            dataIndex: 'category',
+            key: 'category',
+        },
+
     ];
 
     //每一行的内容
     const data = [
         {
             key: '1',
-            resource: 'line1',
-            resourceSort: '设备',
-            resourceNumber: 'M0001',
+            orderID: '123',
+            resourceName: 'line1',
+            category: '设备',
             manpower:123,
         },
         {
             key: '2',
-            resource: 'line2',
-            resourceSort: '设备',
-            resourceNumber: 'M0002',
+            orderID: '123',
+            resourceName: 'line2',
+            category: '设备',
             manpower:544,
         },
         {
             key: '3',
-            resource: '张三',
-            resourceSort: '人员',
-            resourceNumber: 'H0001',
+            orderID: '123',
+            resourceName: '张三',
+            category: '人员',
             manpower:2,
         },
         {
             key: '4',
-            resource: '李四',
-            resourceSort: '人员',
-            resourceNumber: 'H0002',
+            orderID: '123',
+            resourceName: '李四',
+            category: '人员',
             manpower:5,
         },
     ];
@@ -88,6 +89,21 @@
                 if (index % 2 === 1) className = "dark-row";
                 return className;
             }
+        },
+        mounted() {
+            //请求后端的获取生产单-资源关系表
+            //要需要传首尾日期？？？
+            this.$axios.get('/resource/productionForm').then(response => {
+                console.log("GET请求发出了");
+                if (response.data) {
+                    console.log("生产单-资源关系表数据:");
+                    console.log(response.data);
+                    this.dataGroups=response.data.data;
+                    console.log(response.data.data);
+                }
+            }).catch(err => {
+                alert('生产单-资源关系表请求失败');
+            })
         }
     };
 </script>

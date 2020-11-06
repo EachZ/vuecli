@@ -82,180 +82,184 @@
 <!--                            </li>-->
                         </ul>
 <!--                        资源负载-->
-                        <ul class="resources">
-                            <li>
-                                <span>line1</span>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="25" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="80" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="115" status="exception" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="2" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="100" status="success" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="35" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="55" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-<!--                                <span>要去掉</span>-->
-                            </li>
-                        </ul>
+                        <div id="theResources">
 
-                        <ul class="resources">
-                            <li>
-                                <span>line2</span>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="15" status="warning" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="60" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="65" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="29" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="90" status="exception" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="85" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="5" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-<!--                                <span>要去掉</span>-->
-                            </li>
-                        </ul>
+<!--                        <ul class="resources">-->
+<!--                            <li>-->
+<!--                                <span>line1</span>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="25" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="80" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="115" status="exception" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="2" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="100" status="success" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="35" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="55" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--&lt;!&ndash;                                <span>要去掉</span>&ndash;&gt;-->
+<!--                            </li>-->
+<!--                        </ul>-->
 
-                        <ul class="resources">
-                            <li>
-                                <span>张三</span>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="65" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="30" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="15" status="warning" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="48" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="100" status="success" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="35" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="66" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-<!--                                <span>要去掉</span>-->
-                            </li>
-                        </ul>
-                        <ul class="resources">
-                            <li>李四</li>
-                            <li>
-                                <el-progress type="circle" :percentage="25" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="80" status="success" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="115" status="exception" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="43" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="100" status="warning" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="98" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="55" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-<!--                                <span>要去掉</span>-->
-                            </li>
-                        </ul>
-                        <ul class="resources">
-                            <li>
-                                <span>王五</span>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="20" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="50" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="11" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="9" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="10" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="22" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="55" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-<!--                                <span>要去掉</span>-->
-                            </li>
-                        </ul>
-                        <ul class="resources">
-                            <li>
-                                <span>陈二</span>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="25" status="warning" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="89" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="55" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="19" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="40" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="0" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-                                <el-progress type="circle" :percentage="115" status="exception" :width="80" :height="80"></el-progress>
-                            </li>
-                            <li>
-<!--                                <span>要去掉</span>-->
-                            </li>
-                        </ul>
+<!--                        <ul class="resources">-->
+<!--                            <li>-->
+<!--                                <span>line2</span>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="15" status="warning" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="60" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="65" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="29" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="90" status="exception" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="85" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="5" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--&lt;!&ndash;                                <span>要去掉</span>&ndash;&gt;-->
+<!--                            </li>-->
+<!--                        </ul>-->
+
+<!--                        <ul class="resources">-->
+<!--                            <li>-->
+<!--                                <span>张三</span>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="65" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="30" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="15" status="warning" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="48" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="100" status="success" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="35" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="66" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--&lt;!&ndash;                                <span>要去掉</span>&ndash;&gt;-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                        <ul class="resources">-->
+<!--                            <li>李四</li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="25" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="80" status="success" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="115" status="exception" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="43" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="100" status="warning" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="98" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="55" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--&lt;!&ndash;                                <span>要去掉</span>&ndash;&gt;-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                        <ul class="resources">-->
+<!--                            <li>-->
+<!--                                <span>王五</span>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="20" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="50" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="11" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="9" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="10" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="22" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="55" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--&lt;!&ndash;                                <span>要去掉</span>&ndash;&gt;-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                        <ul class="resources test">-->
+<!--                            <li>-->
+<!--                                <span>陈二</span>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="25" status="warning" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="89" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="55" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="19" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="40" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="0" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <el-progress type="circle" :percentage="115" status="exception" :width="80" :height="80"></el-progress>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--&lt;!&ndash;                                <span>要去掉</span>&ndash;&gt;-->
+<!--                            </li>-->
+<!--                        </ul>-->
+                        </div>
+
                     </div>
                 </el-col>
             </el-row>
@@ -291,6 +295,75 @@
         },
         data() {
             return {
+                text: '',
+                loadData:[
+                    {
+                        loadRate: [
+                            {
+                                rate: 30,
+                                time: "2020-11-06 15:02:04"
+                            },
+                            {
+                                rate: 34,
+                                time: "2020-11-07 15:02:04"
+                            },
+                            {
+                                rate: 36,
+                                time: "2020-11-08 15:02:04"
+                            },
+                            {
+                                rate: 39,
+                                time: "2020-11-09 15:02:04"
+                            },
+                            {
+                                rate: 40,
+                                time: "2020-11-10 15:02:04"
+                            },
+                            {
+                                rate: 44,
+                                time: "2020-11-11 15:02:04"
+                            },
+                            {
+                                rate: 47,
+                                time: "2020-11-06 15:02:04"
+                            }
+                        ],
+                        resourceName: "5组-童玲 (5)"
+                    },
+                    {
+                        loadRate: [
+                            {
+                                rate: 50,
+                                time: "2020-11-06 15:02:04"
+                            },
+                            {
+                                rate: 54,
+                                time: "2020-11-07 15:02:04"
+                            },
+                            {
+                                rate: 56,
+                                time: "2020-11-08 15:02:04"
+                            },
+                            {
+                                rate: 59,
+                                time: "2020-11-09 15:02:04"
+                            },
+                            {
+                                rate: 60,
+                                time: "2020-11-10 15:02:04"
+                            },
+                            {
+                                rate: 64,
+                                time: "2020-11-11 15:02:04"
+                            },
+                            {
+                                rate: 67,
+                                time: "2020-11-06 15:02:04"
+                            }
+                        ],
+                        resourceName: "6组-张三 (6)"
+                    }
+                ],
                 currentYear: 1970, // 年份
                 currentMonth: 1, // 月份
                 currentDay: 1, // 日期
@@ -465,12 +538,62 @@
                 //   this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
                 // );
             }
+        },
+        mounted() {
+            let testDom=document.getElementById("theResources");
+            console.log(this.loadData);
+            console.log(this.loadData.length);
+            let theHTML="";
+            for(let j=0;j<this.loadData.length;j++){
+                theHTML +=
+                    "<ul class=\"resources\">\n" +
+                    "                            <li>\n" +
+                    "                                <span>"+this.loadData[j].resourceName+"</span>\n" +
+                    "                            </li>\n";
+                for(let i=0;i<7;i++){
+                    theHTML +=
+                        "                            <li>\n"+
+                        "<span>"+this.loadData[j].loadRate[i].rate+"%</span>"+
+                        "                            </li>\n";
+                }
+                // theHTML +=
+                //     "                            <li>\n"+
+                //     "<span>"+this.loadData[0].loadRate[0].rate+"</span>"+
+                //     "                            </li>\n" +
+                //     "                            <li>\n" +
+                //     "<span>"+this.loadData[0].loadRate[1].rate+"</span>"+
+                //     "                            </li>\n" +
+                //     "                            <li>\n" +
+                //     "<span>"+this.loadData[0].loadRate[2].rate+"</span>"+
+                //     "                            </li>\n" +
+                //     "                            <li>\n" +
+                //     "<span>"+this.loadData[0].loadRate[3].rate+"</span>"+
+                //     "                            </li>\n" +
+                //     "                            <li>\n" +
+                //     "<span>"+this.loadData[0].loadRate[4].rate+"</span>"+
+                //     "                            </li>\n" +
+                //     "                            <li>\n" +
+                //     "<span>"+this.loadData[0].loadRate[5].rate+"</span>"+
+                //     "                            </li>\n" +
+                //     "                            <li>\n" +
+                //     "<span>"+this.loadData[0].loadRate[6].rate+"</span>"+
+                //     "                            </li>\n" +
+                //     "                            <li>\n" +
+                //     "                            </li>\n" +
+                //     "                        </ul>";
+                theHTML+=
+                    "                            <li>\n" +
+                    "                            </li>\n" +
+                    "                        </ul>\n";
+            }
+
+            testDom.innerHTML=theHTML;
         }
     };
 
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
     #container{
         display: grid;
         grid-template-columns: 250px 250px;
