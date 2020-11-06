@@ -196,6 +196,8 @@
                         if(date.getHours()===0 && date.getMinutes()===0 && date.getSeconds()===0){
                             console.log(date.toLocaleString());
                             console.log("零点了！！！");
+                        //    零点的时候要向后端调用排程方法
+                            this.postSchedule();
                         }
                     }
                     // this.miao=this.miao+86400000;
@@ -230,7 +232,14 @@
                     _this.count_time = h + ':' + min + ':' + sec
                 }, 1000)
             },
-
+            postSchedule(){
+                this.$axios.post('/schedule',this.currentVirtualTime).then(response => {
+                    console.log("发送时间成功");
+                    console.log(response);
+                }).catch(err => {
+                    alert('请求失败')
+                })
+            }
         },
         mounted() {
             //最后的timeout,大概1000是过去1秒[980更准一点]

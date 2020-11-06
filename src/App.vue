@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link :to="{path:'/',query:{year:this.year,month:this.month,day:this.day}}">资源负载图</router-link> |
+      <router-link to="/">表单输出</router-link> |
+      <router-link :to="{path:'/home',query:{year:this.year,month:this.month,day:this.day}}">资源负载图</router-link> |
 <!--      <router-link to="/about">About</router-link> |-->
       <router-link :to="{path:'/page1',query:{year:this.year,month:this.month,day:this.day}}">订单甘特图</router-link> |
-      <router-link :to="{path:'/page2',query:{year:this.year,month:this.month,day:this.day}}">资源甘特图</router-link> |
-      <router-link :to="{path:'/page3',query:{year:this.year,month:this.month,day:this.day}}">增删改查</router-link> |
-      <router-link :to="{path:'/page4',query:{year:this.year,month:this.month,day:this.day}}">设置时间</router-link> |
-      <router-link to="/page5">表单输出</router-link> |
+      <router-link :to="{path:'/page2'}">资源甘特图</router-link> |
+      <router-link :to="{path:'/page3'}">增删改查</router-link> |
+      <router-link :to="{path:'/page4'}">设置时间</router-link> |
       <router-link to="/page6">实验页面</router-link>
       <Time @current-virtual-time="getTime"></Time>
 

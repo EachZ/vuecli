@@ -5,11 +5,13 @@ module.exports = {
     devServer:{
         open:true,
         host:'localhost',
-        port:8080,
+        port:8081,
         proxy: {
             '/api': {
-                // 此处的写法，目的是为了 将 /api 替换成 https://www.baidu.com/
-                target: 'https://www.baidu.com/',
+                // 此处的写法，目的是为了 将 /api 替换成 target中的网址
+                // target: 'http://123.57.231.57:8080',
+                target:'http://172.17.237.22:3180',
+                // target: 'http://localhost:8080/',
                 // 允许跨域
                 changeOrigin: true,
                 ws: true,
