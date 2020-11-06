@@ -3,6 +3,9 @@ module.exports = {
     //可以通过vue.config.js修改webpack的默认配置
     //vue-cli默认隐藏所有webpack的配置
     devServer:{
+        open:true,
+        host:'localhost',
+        port:8080,
         proxy: {
             '/api': {
                 // 此处的写法，目的是为了 将 /api 替换成 https://www.baidu.com/
