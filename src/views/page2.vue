@@ -401,6 +401,28 @@
                     console.log(name);
                     console.log("selected:");
                     console.log(selected);
+
+                    //一个都没选，就是true
+                    let allIsFalse=true;
+                    let setLegend={};
+                    //有一个图例被选中了，就设置allIsFalse为false
+                    for (let item in selected) {
+                        if (selected[item]) {
+                            allIsFalse=false;
+                        }
+                    }
+                    //一个图例没都选，就默认选全部图例
+                    if(allIsFalse){
+                        for(let item in selected){
+                            setLegend[item]=true;
+                            Gantt.setOption({
+                                legend: {
+                                    selected:setLegend
+                                }
+                            })
+                        }
+                    }
+
                     //如果点击了图例
                     if (selected !== undefined) {
 
@@ -409,6 +431,7 @@
                             onlyEnableCurrentSelectedLegend(name, selected, Gantt);
                         }
                     }
+
                     function isOnlyClickedOneIsUnSelected(name, selected){
                         console.log('onlyClickOne');
                         let unSelectedCount = 0;
