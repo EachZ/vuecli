@@ -137,11 +137,69 @@
                 let date1=(this.newDate).toString();
                 console.log(date1);
 
-                this.$axios.get("/orders/gantt?date="+"2020-11-02 12:00:00").then(response => {
+                this.$axios.get("/orders/gantt?date="+"2008/11/05").then(response => {
                     console.log("GET请求发出了");
                     if (response.data) {
-                        console.log(response.data);
-                        this.GETcontent=response.data;
+                        console.log(response.data.data);
+                        this.GETcontent=response.data.data;
+                        let data=this.GETcontent;
+                        console.log(data[0])
+
+                        // date: "2008-11-05 00:00:00"
+                        // expectedDelivery: "2008-11-06 20:00:00"
+                        // finishPercent: "100%;44.44%"
+                        // orderId: 36
+                        // orderNumber: 764098
+                        // orderRecordId: 1
+                        let orderList = data.map(function (item) {
+                            return item.orderNumber;
+                        });
+                        console.log(orderList);
+                        let dataList=data.map(function (item) {
+                            let poetryArr = item.finishPercent.split(";")
+                            let sub=poetryArr[0].substring(0,poetryArr[0].length-1);
+                            return parseInt(sub)/100;
+                        });
+                        console.log(dataList);
+                        let dataList2=data.map(function (item) {
+                            let poetryArr1 = item.finishPercent.split(";")
+                            console.log(poetryArr1);
+                            console.log(poetryArr1.length);
+                            if(poetryArr1.length===1){
+                                console.log("第二项没有");
+                                return 0;
+                            }
+                            else{
+                                let sub=poetryArr1[1].substring(0,poetryArr1[1].length-1);
+                                console.log(sub);
+                                return parseInt(sub)/100;
+                            }
+                        });
+                        console.log(dataList2);
+
+                        let dataList3=data.map(function (item) {
+                            let poetryArr3 = item.finishPercent.split(";")
+                            if(poetryArr3.length!==3){
+                                console.log("第三项没有");
+                                return 0;
+                            }
+                            else{
+                                let sub=poetryArr3[2].substring(0,poetryArr3[1].length-1);
+                                console.log(sub);
+                                return parseInt(sub)/100;
+                            }
+                        });
+
+                        let data1={
+                            order:orderList,
+                            data2:dataList,//装配
+                            data3:dataList2,//测试
+                            data5:dataList3,
+                            //data4:[1,1.5,0.5,1,1.5,1.5]//状态
+                            data4:[1,1.5,0.5,1,1.5,1.5,1,1,1,1]
+                        };
+                        //上面的小方块的数组、y轴的数组、产品的series数组
+                        this.drawLine(data1);
                     }
                 }).catch(err => {
                     alert('请求失败')
@@ -149,15 +207,6 @@
             },
             getData(){
                 this.testAxiosGET();
-                let data={
-                    order:[100000001,100000002,100000003,100000004,100000005,100000006],
-                    data2:[0.3,0.3,1,0.5,0.7,0.5],//装配
-                    data3:[0.1,0.3,0.5,0,0.2,0.3],//测试
-                    //data4:[1,1.5,0.5,1,1.5,1.5]//状态
-                    data4:[1,1.5,0.5,1,1.5,1.5]
-                };
-                //上面的小方块的数组、y轴的数组、产品的series数组
-                this.drawLine(data);
             },
             drawLine(data1) {
                 console.log(data1);
@@ -235,6 +284,21 @@
                                 show: true
                             },
                             data: data1.data2
+                        },{
+                            name: 'xx完成度',
+                            type: 'bar',
+                            stack:'数据',
+                            itemStyle: {
+                                normal: {
+                                    //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                    color:'#baadc3'
+                                }
+                            },
+
+                            label: {
+                                show: true,
+                            },
+                            data: data1.data5
                         },
                         {
                             name: '状态',
