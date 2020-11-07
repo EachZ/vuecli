@@ -131,6 +131,7 @@
         },
         mounted() {
             //请求后端的获取订单计划表
+            console.log("订单计划表get请求");
             this.$axios.get('/orderScheduleForm').then(response => {
                 console.log("GET请求发出了");
                 if (response.data) {

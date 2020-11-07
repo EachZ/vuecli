@@ -132,7 +132,13 @@
         mounted() {
             //请求后端的获取生产单
             //要需要传首尾日期？？？
-            this.$axios.get('/resource/gantt/running').then(response => {
+            console.log("生产单get请求");
+            this.$axios.get('/resource/gantt/running',{
+                params:{
+                    startDate: "2008-11-07",
+                    endDate: "2008-11-09"
+                }
+            }).then(response => {
                 console.log("GET请求发出了");
                 if (response.data) {
                     console.log("生产单数据:");

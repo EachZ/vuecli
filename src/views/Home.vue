@@ -417,6 +417,7 @@
             });
             console.log("index: ", index);
             this.tabIndex = index;
+
         },
         created() {
             this.initData(null);
@@ -540,6 +541,23 @@
             }
         },
         mounted() {
+            //向后端调用方法
+            console.log("资源甘特图 axios get");
+            this.$axios.get('/resource/gantt/loading',{
+                params:{
+                    startDate: "2008-11-05 19:00:00",
+                    endDate: "2008-11-07 19:00:00",
+                    frequency :1
+                }
+            }).then(response => {
+                console.log("get传参数");
+                if (response.data) {
+                    console.log(response.data);
+                }
+            }).catch(err => {
+                alert('请求失败')
+            });
+
             let testDom=document.getElementById("theResources");
             console.log(this.loadData);
             console.log(this.loadData.length);

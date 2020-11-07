@@ -93,7 +93,13 @@
         mounted() {
             //请求后端的获取生产单-资源关系表
             //要需要传首尾日期？？？
-            this.$axios.get('/resource/productionForm').then(response => {
+            console.log("生产单-资源关系表get请求");
+            this.$axios.get('/resource/productionForm',{
+                params:{
+                    startDate: "2008-11-07",
+                    endDate: "2008-11-09"
+                }
+            }).then(response => {
                 console.log("GET请求发出了");
                 if (response.data) {
                     console.log("生产单-资源关系表数据:");

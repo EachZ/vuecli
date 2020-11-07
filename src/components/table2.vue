@@ -35,26 +35,26 @@
     const data = [
         {
             key: '1',
-            orderId: '设备',
-            orderNumber: 'M0001',
+            orderId: 1,
+            orderNumber: 11,
             secondaryProductionNumbers:[1,2,3],
         },
         {
             key: '2',
-            orderId: '设备',
-            orderNumber: 'M0002',
+            orderId: 2,
+            orderNumber: 22,
             secondaryProductionNumbers:[1,2,3],
         },
         {
             key: '3',
-            orderId: '人员',
-            orderNumber: 'H0001',
+            orderId: 3,
+            orderNumber: 33,
             secondaryProductionNumbers:[1,2,3],
         },
         {
             key: '4',
-            orderId: '人员',
-            orderNumber: 'H0002',
+            orderId: 4,
+            orderNumber: 44,
             secondaryProductionNumbers:[1,2,3],
         },
     ];
@@ -77,7 +77,13 @@
         mounted() {
             //请求后端的获取订单-生产单关系表
             //要需要传首尾日期？？？
-            this.$axios.get('/orders/productionForm').then(response => {
+            console.log("订单-生产单关系表get请求");
+            this.$axios.get('/orders/productionForm',{
+                params:{
+                    startDate: "2020-11-07",
+                    endDate: "2020-11-09"
+                }
+            }).then(response => {
                 console.log("GET请求发出了");
                 if (response.data) {
                     console.log("订单-生产单关系表数据:");
