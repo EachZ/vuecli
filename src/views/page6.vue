@@ -43,12 +43,18 @@
                 // 由于 main.js 里全局定义的 axios,此处直接使用 $axios 即可。
                 // 由于 main.js 里定义了每个请求前缀，此处的 / 即为 /api/，
                 // 经过 vue.config.js 配置文件的代理设置，会自动转为 target中的网址，从而解决跨域问题
-                // get方法
                 let form={
-                    username:'/abbcde',
-                    password:'123456'
+                    startDate: "2008-11-05 19:00:00",
+                    endDate: "2008-11-07 19:00:00",
+                    frequency :1
+
                 };
-                this.$axios.post('/account/add',form).then(response => {
+                this.$axios.get('/resourceById',{
+                    params:{
+                        id:16
+                    }
+                }).then(response => {
+                    console.log("get传参数");
                     if (response.data) {
                         console.log(response.data);
                         this.POSTcontent=response.data;

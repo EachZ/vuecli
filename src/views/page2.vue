@@ -22,6 +22,24 @@
             };
         },
         mounted(){
+            console.log("资源甘特图get请求");
+            this.$axios.get('/resource/gantt/running',{
+                params:{
+                    startDate: "2008-11-07",
+                    endDate: "2008-11-09"
+                }
+            }).then(response => {
+                console.log("GET请求发出了");
+                if (response.data) {
+                    console.log("资源甘特图数据:");
+                    console.log(response.data);
+                    this.dataGroups=response.data.data;
+                    console.log(response.data.data);
+                }
+            }).catch(err => {
+                alert('资源甘特图数据请求失败');
+            })
+
             this.getData();
         },
         methods: {

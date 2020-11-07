@@ -8,7 +8,7 @@
             <a-table :pagination="{defaultPageSize: 999, hideOnSinglePage: true }"
                      :columns="columns"
                      slot="expandedRowRender" slot-scope="parentData"
-                     :dataSource="parentData.groupItem" :rowKey="item => item.id"
+                     :dataSource="parentData.orderSchedulesVOList" :rowKey="item => item.id"
                      :locale="{emptyText: '该类别 暂无节点'}"
                      :rowClassName="rowClassName"
             >
@@ -23,68 +23,72 @@
         data() {
             return {
                 dataGroups: [
-                    {
-                        orderId: '1',
-                        orderNumber: '2013',
-                        startTime: '2013-12-24 23:12:00',
-                        endTime: '2013-12-26 21:00:00',
-                        completedResourceNumber: '212',
-                        groupItem: [
-                            {
-                                id: '11',
-                                childOrderNumber: '2014',
-                                childStartTime: '2014-12-24 23:12:00',
-                                childEndTime: '2014-12-26 21:00:00',
-                                childCompletedResourceNumber: '12'
-                            },
-                            {
-                                id: '12',
-                                childOrderNumber: '2015',
-                                childStartTime: '2015-12-24 23:12:00',
-                                childEndTime: '2015-12-26 21:00:00',
-                                childCompletedResourceNumber: '12'
-                            },
-                            {
-                                id: '13',
-                                childOrderNumber: '2016',
-                                childStartTime: '2016-12-24 23:12:00',
-                                childEndTime: '2016-12-26 21:00:00',
-                                childCompletedResourceNumber: '12'
-                            },
-                        ],
-                    },
-                    {
-                        orderId: '2',
-                        orderNumber: '2224',
-                        startTime: '2224-12-24 23:12:00',
-                        endTime: '2224-12-26 21:00:00',
-                        completedResourceNumber: '1322',
-                        groupItem: [
-                            {
-                                id: '21',
-                                childOrderNumber: '2017',
-                                childStartTime: '2017-12-24 23:12:00',
-                                childEndTime: '2017-12-26 21:00:00',
-                                childCompletedResourceNumber: '34'
-                            },
-                            {
-                                id: '22',
-                                childOrderNumber: '2018',
-                                childStartTime: '2018-12-24 23:12:00',
-                                childEndTime: '2018-12-26 21:00:00',
-                                childCompletedResourceNumber: '34'
-                            },
-                            {
-                                id: '23',
-                                childOrderNumber: '2019',
-                                childStartTime: '2019-12-24 23:12:00',
-                                childEndTime: '2019-12-26 21:00:00',
-                                childCompletedResourceNumber: '34'
-                            },
-                        ],
-                    },
+                    // {
+                    //     orderId: '1',
+                    //     orderNumber: '2013',
+                    //     startTime: '2013-12-24 23:12:00',
+                    //     endTime: '2013-12-26 21:00:00',
+                    //     count: '212',
+                    //     orderSchedulesVOList: [
+                    //         {
+                    //             id: '11',
+                    //             craft: '2014',
+                    //             startTime: '2014-12-24 23:12:00',
+                    //             endTime: '2014-12-26 21:00:00',
+                    //             count: '12'
+                    //         },
+                    //         {
+                    //             id: '12',
+                    //             craft: '2015',
+                    //             startTime: '2015-12-24 23:12:00',
+                    //             endTime: '2015-12-26 21:00:00',
+                    //             count: '12'
+                    //         },
+                    //         {
+                    //             id: '13',
+                    //             craft: '2016',
+                    //             startTime: '2016-12-24 23:12:00',
+                    //             endTime: '2016-12-26 21:00:00',
+                    //             count: '12'
+                    //         },
+                    //     ],
+                    // },
+                    // {
+                    //     orderId: '2',
+                    //     orderNumber: '2224',
+                    //     startTime: '2224-12-24 23:12:00',
+                    //     endTime: '2224-12-26 21:00:00',
+                    //     count: '1322',
+                    //     orderSchedulesVOList: [
+                    //         {
+                    //             id: '21',
+                    //             craft: '2017',
+                    //             startTime: '2017-12-24 23:12:00',
+                    //             endTime: '2017-12-26 21:00:00',
+                    //             count: '34'
+                    //         },
+                    //         {
+                    //             id: '22',
+                    //             craft: '2018',
+                    //             startTime: '2018-12-24 23:12:00',
+                    //             endTime: '2018-12-26 21:00:00',
+                    //             count: '34'
+                    //         },
+                    //         {
+                    //             id: '23',
+                    //             craft: '2019',
+                    //             startTime: '2019-12-24 23:12:00',
+                    //             endTime: '2019-12-26 21:00:00',
+                    //             count: '34'
+                    //         },
+                    //     ],
+                    // },
                 ],
                 outColumns: [
+                    {
+                        title:'订单ID',
+                        dataIndex: 'orderId',
+                    },
                     {
                         title: '订单号',
                         dataIndex: 'orderNumber',
@@ -96,24 +100,24 @@
                         title: '结束时间',
                         dataIndex: 'endTime',
                     },{
-                        title: '完成资源数',
-                        dataIndex: 'completedResourceNumber'
+                        title: '订单数量',
+                        dataIndex: 'count'
                     }
                 ],
                 columns: [
                     {
-                        title: '子订单号',
-                        dataIndex: 'childOrderNumber',
+                        title: '子订单工艺',
+                        dataIndex: 'craft',
                     }, {
                         title: '子订单开始时间',
-                        dataIndex: 'childStartTime',
+                        dataIndex: 'startTime',
                         // scopedSlots: { customRender: 'sex' },
                     }, {
                         title: '子订单结束时间',
-                        dataIndex: 'childEndTime',
+                        dataIndex: 'endTime',
                     },{
-                        title: '子订单完成资源数',
-                        dataIndex: 'childCompletedResourceNumber'
+                        title: '子订单完成订单数量',
+                        dataIndex: 'count'
                     }
                 ],
             }
@@ -124,6 +128,21 @@
                 if (index % 2 === 1) className = "dark-row";
                 return className;
             }
+        },
+        mounted() {
+            //请求后端的获取订单计划表
+            console.log("订单计划表get请求");
+            this.$axios.get('/orderScheduleForm').then(response => {
+                console.log("GET请求发出了");
+                if (response.data) {
+                    console.log("订单计划表数据:");
+                    console.log(response.data);
+                    this.dataGroups=response.data.data;
+                    console.log(response.data.data);
+                }
+            }).catch(err => {
+                alert('订单计划表请求失败')
+            })
         }
     }
 </script>
