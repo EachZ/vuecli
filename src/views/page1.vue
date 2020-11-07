@@ -137,7 +137,7 @@
                 let date1=(this.newDate).toString();
                 console.log(date1);
 
-                this.$axios.get("/orders/gantt?date="+"2008/11/05").then(response => {
+                this.$axios.get("/orders/gantt?date="+date1).then(response => {
                     console.log("GET请求发出了");
                     if (response.data) {
                         console.log(response.data.data);
@@ -153,6 +153,20 @@
                         // orderRecordId: 1
                         let orderList = data.map(function (item) {
                             return item.orderNumber;
+                        });
+                        let stateList=data.map(function (item) {
+                            if(item.finishState===0){
+                                return 0.1;
+                            }else if(item.finishState===2){
+                                return 0.2;
+                            }
+                            return 0.3;
+                        });
+                        let yanList=data.map(function (item) {
+                            if(item.isDelivery===0){
+                                return 0.1;
+                            }
+                            return 0.2;
                         });
                         console.log(orderList);
                         let dataList=data.map(function (item) {
@@ -177,6 +191,7 @@
                         });
                         console.log(dataList2);
 
+
                         let dataList3=data.map(function (item) {
                             let poetryArr3 = item.finishPercent.split(";")
                             if(poetryArr3.length!==3){
@@ -196,7 +211,7 @@
                             data3:dataList2,//测试
                             data5:dataList3,
                             //data4:[1,1.5,0.5,1,1.5,1.5]//状态
-                            data4:[1,1.5,0.5,1,1.5,1.5,1,1,1,1]
+                            data4:stateList
                         };
                         //上面的小方块的数组、y轴的数组、产品的series数组
                         this.drawLine(data1);
@@ -233,7 +248,7 @@
                         }
                     },
                     legend:{
-                        data:["装配完成度","测试完成度"]
+                        data:["步骤1","步骤2","步骤3"]
                     },
                     grid: {
                         left: '10%',
@@ -255,7 +270,7 @@
                     ],
                     series: [
                         {
-                            name: '装配完成度',
+                            name: '步骤1',
                             type: 'bar',
                             stack:'数据',
                             itemStyle: {
@@ -271,7 +286,7 @@
                             data: data1.data3
                         },
                         {
-                            name: '测试完成度',
+                            name: '步骤2',
                             type: 'bar',
                             itemStyle: {
                                 normal: {
@@ -285,7 +300,7 @@
                             },
                             data: data1.data2
                         },{
-                            name: 'xx完成度',
+                            name: '步骤3',
                             type: 'bar',
                             stack:'数据',
                             itemStyle: {
@@ -315,9 +330,9 @@
                                             '#C1232B','#B5C334','#FCCE10'
                                         ];
                                         console.log(params);
-                                        if(params.data==1){
+                                        if(params.data==0.2){
                                             return colorList[1];
-                                        }else if(params.data==0.5){
+                                        }else if(params.data==0.3){
                                             return colorList[2]
                                         }
                                         return colorList[0]
@@ -334,12 +349,12 @@
                                             position: 'inside',
                                             formatter: function(params) {
                                                 console.log(params);
-                                                if(params.data==1){
+                                                if(params.data==0.3){
                                                     return '已完成';
-                                                }else if(params.data==0.5){
-                                                    return '未完成';
+                                                }else if(params.data==0.2){
+                                                    return '正在进行';
                                                 }
-                                                return '延期';
+                                                return '未开始';
 
                                             }
                                     }
@@ -347,7 +362,52 @@
 
                             },
                             data: data1.data4
+                        },
+                {
+                    name: '状态',
+                        type: 'bar',
+                    stack:'状态',
+                    label: {
+                    show: true
+                },
+                    itemStyle: {
+                        normal: {
+                            //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                            color: function(params) {
+                                var colorList = [
+                                    '#c1675e','#6ac35d'
+                                ];
+                                console.log(params);
+                                if(params.data==0.1){
+                                    return colorList[1];
+                                }
+                                return colorList[0]
+
+                            },
+                            //以下为是否显示，显示位置和显示格式的设置了
+                            // label: {
+                            //     show: true,
+                            //     position: 'top',
+                            //     formatter: '{b}\n{c}'
+                            // }
+                            label: {
+                                show: true,
+                                    position: 'inside',
+                                    formatter: function(params) {
+                                    console.log(params);
+                                    if(params.data==0.2){
+                                        return '延期';
+                                    }
+                                    return '未延期';
+
+                                }
+                            }
                         }
+
+                    },
+                    data: data1.data4
+                }
+
                     ]
                 }
             );
