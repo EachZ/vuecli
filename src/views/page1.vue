@@ -50,6 +50,8 @@
         },
         data() {
             return {
+                GETcontent :'',
+                POSTcontent:'',
                 currentYear: 1970, // 年份
                 currentMonth: 1, // 月份
                 currentDay: 1, // 日期
@@ -57,7 +59,7 @@
                 days: [],
                 value1: "",
                 tabIndex: null,
-                newDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
+                newDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY/MM/DD"),
                 tabTimeIndex: 4,
                 times: [
                     { time: "00:00:00~06:00:00", label: "00:00~06:00" },
@@ -127,9 +129,28 @@
             this.initData(null);
         },
         methods: {
+            testAxiosGET() {
+                // 由于 main.js 里全局定义的 axios,此处直接使用 $axios 即可。
+                // 由于 main.js 里定义了每个请求前缀，此处的 / 即为 /api/，
+                // 经过 vue.config.js 配置文件的代理设置，会自动转为 target中的网址，从而解决跨域问题
+                // get方法
+                let date1=(this.newDate).toString();
+                console.log(date1);
+
+                this.$axios.get("/orders/gantt?date="+"2020-11-02 12:00:00").then(response => {
+                    console.log("GET请求发出了");
+                    if (response.data) {
+                        console.log(response.data);
+                        this.GETcontent=response.data;
+                    }
+                }).catch(err => {
+                    alert('请求失败')
+                })
+            },
             getData(){
+                this.testAxiosGET();
                 let data={
-                    order:["100000001","100000002","100000003","100000004","100000005","100000006"],
+                    order:[100000001,100000002,100000003,100000004,100000005,100000006],
                     data2:[0.3,0.3,1,0.5,0.7,0.5],//装配
                     data3:[0.1,0.3,0.5,0,0.2,0.3],//测试
                     //data4:[1,1.5,0.5,1,1.5,1.5]//状态
