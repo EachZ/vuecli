@@ -1,141 +1,40 @@
 <template>
-    <div>
-<!--        <a-button @click="freshPage">返回</a-button>-->
-        <div id="high">
-            <highcharts :options="chartOptions" :highcharts="hcInstance"></highcharts>
-        </div>
-<!--        <div>-->
-<!--            <img alt="Vue logo" src="../assets/logo.png">-->
-<!--        </div>-->
-    </div>
+    <div class="page2">
+        <!--        <div class="container" >-->
+        <!--            <gantt style="height: 1000px" :tasks="tasks"/>-->
+        <!--        </div>-->
+        <!--        <div id="myChart" :style="{width: '80%', height: '500%'}"></div>-->
+        <div id="Gantt" :style="{width: '1000px', height: '500px'}"></div>
 
+
+    </div>
 </template>
 
 <script>
-    import Highcharts from 'highcharts'
+    // import Gantt from '../components/Gantt.vue';
+
     export default {
         name: "page7",
-        data(){
-            return{
-                //可以用于处理的数据
-                standardData:[],
-                //甘特图实例？？
-                hcInstance: Highcharts,
-                //甘特图渲染选项
-                chartOptions:{},
-                //纵坐标数据，存放资源名
-                categoryData:[],
-                //图例数据，存放产品名
-                productionsData:[],
+        // components: {Gantt},
+        data() {
+            return {
+                //各种图例的颜色
+                colorData:["red","yellow","green","blue","skyblue","black","pink","purple"],
+                //产品，各种图例
+                productData:["产品1", "产品2", "产品3", "产品4", "产品5", "产品6"],
+                //资源（设备和人员）
+                yAxisData:["line1", "line2", "李四"],
+                //装【【设备数】个】起始时间,按顺序来
+                startDateData:[],
+                //装【【设备数】个】结束时间,按顺序来
+                endDateData:[],
+
                 //后端提供的json数据
                 providedData:
                     [
                         {
                             productionOrderNumber: "Production1",
-                            resourceName: "5组-童玲",
-                            resourceId: 1,
-                            productAndTime: [
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-05 12:00:00.0",
-                                    materialCoding: "3209248",
-                                    startTime: "2008-11-05 12:00:00",
-                                    endTime: "2008-11-05 13:00:00",
-                                    orderId: 36,
-                                    orderNumber: 764098
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-05 13:00:00.0",
-                                    materialCoding: "3209248",
-                                    startTime: "2008-11-05 13:00:00",
-                                    endTime: "2008-11-05 14:00:00",
-                                    orderId: 36,
-                                    orderNumber: 764098
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-05 14:00:00.0",
-                                    materialCoding: "3209248",
-                                    startTime: "2008-11-05 14:00:00",
-                                    endTime: "2008-11-05 15:00:00",
-                                    orderId: 36,
-                                    orderNumber: 764098
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-05 15:00:00.0",
-                                    materialCoding: "3209248",
-                                    startTime: "2008-11-05 15:00:00",
-                                    endTime: "2008-11-05 16:00:00",
-                                    orderId: 36,
-                                    orderNumber: 764098
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-05 16:00:00.0",
-                                    materialCoding: "3059786",
-                                    startTime: "2008-11-05 16:00:00",
-                                    endTime: "2008-11-05 17:00:00",
-                                    orderId: 74,
-                                    orderNumber: 417174
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-05 17:00:00.0",
-                                    materialCoding: "3059786",
-                                    startTime: "2008-11-05 17:00:00",
-                                    endTime: "2008-11-05 18:00:00",
-                                    orderId: 74,
-                                    orderNumber: 417174
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-05 18:00:00.0",
-                                    materialCoding: "3059786",
-                                    startTime: "2008-11-05 18:00:00",
-                                    endTime: "2008-11-05 19:00:00",
-                                    orderId: 74,
-                                    orderNumber: 417174
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-06 07:00:00.0",
-                                    materialCoding: "3209248",
-                                    startTime: "2008-11-06 07:00:00",
-                                    endTime: "2008-11-06 08:00:00",
-                                    orderId: 75,
-                                    orderNumber: 762485
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-06 08:00:00.0",
-                                    materialCoding: "3209248",
-                                    startTime: "2008-11-06 08:00:00",
-                                    endTime: "2008-11-06 09:00:00",
-                                    orderId: 75,
-                                    orderNumber: 762485
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-06 09:00:00.0",
-                                    materialCoding: "3209248",
-                                    startTime: "2008-11-06 09:00:00",
-                                    endTime: "2008-11-06 10:00:00",
-                                    orderId: 75,
-                                    orderNumber: 762485
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-06 10:00:00.0",
-                                    materialCoding: "3209248",
-                                    startTime: "2008-11-06 10:00:00",
-                                    endTime: "2008-11-06 11:00:00",
-                                    orderId: 75,
-                                    orderNumber: 762485
-                                },
-                                {
-                                    secondaryProductionNumber: "production_1_2008-11-06 11:00:00.0",
-                                    materialCoding: "3209248",
-                                    startTime: "2008-11-06 11:00:00",
-                                    endTime: "2008-11-06 12:00:00",
-                                    orderId: 75,
-                                    orderNumber: 762485
-                                }
-                            ]
-                        },
-                        {
-                            productionOrderNumber: "Production1",
-                            resourceName: "6组-李  倩（4）",
+                            resourceName: "5组-童玲 (5)",
                             resourceId: 1,
                             productAndTime: [
                                 {
@@ -244,7 +143,7 @@
                                 {
                                     secondaryProductionNumber: "production_2_2008-11-05 19:00:00.0",
                                     materialCoding: "3059786",
-                                    startTime: "2008-11-05 18:00:00",
+                                    startTime: "2008-11-05 19:00:00",
                                     endTime: "2008-11-05 20:00:00",
                                     orderId: 74,
                                     orderNumber: 417174
@@ -314,419 +213,21 @@
                                 }
                             ]
                         }
-                    ],
-                colors: ['#058DC7',
-                    '#50B432',
-                    '#ED561B',
-                    '#DDDF00',
-                    '#24CBE5',
-                    '#64E572',
-                    '#FF9655',
-                    '#FFF263',
-                    '#6AF9C4'
-                ],
-
-
-                /////
-            }
-        },
-        methods: {
-            //刷新页面
-            freshPage(){
-                window.location.reload();
-            },
-            //将后端传回来的数据providedData转为渲染甘特图需要的标准数据
-            turnIntoStandardData(oldData){
-                // console.log(oldData);
-                //提取所有资源
-                this.categoryData=[];
-                for(let i=0;i<oldData.length;i++){
-                    //不存放重复资源名
-                    if(this.categoryData.indexOf(oldData[i].resourceName)===-1){
-                        this.categoryData.push(oldData[i].resourceName);
-                    }
-                }
-                console.log(this.categoryData);
-
-                //提取所有产品
-                this.productionsData=[];
-                for(let i=0;i<oldData.length;i++){
-                    //不存放重复产品名
-                    if(this.productionsData.indexOf(oldData[i].productionOrderNumber)===-1){
-                        this.productionsData.push(oldData[i].productionOrderNumber);
-                    }
-                }
-                console.log(this.productionsData);
-
-                //存放最终的标准数据中的productionList
-                let finalDataArr=[];
-                for(let i=0;i<this.productionsData.length;i++){
-                    //产品名
-                    let pName=this.productionsData[i];
-                    let jsonArr=[];
-                    for(let j=0;j<oldData.length;j++){
-                        if(oldData[j].productionOrderNumber===pName){
-                            //资源名
-                            let rName=oldData[j].resourceName;
-                            //资源名对应下标
-                            let rIndex=this.categoryData.indexOf(rName);
-                            //原始数据里最里面的数组
-                            let ptArr=oldData[j].productAndTime;
-                            for(let k=0;k<ptArr.length;k++){
-                                let sTime=ptArr[k].startTime;
-                                let eTime=ptArr[k].endTime;
-                                let tempJSON={
-                                    startTime: sTime,
-                                    endTime: eTime,
-                                    resourceIndex: rIndex
-                                };
-                                jsonArr.push(tempJSON);
-                            }
-                        }
-                    }
-                    let tempJSON={
-                        productionName: pName,
-                        timeList: jsonArr
-                    };
-                    console.log(tempJSON);
-                    finalDataArr.push(tempJSON);
-                }
-
-                // console.log("finalDataArr:");
-                // console.log(finalDataArr);
-
-                this.standardData=finalDataArr;
-            },
-            handleStandardData(data){
-                console.log("标准化数据为");
-                console.log(data);
-                //有多少产品就有多少颜色
-                let colors=this.colors;
-
-                let mySeries=[];
-
-                for(let i=0;i<data.length;i++){
-                    let pName=data[i].productionName;
-                    let tList=data[i].timeList;
-                    let dataArr=[];
-                    for(let j=0;j<tList.length;j++){
-                        let rIndex=tList[j].resourceIndex;
-                        let sTime=new Date(tList[j].startTime);
-                        let eTime=new Date(tList[j].endTime);
-                        let tempDataJSON={
-                                //童玲，产品1开始日期
-                                x: Date.UTC(sTime.getFullYear(), sTime.getMonth(), sTime.getDate(),sTime.getHours(),sTime.getMinutes(),sTime.getSeconds()),
-                                //童玲，产品1结束日期
-                                x2: Date.UTC(eTime.getFullYear(), eTime.getMonth(), eTime.getDate(),eTime.getHours(),eTime.getMinutes(),eTime.getSeconds()),
-                                // x2: Date.UTC(2008, 11, 5,13,0,0),
-                                //y: 0表示是童玲
-                                y: rIndex,
-                                color:colors[i],
-                        };
-                        dataArr.push(tempDataJSON);
-                    }
-                    let tempSeriesJSONs={
-                        name: pName,
-                        borderRadius: 0,
-                        pointWidth: 10,
-                        data:dataArr
-                    };
-                    mySeries.push(tempSeriesJSONs);
-                }
-
-
-                let chartO={
-                    chart: {
-                        type: 'xrange'
-                    },
-                    title: {
-                        text: '资源甘特图'
-                    },
-                    xAxis: {
-                        type: 'datetime',
-                            dateTimeLabelFormats: {
-                            day: '%Y-%m-%d %H:%M:%S',
-                        }
-                    },
-                    yAxis: {
-                        title: '资源名',
-                            categories:this.categoryData,
-                            // categories: ["5组-童玲 (5)","6组-李  倩（4）","7组-黄娣（4）"],
-                        // min: 0,
-                        // max: 2
-                    },
-                    legend: {
-                        align: 'left', //水平方向位置
-                        verticalAlign: 'top', //垂直方向位置
-                        x: 0, //距离x轴的距离
-                        y: 0,//距离Y轴的距离
-                        // labelFormatter: function() { return this.name+"xx"; },
-                        itemHiddenStyle: {
-                            color: 'white',
-                        },
-                        // itemHoverStyle: {
-                        //     color: 'black'
-                        // },
-                        // itemStyle: {
-                        //     color: ['grey'],
-                        // },
-                        // backgroundColor:'black',
-                        floating:true,
-                    },
-                    colors: this.colors,
-                    series: mySeries,
-                    plotOptions: {
-                        series: {
-                            events: {
-                                legendItemClick: function(e) {
-                                    /*
-                                    * 默认实现是显示或隐藏当前数据列，e 代表事件， this 为当前数据列
-                                     */
-                                    let index = this.index;
-
-                                    let series = this.chart.series;
-
-                                    console.log(index);
-                                    console.log(series);
-
-                                    console.log(series[index].visible);
-
-                                    if (series[index].visible) {
-
-                                        for (let i = 0; i < series.length; i++) {
-
-                                            let s = series[i];
-
-                                            i === index ? s.show() : s.hide();
-                                        }
-                                    }
-
-                                    return false;
-
-                                    // console.log(this);
-                                    // let series = mySeries;
-                                    // let count = 0;
-                                    // console.log(this.visible);
-                                    // this.setVisible(!this.visible);
-                                    // console.log(this.visible);
-                                    // for(let i=0;i<series.length;i++) {
-                                    //     // if(series[i].visible) {
-                                    //     console.log(series[i].visible);
-                                    //     // series[i].setVisible(series[i].visible);
-                                    //     console.log(series[i].visible);
-                                    //
-                                    //     // }
-                                    // }
-                                    // console.log(series);
-                                    // 计算图例点击事件执行后的数量
-                                    // if(this.visible) {
-                                    //     this.setVisible(false);
-                                    // } else {
-                                    //     this.setVisible(true);
-                                    // }
-                                }
-                            }
-                        }
-                    },
-                    // series: [{
-                    //     name: 'Production1',
-                    //     // pointPadding: 0,
-                    //     // groupPadding: 0,
-                    //     borderRadius: 0,
-                    //     pointWidth: 10,
-                    //     data: [
-                    //         {
-                    //             //童玲，产品1开始日期
-                    //             x: Date.UTC(2008, 11, 5,12,0,0),
-                    //             //童玲，产品1结束日期
-                    //             x2: Date.UTC(2008, 11, 5,13,0,0),
-                    //             //y: 0表示是童玲
-                    //             y: 0,
-                    //             color:'red',
-                    //         },
-                    //         {
-                    //             //童玲，产品1开始日期
-                    //             x: Date.UTC(2008, 11, 5,13,0,0),
-                    //             //童玲，产品1结束日期
-                    //             x2: Date.UTC(2008, 11, 5,14,0,0),
-                    //             //y: 0表示是童玲
-                    //             y: 0,
-                    //             color:'red',
-                    //         },
-                    //         {
-                    //             //童玲，产品1开始日期
-                    //             x: Date.UTC(2008, 11, 5,14,0,0),
-                    //             //童玲，产品1开始日期
-                    //             x2: Date.UTC(2008, 11, 5,15,0,0),
-                    //             //y: 0表示是童玲
-                    //             y: 0,
-                    //             color:'red',
-                    //         },
-                    //     ]
-                    // },
-                    //     {
-                    //         name: '产品2',
-                    //         // pointPadding: 0,
-                    //         // groupPadding: 0,
-                    //         borderRadius: 0,
-                    //         pointWidth: 10,
-                    //         data: [{
-                    //             x: Date.UTC(2008, 11, 2,12,0,0),
-                    //             x2: Date.UTC(2008, 11, 3,12,0,0),
-                    //             y: 0,
-                    //             color:'blue'
-                    //         }, {
-                    //             x: Date.UTC(2008, 11, 2,12,0,0),
-                    //             x2: Date.UTC(2008, 11, 5,12,0,0),
-                    //             y: 1,
-                    //             color:'blue'
-                    //         }, {
-                    //             x: Date.UTC(2008, 11, 8,12,0,0),
-                    //             x2: Date.UTC(2008, 11, 9,12,0,0),
-                    //             y: 2,
-                    //             color:colors[0]
-                    //         }, {
-                    //             x: Date.UTC(2008, 11, 9,12,0,0),
-                    //             x2: Date.UTC(2008, 11, 19,12,0,0),
-                    //             y: 1,
-                    //             color:'blue'
-                    //         }, {
-                    //             x: Date.UTC(2008, 11, 10,2,0,0),
-                    //             x2: Date.UTC(year, month, day,hour,minute,second),
-                    //             y: 2,
-                    //             color:'green'
-                    //
-                    //         }]
-                    //     }
-                    // ]
-                };
-                this.chartOptions=chartO;
-
-                // console.log(Highcharts.getOptions());
-            },
-            //随机生成很多颜色
-            createdRandomManyColors(){
-                let i = 0;
-                let str = "#";
-                let random = 0;
-                let aryNum = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
-
-                for(i = 0; i < 6; i++)
-                {
-                    random = parseInt(Math.random() * 16);
-
-                    str += aryNum[random];
-                }
-                //colors里没有重复的颜色
-                if(this.colors.indexOf(str)===-1){
-                    this.colors.push(str);
-                }
-            },
-            renderHighchart(H){
-                let defaultPlotOptions = H.getOptions().plotOptions,
-                    columnType = H.seriesTypes.column,
-                    each = H.each,
-                    extendClass = H.extendClass,
-                    Point = H.Point;
-                defaultPlotOptions.xrange = H.merge(defaultPlotOptions.column, {
-                    tooltip: {
-                        pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.yCategory}</b><br/>'
-                    }
-                });
-                H.seriesTypes.xrange = H.extendClass(columnType, {
-                    pointClass: extendClass(Point, {
-                        // Add x2 and yCategory to the available properties for tooltip formats
-                        getLabelConfig: function () {
-                            let cfg = Point.prototype.getLabelConfig.call(this);
-                            cfg.x2 = this.x2;
-                            cfg.yCategory = this.yCategory = this.series.yAxis.categories && this.series.yAxis.categories[this.y];
-                            return cfg;
-                        }
-                    }),
-                    type: 'xrange',
-                    parallelArrays: ['x', 'x2', 'y'],
-                    requireSorting: false,
-                    animate: H.seriesTypes.line.prototype.animate,
-                    /**
-                     * Borrow the column series metrics, but with swapped axes. This gives free access
-                     * to features like groupPadding, grouping, pointWidth etc.
-                     */
-                    getColumnMetrics: function () {
-                        let metrics,
-                            chart = this.chart;
-                        function swapAxes() {
-                            each(chart.series, function (s) {
-                                let xAxis = s.xAxis;
-                                s.xAxis = s.yAxis;
-                                s.yAxis = xAxis;
-                            });
-                        }
-                        swapAxes();
-                        this.yAxis.closestPointRange = 1;
-                        metrics = columnType.prototype.getColumnMetrics.call(this);
-                        swapAxes();
-                        return metrics;
-                    },
-                    translate: function () {
-                        columnType.prototype.translate.apply(this, arguments);
-                        let series = this,
-                            xAxis = series.xAxis,
-                            metrics = series.columnMetrics;
-                        H.each(series.points, function (point) {
-                            let barWidth = xAxis.translate(H.pick(point.x2, point.x + (point.len || 0))) - point.plotX;
-                            point.shapeArgs = {
-                                x: point.plotX,
-                                y: point.plotY + metrics.offset,
-                                width: barWidth,
-                                height: metrics.width
-                            };
-                            point.tooltipPos[0] += barWidth / 2;
-                            point.tooltipPos[1] -= metrics.width / 2;
-                        });
-                    }
-                });
-                /**
-                 * Max x2 should be considered in xAxis extremes
-                 */
-                // H.wrap(H.Axis.prototype, 'getSeriesExtremes', function (proceed) {
-                //     let axis = this,
-                //         dataMax = Number.MIN_VALUE;
-                //     proceed.call(this);
-                //     if (this.isXAxis) {
-                //         each(this.series, function (series) {
-                //             each(series.x2Data || [], function (val) {
-                //                 if (val > dataMax) {
-                //                     dataMax = val;
-                //                 }
-                //             });
-                //         });
-                //         if (dataMax > Number.MIN_VALUE) {
-                //             axis.dataMax = dataMax;
-                //         }
-                //     }
-                // });
-            }
+                    ]
+            };
         },
         mounted(){
-            //随机生成colorNum个颜色
-            let colorNum=1000;
-            this.colors=[];
-            for(let i=0;i<colorNum;i++){
-                this.createdRandomManyColors();
-            }
-            // console.log("资源甘特图get请求");
-            /**
+            console.log("资源甘特图get请求");
             this.$axios.get('/resource/gantt/running',{
                 params:{
                     startDate: "2008/11/05 12:00:00",
                     endDate: "2008/11/07 12:00:00"
                 }
             }).then(response => {
-                // console.log("GET请求发出了");
+                console.log("GET请求发出了");
                 if (response.data) {
-                    // console.log("page7资源甘特图数据:");
-                    // console.log(response.data.data);
-                    //res应该是providedData格式
+                    console.log("资源甘特图数据:");
+                    console.log(response.data.data);
                     let res=response.data.data;
                     //把数据放进图里
                     for(let i=0;i<res.length;i++){
@@ -738,19 +239,543 @@
                 alert('资源甘特图数据请求失败');
             })
 
-             **/
-            //将从后端传回来的数据标准化
-            this.turnIntoStandardData(this.providedData);
-            //将已经标准化的数据渲染进甘特图里
-            this.handleStandardData(this.standardData);
-            // Highcharts.setOptions(this.chartOptions);
-            // this.renderHighchart(this.hcInstance);
+            this.getData();
         },
-    }
+        methods: {
+            getData(){
+                let data1={
+                    product:this.productData,
+                    yAxis:this.yAxisData,
+                    series:[
+                        // {
+                        //     name: "产品1",
+                        //     type: "bar",
+                        //     stack: "产品1",
+                        //     label: {
+                        //         normal: {
+                        //             show: true,
+                        //             color: "#000",
+                        //             position: "right",
+                        //             formatter: function(params) {
+                        //                 return params.seriesName
+                        //             }
+                        //         }
+                        //     },
+                        //     itemStyle: {
+                        //         normal: {
+                        //             color: "skyblue",
+                        //             borderColor: "#fff",
+                        //             borderWidth: 2
+                        //         }
+                        //     },
+                        //     zlevel: -1,
+                        //     data: [
+                        //         //产品1的结束时间
+                        //         //line1的产品1的结束时间
+                        //         new Date("2020-10-17"),
+                        //         new Date("2020-10-30")
+                        //     ]
+                        // },
+                        // {
+                        //     name: "产品1",
+                        //     type: "bar",
+                        //     stack: "产品1",
+                        //     itemStyle: {
+                        //         normal: {
+                        //             color: "white",
+                        //         }
+                        //     },
+                        //     zlevel: -1,
+                        //     z: 3,
+                        //     data: [
+                        //         //产品1的起始时间
+                        //         new Date("2020-10-03"),
+                        //         new Date("2020-10-14")
+                        //
+                        //     ]
+                        // },
+                        //==================================================================
+                        //-------------
+                        {
+                            name: "产品1",
+                            type: "bar",
+                            stack: "产品1",
+                            label: {
+                                normal: {
+                                    show: true,
+                                    color: "#000",
+                                    position: "right",
+                                    formatter: function(params) {
+                                        return params.seriesName
+                                    }
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: "skyblue",
+                                    borderColor: "#fff",
+                                    borderWidth: 2
+                                }
+                            },
+                            zlevel: -1,
+                            data: [
+                                //产品1的结束时间
+                                //line1的产品1的结束时间
+                                new Date("2020-10-01"),
+                                //line2的产品1的结束时间
+                                new Date("2020-03-14"),
+                                //李四的产品1的结束时间
+                                new Date("2020-05-01")
+                            ]
+                        },
+                        {
+                            name: "产品1",
+                            type: "bar",
+                            stack: "产品1",
+                            itemStyle: {
+                                normal: {
+                                    color: "white",
+                                }
+                            },
+                            zlevel: -1,
+                            z: 3,
+                            data: [
+                                //产品1的起始时间
+                                new Date("2020-01-01"),
+                                new Date("2020-01-01"),
+                                new Date("2020-03-15")]
+                        },
+                        {
+                            name: "产品2",
+                            type: "bar",
+                            stack: "产品2",
+                            label: {
+                                normal: {
+                                    show: true,
+                                    color: "#000",
+                                    position: "right",
+                                    formatter: function(params) {
+                                        return params.seriesName
+                                    }
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: "green",
+                                    borderColor: "#fff",
+                                    borderWidth: 2
+                                }
+                            },
+                            zlevel: -1,
+                            data: [
+                                new Date("2020-01-10"),
+                                new Date("2020-01-10"),
+                                new Date("2020-03-30")]
+                        },
+                        {
+                            name: "产品2",
+                            type: "bar",
+                            stack: "产品2",
+                            itemStyle: {
+                                normal: {
+                                    color: "white",
+                                }
+                            },
+                            zlevel: -1,
+                            z: 3,
+                            data: [
+                                new Date("2020-01-02"),
+                                new Date("2020-01-02"),
+                                new Date("2020-03-16")]
+                        },
+                        {
+                            name: "产品3",
+                            type: "bar",
+                            stack: "产品3",
+                            label: {
+                                normal: {
+                                    show: true,
+                                    color: "#000",
+                                    position: "right",
+                                    formatter: function(params) {
+                                        return params.seriesName
+                                    }
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: "red",
+                                    borderColor: "#fff",
+                                    borderWidth: 2
+                                }
+                            },
+                            zlevel: -1,
+                            data: [
+                                new Date("2020-02-20"),
+                                new Date("2020-01-20"),
+                                new Date("2020-04-10")]
+                        },
+                        {
+                            name: "产品3",
+                            type: "bar",
+                            stack: "产品3",
+                            itemStyle: {
+                                normal: {
+                                    color: "white"
+                                }
+                            },
+                            zlevel: -1,
+                            z: 3,
+                            data: [
+                                new Date("2020-02-01"),
+                                new Date("2020-01-12"),
+                                new Date("2020-04-01")]
+                        },
+                        {
+                            name: "产品4",
+                            type: "bar",
+                            stack: "产品4",
+                            label: {
+                                normal: {
+                                    show: true,
+                                    color: "#000",
+                                    position: "right",
+                                    formatter: function(params) {
+                                        return params.seriesName
+                                    }
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: "brown",
+                                    borderColor: "#fff",
+                                    borderWidth: 2
+                                }
+                            },
+                            zlevel: -1,
+                            data: [
+                                //终止时间
+                                new Date("2020-03-09"),
+                                new Date("2020-01-25"),
+                                new Date("2020-04-20")]
+                        },
+                        {
+                            name: "产品4",
+                            type: "bar",
+                            stack: "产品4",
+                            itemStyle: {
+                                normal: {
+                                    color: "white",
+                                }
+                            },
+                            zlevel: -1,
+                            z: 3,
+                            data: [
+                                //起始时间，还要可以按照小时
+                                new Date("2020-02-25"),
+                                new Date("2020-01-21"),
+                                new Date("2020-04-11")]
+                        },
+                        {
+                            name: "产品5",
+                            type: "bar",
+                            stack: "产品5",
+                            label: {
+                                normal: {
+                                    show: true,
+                                    color: "#000",
+                                    position: "right",
+                                    formatter: function(params) {
+                                        return params.seriesName
+                                    }
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: "yellow",
+                                    borderColor: "#fff",
+                                    borderWidth: 2
+                                }
+                            },
+                            zlevel: -1,
+                            data: [
+                                new Date("2020-03-12"),
+                                new Date("2020-02-15"),
+                                new Date("2020-04-30")]
+                        },
+                        {
+                            name: "产品5",
+                            type: "bar",
+                            stack: "产品5",
+                            itemStyle: {
+                                normal: {
+                                    color: "white",
+                                }
+                            },
+                            zlevel: -1,
+                            z: 3,
+                            data: [
+                                new Date("2020-03-10"),
+                                new Date("2020-01-26"),
+                                new Date("2020-04-21")]
+                        },
+                        {
+                            name: "产品6",
+                            type: "bar",
+                            stack: "产品6",
+                            label: {
+                                normal: {
+                                    show: true,
+                                    color: "#000",
+                                    position: "right",
+                                    formatter: function(params) {
+                                        return params.seriesName
+                                    }
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: 'orange',
+                                    borderColor: "#fff",
+                                    borderWidth: 2
+                                }
+                            },
+                            zlevel: -1,
+                            data: [
+                                new Date("2020-03-30"),
+                                new Date("2020-03-13"),
+                                new Date("2020-05-01")]
+                        },
+                        {
+                            name: "产品6",
+                            type: "bar",
+                            stack: "产品6",
+                            itemStyle: {
+                                normal: {
+                                    color: 'white',
+                                }
+                            },
+                            zlevel: -1,
+                            z: 3,
+                            data: [
+                                new Date("2020-03-15"),
+                                new Date("2020-02-16"),
+                                new Date("2020-04-30")]
+                        },
+                    ]
+                };
+                //上面的小方块的数组、y轴的数组、产品的series数组
+                this.drawLine(data1);
+            },
+            drawLine(data1) {
+                console.log(data1);
+                let Gantt=this.$echarts.init(document.getElementById('Gantt'));
+                Gantt.setOption({
+                    backgroundColor: "#fff",
+                    title: {
+                        text: "资源甘特图",
+                        padding: 20,
+                        textStyle: {
+                            fontSize: 17,
+                            fontWeight: "bolder",
+                            color: "#333"
+                        },
+                        subtextStyle: {
+                            fontSize: 13,
+                            fontWeight: "bolder"
+                        }
+                    },
+                    legend: {
+                        data: data1.product,
+                        align: "right",
+                        right: 80,
+                        top: 50,
+                    },
+                    grid: {
+                        containLabel: true,
+                        show: false,
+                        right: 130,
+                        left: 40,
+                        bottom: 40,
+                        top: 90
+                    },
+                    xAxis: {
+                        type: "time",
+                        axisLabel: {
+                            "show": true,
+                            "interval": 0
+                        }
+                    },
+                    yAxis: {
+                        axisLabel: {
+                            show: true,
+                            interval: 0,
+                            formatter: function(value) {
+                                let last = "";
+                                let max = 5;
+                                let len = value.length;
+                                let hang = Math.ceil(len / max);
+                                if (hang > 1) {
+                                    for (let i = 0; i < hang; i++) {
+                                        let start = i * max;
+                                        let end = start + max;
+                                        let temp = value.substring(start, end) + "\n";
+                                        last += temp; //凭借最终的字符串
+                                    }
+                                    return last;
+                                } else {
+                                    return value;
+                                }
+                            }
+                        },
+                        data: data1.yAxis
+                    },
+                    tooltip: {
+                        trigger: "axis",
+                        formatter: function(params) {
+                            let res = "";
+                            let name = "";
+                            let start0 = "";
+                            let start = "";
+                            let end0 = "";
+                            let end = "";
+                            for (let i in params) {
+                                let k = i % 2;
+                                if (!k) { //偶数
+                                    start0 = params[i].data;
+                                    // console.log(start0)
+                                    start = start0.getFullYear() + "-" + (start0.getMonth() + 1) + "-" + start0.getDate();
+                                }
+                                if (k) { //奇数
+                                    name = params[i].seriesName;
+                                    end0 = params[i].data;
+                                    end = end0.getFullYear() + "-" + (end0.getMonth() + 1) + "-" + end0.getDate();
+                                    res += name + " : " + end + "~" + start + "</br>";
+
+                                }
+                            }
+                            return res;
+                        }
+                    },
+                    series: data1.series
+
+                });
+
+                console.log("qqq");
+                //点了图例才会调用以下方法
+                Gantt.on('legendselectchanged', function(obj) {
+                    //所有的图例的被点击情况
+                    let selected = obj.selected;
+                    //点的图例的名字
+                    let name = obj.name; // current clicked one
+                    // if all legends are selected, only enable clicked legend, others are toggled to false.
+                    // other situation, do what is default.
+                    // console.log("name:");
+                    // console.log(name);
+                    // console.log("selected:");
+                    // console.log(selected);
+
+                    //一个都没选，就是true
+                    let allIsFalse=true;
+                    let setLegend={};
+                    //有一个图例被选中了，就设置allIsFalse为false
+                    for (let item in selected) {
+                        if (selected[item]) {
+                            allIsFalse=false;
+                        }
+                    }
+                    //一个图例没都选，就默认选全部图例
+                    if(allIsFalse){
+                        for(let item in selected){
+                            setLegend[item]=true;
+                            Gantt.setOption({
+                                legend: {
+                                    selected:setLegend
+                                }
+                            })
+                        }
+                    }
+
+                    //如果点击了图例
+                    if (selected !== undefined) {
+
+                        if ((isOnlyClickedOneIsUnSelected(name, selected))) {
+                            // all legend are selected except current clicked one
+                            onlyEnableCurrentSelectedLegend(name, selected, Gantt);
+                        }
+                    }
+
+                    function isOnlyClickedOneIsUnSelected(name, selected){
+                        // console.log('onlyClickOne');
+                        let unSelectedCount = 0;
+                        for ( let item in selected) {
+                            // console.log("item:");
+                            // console.log(item);
+                            // console.log("hasOwnProperty");
+                            // console.log(Object.prototype.hasOwnProperty.call(selected, item));
+                            // console.log("================");
+                            //例如，foo.hasOwnProperty("bar") 应该替换为 Object.prototype.hasOwnProperty.call(foo, "bar")。
+                            // if (!selected.hasOwnProperty(item)) {
+                            //     continue;
+                            // }
+
+                            //如果，就跳出循环，从下一个item开始
+                            // if (!Object.prototype.hasOwnProperty.call(selected, item)) {
+                            //     continue;
+                            // }
+
+                            if (selected[item] === false) {
+                                ++unSelectedCount;
+                            }
+                        }
+                        // console.log("~~~~~~~~~");
+                        // console.log(unSelectedCount);
+                        //只点击了name的图例
+                        return unSelectedCount===1 && selected[name] === false;
+                    }
+                    function onlyEnableCurrentSelectedLegend(name, selected, echartInstance) {
+                        // console.log("onlyEnable");
+                        // console.log(name);
+                        // console.log(selected);
+                        let legend = {};
+                        for (let item in selected) {
+                            if (selected[item]) {
+                                legend[item]=false;
+                                continue;
+                            }
+
+                            legend[item]=true;
+
+                            // console.log("&&&&&&&&&&&&&");
+                            // console.log(legend);
+                            // if (!Object.prototype.hasOwnProperty.call(selected, item)) {
+                            //     continue;
+                            // }
+                            //只显示选中的图例
+                            // legend.push({'name': item});
+                            //
+                            //
+                            // echartInstance.dispatchAction({
+                            //     type: 'legendToggleSelect',
+                            //     batch: legend
+                            // });
+                        }
+                        echartInstance.setOption({
+                            legend: {
+                                selected:legend
+                            }
+                        })
+                    }
+                });
+
+
+            },
+        },
+
+    };
+
 </script>
 
-<style scoped>
-    #high{
+<style lang="less" scoped>
 
-    }
 </style>
