@@ -9,13 +9,13 @@
                 <!--              设备总负载-->
                 <h4>设备总负载</h4>
                 <h5>2020年10月1-7日</h5>
-                <el-progress type="circle" :percentage="25"></el-progress>
+                <el-progress type="circle" :percentage=percentages></el-progress>
             </div>
             <div class="staff item">
         <!--                人员总负载-->
                 <h4>人员总负载</h4>
                 <h5>2020年10月1-7日</h5>
-                <el-progress type="circle" :percentage="75"></el-progress>
+                <el-progress type="circle" :percentage=percentages1></el-progress>
             </div>
         </div>
         <div class="date">
@@ -364,6 +364,8 @@
                     //     resourceName: "6组-张三 (6)"
                     // }
                 ],
+                percentages:0,
+                percentages1:0,
                 currentYear: 1970, // 年份
                 currentMonth: 1, // 月份
                 currentDay: 1, // 日期
@@ -413,6 +415,56 @@
             this.initData(null);
         },
         methods: {
+            testAxiosGET1(sDate,eDate) {
+                let dateS=moment(sDate).format("YYYY-MM-DD");
+                let dateE=moment(eDate).format("YYYY-MM-DD");
+
+                let year1=(dateS.toString()).substring(0,4);
+                let month1=(dateS.toString()).substring(5,7);
+                let day1=(dateS.toString()).substring(8,10);
+                let date1=year1+"/"+month1+"/"+day1;
+
+                let year2=(dateE.toString()).substring(0,4);
+                let month2=(dateE.toString()).substring(5,7);
+                let day2=(dateE.toString()).substring(8,10);
+                let date2=year2+"/"+month2+"/"+day2;
+
+                console.log(date1);
+                console.log(date2);
+
+                this.$axios.get("/rate/load/machine?startDate="+date1+"&endDate="+date2).then(response => {
+                    console.log("jiqifuzai GET请求发出了");
+                    if (response.data) {
+                        console.log(response.data.data);
+                        this.GETcontent=response.data.data;
+                        let data=this.GETcontent;
+                        if(isNaN(data))
+                            this.percentages=0;
+                        else{
+                            this.percentages= parseFloat((data*100).toString()).toFixed(2);
+                        }
+                    }
+                }).catch(err => {
+                    alert('请求失败')
+                })
+
+                this.$axios.get("/rate/load/people?startDate="+date1+"&endDate="+date2).then(response => {
+                    console.log("jiqifuzai GET请求发出了");
+                    if (response.data) {
+                        console.log(response.data.data);
+                        this.GETcontent=response.data.data;
+                        let data=this.GETcontent;
+                        if(isNaN(data))
+                            this.percentages1=0;
+                        else{
+                            this.percentages1= parseFloat((data*100).toString()).toFixed(2);
+                        }
+                    }
+                }).catch(err => {
+                    alert('请求失败')
+                })
+
+            },
             increase() {
                 this.percentage += 10;
                 if (this.percentage > 100) {
@@ -457,6 +509,7 @@
                 let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 12:00:00";
 
                 //向后端调用方法
+                this.testAxiosGET1(sDate,eDate);
                 console.log("资源甘特图 axios get");
                 this.$axios.get('/resource/gantt/loading',{
                     params:{
@@ -478,6 +531,7 @@
                 }).catch(err => {
                     alert('请求资源负载图失败');
                 });
+
 
 
                 const index = _.findIndex(that.days, function(o) {
@@ -643,6 +697,8 @@
 
             let sDate =this.days[0];
             let eDate =this.days[6];
+
+            this.testAxiosGET1(sDate,eDate);
 
             let sDateYear=sDate.getFullYear();
             let sDateMonth=sDate.getMonth()+1;
