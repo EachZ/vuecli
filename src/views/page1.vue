@@ -4,7 +4,7 @@
             <!--            按期交货率-->
             <h4>按期交货率</h4>
             <h5>2020年10月1日之前</h5>
-            <a-progress type="circle" :percent="25" />
+            <el-progress type="circle" :percentage=percentages></el-progress>
 
         </div>
         <br/>
@@ -50,6 +50,7 @@
         },
         data() {
             return {
+                percentages:50,
                 GETcontent :'',
                 POSTcontent:'',
                 currentYear: 1970, // 年份
@@ -129,6 +130,27 @@
             this.initData(null);
         },
         methods: {
+            testAxiosGET1() {
+                let year1=(this.newDate.toString()).substring(0,4);
+                let month1=(this.newDate.toString()).substring(5,7);
+                let day1=(this.newDate.toString()).substring(8,10);
+                let date1=year1+"/"+month1+"/"+day1;
+                this.$axios.get("/rate/ontimeDelivery?currentDate="+date1).then(response => {
+                    console.log("GET请求发出了");
+                    if (response.data) {
+                        console.log(response.data.data);
+                        this.GETcontent=response.data.data;
+                        let data=this.GETcontent;
+                        if(isNaN(data))
+                            this.percentages=100;
+                        else{
+                            this.percentages= parseFloat((data*100).toString()).toFixed(2);
+                        }
+                    }
+                }).catch(err => {
+                    alert('请求失败')
+                })
+            },
             testAxiosGET() {
                 // 由于 main.js 里全局定义的 axios,此处直接使用 $axios 即可。
                 // 由于 main.js 里定义了每个请求前缀，此处的 / 即为 /api/，
@@ -227,6 +249,7 @@
                 })
             },
             getData(){
+                this.testAxiosGET1();
                 this.testAxiosGET();
             },
             drawLine(data1) {
@@ -545,6 +568,7 @@
                 console.log("选的时间");
                 console.log(this.newDate);
                 this.testAxiosGET();
+                this.testAxiosGET1();
             },
             // initData(cur) {
             //     let date = "";

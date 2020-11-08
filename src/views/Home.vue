@@ -9,13 +9,13 @@
                 <!--              设备总负载-->
                 <h4>设备总负载</h4>
                 <h5>2020年10月1-7日</h5>
-                <el-progress type="circle" :percentage="25"></el-progress>
+                <el-progress type="circle" :percentage=percentages1></el-progress>
             </div>
             <div class="staff item">
         <!--                人员总负载-->
                 <h4>人员总负载</h4>
                 <h5>2020年10月1-7日</h5>
-                <el-progress type="circle" :percentage="75"></el-progress>
+                <el-progress type="circle" :percentage=percentages2></el-progress>
             </div>
         </div>
         <div class="date">
@@ -296,6 +296,8 @@
         data() {
             return {
                 text: '',
+                percentages1:30,
+                percentages2:50,
                 loadData:[
                     {
                         loadRate: [
@@ -410,6 +412,7 @@
             }
         },
         mounted() {
+            // this.testAxiosGET1();
             const index = _.findIndex(this.days, function(o) {
                 // console.log('o: ', o.getDate());
                 // console.log('new Date().getDate(): ', new Date().getDate());
@@ -423,6 +426,27 @@
             this.initData(null);
         },
         methods: {
+            testAxiosGET1() {
+                let year1=(this.newDate.toString()).substring(0,4);
+                let month1=(this.newDate.toString()).substring(5,7);
+                let day1=(this.newDate.toString()).substring(8,10);
+                let date1=year1+"/"+month1+"/"+day1;
+                this.$axios.get("/rate/ontimeDelivery?currentDate="+date1).then(response => {
+                    console.log("GET请求发出了");
+                    if (response.data) {
+                        console.log(response.data.data);
+                        this.GETcontent=response.data.data;
+                        let data=this.GETcontent;
+                        if(isNaN(data))
+                            this.percentages=100;
+                        else{
+                            this.percentages= parseFloat((data*100).toString()).toFixed(2);
+                        }
+                    }
+                }).catch(err => {
+                    alert('请求失败')
+                })
+            },
             increase() {
                 this.percentage += 10;
                 if (this.percentage > 100) {
