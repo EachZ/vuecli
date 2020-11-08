@@ -482,9 +482,9 @@
                         this.GETcontent=response.data.data;
                         let data=this.GETcontent;
                         if(isNaN(data))
-                            this.percentages=0;
+                            this.percentages=Number(0);
                         else{
-                            this.percentages= parseFloat((data*100).toString()).toFixed(2);
+                            this.percentages= Number(parseFloat((data*100).toString()).toFixed(2));
                         }
                     }
                 }).catch(err => {
@@ -498,9 +498,9 @@
                         this.GETcontent=response.data.data;
                         let data=this.GETcontent;
                         if(isNaN(data))
-                            this.percentages1=0;
+                            this.percentages1=Number(0);
                         else{
-                            this.percentages1= parseFloat((data*100).toString()).toFixed(2);
+                            this.percentages1= Number(parseFloat((data*100).toString()).toFixed(2));
                         }
                     }
                 }).catch(err => {

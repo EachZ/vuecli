@@ -389,7 +389,7 @@
                         productionName: pName,
                         timeList: jsonArr
                     };
-                    console.log(tempJSON);
+                    // console.log(tempJSON);
                     finalDataArr.push(tempJSON);
                 }
 
@@ -429,7 +429,7 @@
                     let tempSeriesJSONs={
                         name: pName,
                         borderRadius: 0,
-                        pointWidth: 5,
+                        pointWidth: 10,
                         data:dataArr
                     };
                     mySeries.push(tempSeriesJSONs);
@@ -439,6 +439,11 @@
                 let chartO={
                     chart: {
                         type: 'xrange',
+                        height:2000,
+                        width:1250
+                    },
+                    credits:{
+                        enabled:false
                     },
                     title: {
                         text: '资源甘特图'
@@ -454,10 +459,10 @@
                         categories:this.categoryData,
                         labels:{
                             step:1,
-                            rotation: -45,
+                            // rotation: -45,
                             style: {
                                 // color: '#19a0f5',//颜色bai
-                                fontSize:'4px'  //字体du
+                                fontSize:'15px',  //字体du
                             }
                         },
                         // gridLineWidth:10,
@@ -756,6 +761,7 @@
 
 <style scoped>
     #high{
-        wdith:100%
+        width:100%;
+
     }
 </style>
