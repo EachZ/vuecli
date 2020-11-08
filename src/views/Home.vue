@@ -53,7 +53,7 @@
             </div>
             <div class="5">
                 <div style="float:left;width:100px; height:40px;margin:3px 10px 0 10px;background-color:red; position:relative;border-style:solid;border-width:1px;">
-                    <div style="left:20px;top:10px;position:absolute"><span> > 100%</span></div>
+                    <div style="left:20px;top:10px;position:absolute"><span> >= 100%</span></div>
                     <div style="height:10px;width:78px;position:absolute;bottom:0"></div>
                 </div>
             </div>
