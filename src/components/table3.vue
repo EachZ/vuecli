@@ -8,7 +8,7 @@
             <a-table :pagination="{defaultPageSize: 999, hideOnSinglePage: true }"
                      :columns="columns"
                      slot="expandedRowRender" slot-scope="parentData"
-                     :dataSource="parentData.groupItem" :rowKey="item => item.id"
+                     :dataSource="parentData.productAndTime" :rowKey="item => item.id"
                      :locale="{emptyText: '该类别 暂无节点'}"
                      :rowClassName="rowClassName"
             >
@@ -26,7 +26,7 @@
                     {
                         resourceName: '张三',
                         resourceId: '1',
-                        groupItem: [
+                        productAndTime: [
                             {
                                 id: '11',
                                 secondaryProductionNumber: 'po',
@@ -59,7 +59,7 @@
                     {
                         resourceName: '李四',
                         resourceId: '2',
-                        groupItem: [
+                        productAndTime: [
                             {
                                 id: '21',
                                 secondaryProductionNumber: 'po',
@@ -116,7 +116,7 @@
                         title: '结束时间',
                         dataIndex: 'endTime',
                     },{
-                        title: 'materialCoding',
+                        title: '材料编码',
                         dataIndex: 'materialCoding'
                     }
                 ],
@@ -135,16 +135,15 @@
             console.log("生产单get请求");
             this.$axios.get('/resource/gantt/running',{
                 params:{
-                    startDate: "2008-11-07",
-                    endDate: "2008-11-09"
+                    startDate: "2008/11/05 12:00:00",
+                    endDate: "2008/11/07 12:00:00"
                 }
             }).then(response => {
-                console.log("GET请求发出了");
+                // console.log("GET请求发出了");
                 if (response.data) {
                     console.log("生产单数据:");
-                    console.log(response.data);
-                    this.dataGroups=response.data.data;
                     console.log(response.data.data);
+                    this.dataGroups=response.data.data;
                 }
             }).catch(err => {
                 alert('生产单请求失败')

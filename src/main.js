@@ -23,6 +23,14 @@ Vue.prototype.$axios=axios;
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
 
+//设置全局highcharts
+import HighchartsVue from 'highcharts-vue'
+Vue.use(HighchartsVue);
+import Highcharts from 'highcharts'
+import xrange from 'highcharts/modules/xrange'
+xrange(Highcharts);
+
+
 new Vue({
   router,
   render: h => h(App)

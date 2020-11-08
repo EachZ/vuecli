@@ -18,23 +18,222 @@
         // components: {Gantt},
         data() {
             return {
+                //各种图例的颜色
+                colorData:["red","yellow","green","blue","skyblue","black","pink","purple"],
+                //产品，各种图例
+                productData:["产品1", "产品2", "产品3", "产品4", "产品5", "产品6"],
+                //资源（设备和人员）
+                yAxisData:["line1", "line2", "李四"],
+                //装【【设备数】个】起始时间,按顺序来
+                startDateData:[],
+                //装【【设备数】个】结束时间,按顺序来
+                endDateData:[],
 
+                //后端提供的json数据
+                providedData:
+                    [
+                        {
+                            productionOrderNumber: "Production1",
+                            resourceName: "5组-童玲 (5)",
+                            resourceId: 1,
+                            productAndTime: [
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-05 12:00:00.0",
+                                    materialCoding: "3209248",
+                                    startTime: "2008-11-05 12:00:00",
+                                    endTime: "2008-11-05 13:00:00",
+                                    orderId: 36,
+                                    orderNumber: 764098
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-05 13:00:00.0",
+                                    materialCoding: "3209248",
+                                    startTime: "2008-11-05 13:00:00",
+                                    endTime: "2008-11-05 14:00:00",
+                                    orderId: 36,
+                                    orderNumber: 764098
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-05 14:00:00.0",
+                                    materialCoding: "3209248",
+                                    startTime: "2008-11-05 14:00:00",
+                                    endTime: "2008-11-05 15:00:00",
+                                    orderId: 36,
+                                    orderNumber: 764098
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-05 15:00:00.0",
+                                    materialCoding: "3209248",
+                                    startTime: "2008-11-05 15:00:00",
+                                    endTime: "2008-11-05 16:00:00",
+                                    orderId: 36,
+                                    orderNumber: 764098
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-05 16:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 16:00:00",
+                                    endTime: "2008-11-05 17:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-05 17:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 17:00:00",
+                                    endTime: "2008-11-05 18:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-05 18:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 18:00:00",
+                                    endTime: "2008-11-05 19:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-06 07:00:00.0",
+                                    materialCoding: "3209248",
+                                    startTime: "2008-11-06 07:00:00",
+                                    endTime: "2008-11-06 08:00:00",
+                                    orderId: 75,
+                                    orderNumber: 762485
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-06 08:00:00.0",
+                                    materialCoding: "3209248",
+                                    startTime: "2008-11-06 08:00:00",
+                                    endTime: "2008-11-06 09:00:00",
+                                    orderId: 75,
+                                    orderNumber: 762485
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-06 09:00:00.0",
+                                    materialCoding: "3209248",
+                                    startTime: "2008-11-06 09:00:00",
+                                    endTime: "2008-11-06 10:00:00",
+                                    orderId: 75,
+                                    orderNumber: 762485
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-06 10:00:00.0",
+                                    materialCoding: "3209248",
+                                    startTime: "2008-11-06 10:00:00",
+                                    endTime: "2008-11-06 11:00:00",
+                                    orderId: 75,
+                                    orderNumber: 762485
+                                },
+                                {
+                                    secondaryProductionNumber: "production_1_2008-11-06 11:00:00.0",
+                                    materialCoding: "3209248",
+                                    startTime: "2008-11-06 11:00:00",
+                                    endTime: "2008-11-06 12:00:00",
+                                    orderId: 75,
+                                    orderNumber: 762485
+                                }
+                            ]
+                        },
+                        {
+                            productionOrderNumber: "Production2",
+                            resourceName: "6组-李  倩（4）",
+                            resourceId: 2,
+                            productAndTime: [
+                                {
+                                    secondaryProductionNumber: "production_2_2008-11-05 19:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 19:00:00",
+                                    endTime: "2008-11-05 20:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                },
+                                {
+                                    secondaryProductionNumber: "production_2_2008-11-05 20:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 20:00:00",
+                                    endTime: "2008-11-05 21:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                },
+                                {
+                                    secondaryProductionNumber: "production_2_2008-11-05 21:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 21:00:00",
+                                    endTime: "2008-11-05 22:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                },
+                                {
+                                    secondaryProductionNumber: "production_2_2008-11-05 22:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 22:00:00",
+                                    endTime: "2008-11-05 23:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                },
+                                {
+                                    secondaryProductionNumber: "production_2_2008-11-05 23:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 23:00:00",
+                                    endTime: "2008-11-06 00:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                }
+                            ]
+                        },
+                        {
+                            productionOrderNumber: "Production3",
+                            resourceName: "7组-黄娣（4）",
+                            resourceId: 3,
+                            productAndTime: [
+                                {
+                                    secondaryProductionNumber: "production_3_2008-11-05 16:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 16:00:00",
+                                    endTime: "2008-11-05 17:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                },
+                                {
+                                    secondaryProductionNumber: "production_3_2008-11-05 17:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 17:00:00",
+                                    endTime: "2008-11-05 18:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                },
+                                {
+                                    secondaryProductionNumber: "production_3_2008-11-05 18:00:00.0",
+                                    materialCoding: "3059786",
+                                    startTime: "2008-11-05 18:00:00",
+                                    endTime: "2008-11-05 19:00:00",
+                                    orderId: 74,
+                                    orderNumber: 417174
+                                }
+                            ]
+                        }
+                    ]
             };
         },
         mounted(){
             console.log("资源甘特图get请求");
             this.$axios.get('/resource/gantt/running',{
                 params:{
-                    startDate: "2008-11-07",
-                    endDate: "2008-11-09"
+                    startDate: "2008/11/05 12:00:00",
+                    endDate: "2008/11/07 12:00:00"
                 }
             }).then(response => {
                 console.log("GET请求发出了");
                 if (response.data) {
                     console.log("资源甘特图数据:");
-                    console.log(response.data);
-                    this.dataGroups=response.data.data;
                     console.log(response.data.data);
+                    let res=response.data.data;
+                    //把数据放进图里
+                    for(let i=0;i<res.length;i++){
+                        console.log(res[i]);
+
+                    }
                 }
             }).catch(err => {
                 alert('资源甘特图数据请求失败');
@@ -45,12 +244,62 @@
         methods: {
             getData(){
                 let data1={
-                    product:["产品1", "产品2", "产品3", "产品4", "产品5", "产品6"],
-                    yAxis:["line1", "line2", "张三"],
-                    series:[{
+                    product:this.productData,
+                    yAxis:this.yAxisData,
+                    series:[
+                        // {
+                        //     name: "产品1",
+                        //     type: "bar",
+                        //     stack: "产品1",
+                        //     label: {
+                        //         normal: {
+                        //             show: true,
+                        //             color: "#000",
+                        //             position: "right",
+                        //             formatter: function(params) {
+                        //                 return params.seriesName
+                        //             }
+                        //         }
+                        //     },
+                        //     itemStyle: {
+                        //         normal: {
+                        //             color: "skyblue",
+                        //             borderColor: "#fff",
+                        //             borderWidth: 2
+                        //         }
+                        //     },
+                        //     zlevel: -1,
+                        //     data: [
+                        //         //产品1的结束时间
+                        //         //line1的产品1的结束时间
+                        //         new Date("2020-10-17"),
+                        //         new Date("2020-10-30")
+                        //     ]
+                        // },
+                        // {
+                        //     name: "产品1",
+                        //     type: "bar",
+                        //     stack: "产品1",
+                        //     itemStyle: {
+                        //         normal: {
+                        //             color: "white",
+                        //         }
+                        //     },
+                        //     zlevel: -1,
+                        //     z: 3,
+                        //     data: [
+                        //         //产品1的起始时间
+                        //         new Date("2020-10-03"),
+                        //         new Date("2020-10-14")
+                        //
+                        //     ]
+                        // },
+                        //==================================================================
+                        //-------------
+                        {
                         name: "产品1",
                         type: "bar",
-                        stack: "总量0",
+                        stack: "产品1",
                         label: {
                             normal: {
                                 show: true,
@@ -70,14 +319,19 @@
                         },
                         zlevel: -1,
                         data: [
+                            //产品1的结束时间
+                            //line1的产品1的结束时间
                             new Date("2020-10-01"),
+                            //line2的产品1的结束时间
                             new Date("2020-03-14"),
-                            new Date("2020-05-01")]
+                            //李四的产品1的结束时间
+                            new Date("2020-05-01")
+                        ]
                     },
                         {
                             name: "产品1",
                             type: "bar",
-                            stack: "总量0",
+                            stack: "产品1",
                             itemStyle: {
                                 normal: {
                                     color: "white",
@@ -86,6 +340,7 @@
                             zlevel: -1,
                             z: 3,
                             data: [
+                                //产品1的起始时间
                                 new Date("2020-01-01"),
                                 new Date("2020-01-01"),
                                 new Date("2020-03-15")]
@@ -93,7 +348,7 @@
                         {
                             name: "产品2",
                             type: "bar",
-                            stack: "总量2",
+                            stack: "产品2",
                             label: {
                                 normal: {
                                     show: true,
@@ -120,7 +375,7 @@
                         {
                             name: "产品2",
                             type: "bar",
-                            stack: "总量2",
+                            stack: "产品2",
                             itemStyle: {
                                 normal: {
                                     color: "white",
@@ -136,7 +391,7 @@
                         {
                             name: "产品3",
                             type: "bar",
-                            stack: "总量3",
+                            stack: "产品3",
                             label: {
                                 normal: {
                                     show: true,
@@ -163,7 +418,7 @@
                         {
                             name: "产品3",
                             type: "bar",
-                            stack: "总量3",
+                            stack: "产品3",
                             itemStyle: {
                                 normal: {
                                     color: "white"
@@ -179,7 +434,7 @@
                         {
                             name: "产品4",
                             type: "bar",
-                            stack: "总量4",
+                            stack: "产品4",
                             label: {
                                 normal: {
                                     show: true,
@@ -207,7 +462,7 @@
                         {
                             name: "产品4",
                             type: "bar",
-                            stack: "总量4",
+                            stack: "产品4",
                             itemStyle: {
                                 normal: {
                                     color: "white",
@@ -224,7 +479,7 @@
                         {
                             name: "产品5",
                             type: "bar",
-                            stack: "总量5",
+                            stack: "产品5",
                             label: {
                                 normal: {
                                     show: true,
@@ -251,7 +506,7 @@
                         {
                             name: "产品5",
                             type: "bar",
-                            stack: "总量5",
+                            stack: "产品5",
                             itemStyle: {
                                 normal: {
                                     color: "white",
@@ -267,7 +522,7 @@
                         {
                             name: "产品6",
                             type: "bar",
-                            stack: "总量6",
+                            stack: "产品6",
                             label: {
                                 normal: {
                                     show: true,
@@ -294,7 +549,7 @@
                         {
                             name: "产品6",
                             type: "bar",
-                            stack: "总量6",
+                            stack: "产品6",
                             itemStyle: {
                                 normal: {
                                     color: 'white',
@@ -415,10 +670,10 @@
                     let name = obj.name; // current clicked one
                     // if all legends are selected, only enable clicked legend, others are toggled to false.
                     // other situation, do what is default.
-                    console.log("name:");
-                    console.log(name);
-                    console.log("selected:");
-                    console.log(selected);
+                    // console.log("name:");
+                    // console.log(name);
+                    // console.log("selected:");
+                    // console.log(selected);
 
                     //一个都没选，就是true
                     let allIsFalse=true;
@@ -451,7 +706,7 @@
                     }
 
                     function isOnlyClickedOneIsUnSelected(name, selected){
-                        console.log('onlyClickOne');
+                        // console.log('onlyClickOne');
                         let unSelectedCount = 0;
                         for ( let item in selected) {
                             // console.log("item:");
@@ -473,15 +728,15 @@
                                 ++unSelectedCount;
                             }
                         }
-                        console.log("~~~~~~~~~");
-                        console.log(unSelectedCount);
+                        // console.log("~~~~~~~~~");
+                        // console.log(unSelectedCount);
                         //只点击了name的图例
                         return unSelectedCount===1 && selected[name] === false;
                     }
                     function onlyEnableCurrentSelectedLegend(name, selected, echartInstance) {
-                        console.log("onlyEnable");
-                        console.log(name);
-                        console.log(selected);
+                        // console.log("onlyEnable");
+                        // console.log(name);
+                        // console.log(selected);
                         let legend = {};
                         for (let item in selected) {
                             if (selected[item]) {
@@ -491,8 +746,8 @@
 
                             legend[item]=true;
 
-                            console.log("&&&&&&&&&&&&&");
-                            console.log(legend);
+                            // console.log("&&&&&&&&&&&&&");
+                            // console.log(legend);
                             // if (!Object.prototype.hasOwnProperty.call(selected, item)) {
                             //     continue;
                             // }

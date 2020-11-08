@@ -297,72 +297,72 @@
             return {
                 text: '',
                 loadData:[
-                    {
-                        loadRate: [
-                            {
-                                rate: 30,
-                                time: "2020-11-06 15:02:04"
-                            },
-                            {
-                                rate: 34,
-                                time: "2020-11-07 15:02:04"
-                            },
-                            {
-                                rate: 36,
-                                time: "2020-11-08 15:02:04"
-                            },
-                            {
-                                rate: 39,
-                                time: "2020-11-09 15:02:04"
-                            },
-                            {
-                                rate: 40,
-                                time: "2020-11-10 15:02:04"
-                            },
-                            {
-                                rate: 44,
-                                time: "2020-11-11 15:02:04"
-                            },
-                            {
-                                rate: 47,
-                                time: "2020-11-06 15:02:04"
-                            }
-                        ],
-                        resourceName: "5组-童玲 (5)"
-                    },
-                    {
-                        loadRate: [
-                            {
-                                rate: 50,
-                                time: "2020-11-06 15:02:04"
-                            },
-                            {
-                                rate: 54,
-                                time: "2020-11-07 15:02:04"
-                            },
-                            {
-                                rate: 56,
-                                time: "2020-11-08 15:02:04"
-                            },
-                            {
-                                rate: 59,
-                                time: "2020-11-09 15:02:04"
-                            },
-                            {
-                                rate: 60,
-                                time: "2020-11-10 15:02:04"
-                            },
-                            {
-                                rate: 64,
-                                time: "2020-11-11 15:02:04"
-                            },
-                            {
-                                rate: 67,
-                                time: "2020-11-06 15:02:04"
-                            }
-                        ],
-                        resourceName: "6组-张三 (6)"
-                    }
+                    // {
+                    //     loadRate: [
+                    //         {
+                    //             rate: 30,
+                    //             time: "2020-11-06 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 34,
+                    //             time: "2020-11-07 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 36,
+                    //             time: "2020-11-08 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 39,
+                    //             time: "2020-11-09 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 40,
+                    //             time: "2020-11-10 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 44,
+                    //             time: "2020-11-11 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 47,
+                    //             time: "2020-11-06 15:02:04"
+                    //         }
+                    //     ],
+                    //     resourceName: "5组-童玲 (5)"
+                    // },
+                    // {
+                    //     loadRate: [
+                    //         {
+                    //             rate: 50,
+                    //             time: "2020-11-06 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 54,
+                    //             time: "2020-11-07 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 56,
+                    //             time: "2020-11-08 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 59,
+                    //             time: "2020-11-09 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 60,
+                    //             time: "2020-11-10 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 64,
+                    //             time: "2020-11-11 15:02:04"
+                    //         },
+                    //         {
+                    //             rate: 67,
+                    //             time: "2020-11-06 15:02:04"
+                    //         }
+                    //     ],
+                    //     resourceName: "6组-张三 (6)"
+                    // }
                 ],
                 currentYear: 1970, // 年份
                 currentMonth: 1, // 月份
@@ -408,16 +408,6 @@
                 let weekNumber = moment(date).isoWeekday();
                 return weeksObj[weekNumber];
             }
-        },
-        mounted() {
-            const index = _.findIndex(this.days, function(o) {
-                // console.log('o: ', o.getDate());
-                // console.log('new Date().getDate(): ', new Date().getDate());
-                return o.getDate() === new Date().getDate();
-            });
-            console.log("index: ", index);
-            this.tabIndex = index;
-
         },
         created() {
             this.initData(null);
@@ -538,74 +528,100 @@
                 // alert(
                 //   this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
                 // );
+            },
+            splitDate(s){
+              let sArr=s.split(" ");
+              console.log(sArr);
+              return sArr[0]
+            },
+            renderHTML(graphData){
+                console.log("到这里了");
+                let testDom=document.getElementById("theResources");
+                console.log(graphData);
+                console.log(graphData.length);
+                let theHTML="";
+                for(let j=0;j<graphData.length;j++){
+                    theHTML +=
+                        "<ul class=\"resources\">\n" +
+                        "                            <li>\n" +
+                        "                                <span>"+graphData[j].resourceName+"</span>\n" +
+                        "                            </li>\n";
+                    for(let i=0;i<graphData[j].loadRate.length;i++){
+                        theHTML +=
+                            "                            <li>\n"+
+                            "<span>"+this.splitDate(graphData[j].loadRate[i].time)+"</span>"+
+                            "<span>"+graphData[j].loadRate[i].rate+"%</span>"+
+                            "                            </li>\n";
+                    }
+                    // theHTML +=
+                    //     "                            <li>\n"+
+                    //     "<span>"+this.loadData[0].loadRate[0].rate+"</span>"+
+                    //     "                            </li>\n" +
+                    //     "                            <li>\n" +
+                    //     "<span>"+this.loadData[0].loadRate[1].rate+"</span>"+
+                    //     "                            </li>\n" +
+                    //     "                            <li>\n" +
+                    //     "<span>"+this.loadData[0].loadRate[2].rate+"</span>"+
+                    //     "                            </li>\n" +
+                    //     "                            <li>\n" +
+                    //     "<span>"+this.loadData[0].loadRate[3].rate+"</span>"+
+                    //     "                            </li>\n" +
+                    //     "                            <li>\n" +
+                    //     "<span>"+this.loadData[0].loadRate[4].rate+"</span>"+
+                    //     "                            </li>\n" +
+                    //     "                            <li>\n" +
+                    //     "<span>"+this.loadData[0].loadRate[5].rate+"</span>"+
+                    //     "                            </li>\n" +
+                    //     "                            <li>\n" +
+                    //     "<span>"+this.loadData[0].loadRate[6].rate+"</span>"+
+                    //     "                            </li>\n" +
+                    //     "                            <li>\n" +
+                    //     "                            </li>\n" +
+                    //     "                        </ul>";
+                    theHTML+=
+                        "                            <li>\n" +
+                        "                            </li>\n" +
+                        "                        </ul>\n";
+                }
+
+                testDom.innerHTML=theHTML;
             }
         },
         mounted() {
+            // const index = _.findIndex(this.days, function(o) {
+            //     // console.log('o: ', o.getDate());
+            //     // console.log('new Date().getDate(): ', new Date().getDate());
+            //     return o.getDate() === new Date().getDate();
+            // });
+            // console.log("index: ", index);
+            // this.tabIndex = index;
+
             //向后端调用方法
             console.log("资源甘特图 axios get");
             this.$axios.get('/resource/gantt/loading',{
                 params:{
-                    startDate: "2008-11-05 19:00:00",
-                    endDate: "2008-11-07 19:00:00",
+                    startDate: "2008/11/03 19:00:00",
+                    endDate: "2008/11/10 19:00:00",
                     frequency :1
                 }
             }).then(response => {
-                console.log("get传参数");
+                console.log("资源甘特图get传参数");
                 if (response.data) {
-                    console.log(response.data);
+                    console.log(response.data.data);
+                    this.renderHTML(response.data.data);
+                    console.log("获取渲染图形的参数");
                 }
             }).catch(err => {
-                alert('请求失败')
+                alert('请求资源负载图失败');
             });
 
-            let testDom=document.getElementById("theResources");
-            console.log(this.loadData);
-            console.log(this.loadData.length);
-            let theHTML="";
-            for(let j=0;j<this.loadData.length;j++){
-                theHTML +=
-                    "<ul class=\"resources\">\n" +
-                    "                            <li>\n" +
-                    "                                <span>"+this.loadData[j].resourceName+"</span>\n" +
-                    "                            </li>\n";
-                for(let i=0;i<7;i++){
-                    theHTML +=
-                        "                            <li>\n"+
-                        "<span>"+this.loadData[j].loadRate[i].rate+"%</span>"+
-                        "                            </li>\n";
-                }
-                // theHTML +=
-                //     "                            <li>\n"+
-                //     "<span>"+this.loadData[0].loadRate[0].rate+"</span>"+
-                //     "                            </li>\n" +
-                //     "                            <li>\n" +
-                //     "<span>"+this.loadData[0].loadRate[1].rate+"</span>"+
-                //     "                            </li>\n" +
-                //     "                            <li>\n" +
-                //     "<span>"+this.loadData[0].loadRate[2].rate+"</span>"+
-                //     "                            </li>\n" +
-                //     "                            <li>\n" +
-                //     "<span>"+this.loadData[0].loadRate[3].rate+"</span>"+
-                //     "                            </li>\n" +
-                //     "                            <li>\n" +
-                //     "<span>"+this.loadData[0].loadRate[4].rate+"</span>"+
-                //     "                            </li>\n" +
-                //     "                            <li>\n" +
-                //     "<span>"+this.loadData[0].loadRate[5].rate+"</span>"+
-                //     "                            </li>\n" +
-                //     "                            <li>\n" +
-                //     "<span>"+this.loadData[0].loadRate[6].rate+"</span>"+
-                //     "                            </li>\n" +
-                //     "                            <li>\n" +
-                //     "                            </li>\n" +
-                //     "                        </ul>";
-                theHTML+=
-                    "                            <li>\n" +
-                    "                            </li>\n" +
-                    "                        </ul>\n";
-            }
-
-            testDom.innerHTML=theHTML;
+            const index = _.findIndex(this.days, function(o) {
+                // console.log('o: ', o.getDate());
+                // console.log('new Date().getDate(): ', new Date().getDate());
+                return o.getDate() === new Date().getDate();
+            });
+            console.log("index: ", index);
+            this.tabIndex = index;
         }
     };
 

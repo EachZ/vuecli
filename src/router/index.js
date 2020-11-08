@@ -6,6 +6,9 @@ import Page2 from '../views/page2'
 import Page3 from '../views/page3'
 import Page5 from '../views/page5'
 import Page6 from '../views/page6'
+import Page7 from '../views/page7'
+
+
 
 Vue.use(VueRouter);
 
@@ -47,6 +50,11 @@ const routes = [
     path:'/page6',
     name:'Page6',
     component:Page6
+  },
+  {
+    path:'/page7',
+    name:'Page7',
+    component:Page7
   }
 ];
 

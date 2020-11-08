@@ -77,19 +77,19 @@
         mounted() {
             //请求后端的获取订单-生产单关系表
             //要需要传首尾日期？？？
-            console.log("订单-生产单关系表get请求");
+            // console.log("订单-生产单关系表get请求");
             this.$axios.get('/orders/productionForm',{
                 params:{
-                    startDate: "2020-11-07",
-                    endDate: "2020-11-09"
+                    startDate: "2008/11/05 12:00:00",
+                    endDate: "2008/11/07 12:00:00"
                 }
             }).then(response => {
-                console.log("GET请求发出了");
+                // console.log("GET请求发出了");
                 if (response.data) {
-                    console.log("订单-生产单关系表数据:");
-                    console.log(response.data);
+                    // console.log("订单-生产单关系表数据:");
+                    // console.log(response.data);
                     this.data=response.data.data;
-                    console.log(response.data.data);
+                    // console.log(response.data.data);
                 }
             }).catch(err => {
                 alert('订单-生产单关系表请求失败')

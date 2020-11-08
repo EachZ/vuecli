@@ -233,8 +233,23 @@
                 }, 1000)
             },
             postSchedule(){
-                this.$axios.post('/schedule',this.currentVirtualTime).then(response => {
-                    console.log("发送时间成功");
+                let postYear=this.currentVirtualTime.getFullYear();
+                let postMonth=this.currentVirtualTime.getMonth()+1;
+                let postDay=this.currentVirtualTime.getDate();
+                // let postHour=this.currentVirtualTime.getHours();
+                // let postMinute=this.currentVirtualTime.getMinutes();
+                // let postSecond=this.currentVirtualTime.getSeconds();
+
+                let postDateString=postYear+"/"+postMonth+"/"+postDay+"00:00:00";
+
+                this.$axios.post('/schedule',{
+                    params:{
+                        date: postDateString
+                    }
+                }).then(response => {
+                    console.log("发送时间");
+                    console.log(postDateString);
+                    console.log("成功");
                     console.log(response);
                 }).catch(err => {
                     alert('请求失败')

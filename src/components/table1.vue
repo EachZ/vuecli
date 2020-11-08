@@ -131,14 +131,14 @@
         },
         mounted() {
             //请求后端的获取订单计划表
-            console.log("订单计划表get请求");
+            // console.log("订单计划表get请求");
             this.$axios.get('/orderScheduleForm').then(response => {
-                console.log("GET请求发出了");
+                // console.log("GET请求发出了");
                 if (response.data) {
-                    console.log("订单计划表数据:");
-                    console.log(response.data);
+                    // console.log("订单计划表数据:");
+                    // console.log(response.data);
                     this.dataGroups=response.data.data;
-                    console.log(response.data.data);
+                    // console.log(response.data.data);
                 }
             }).catch(err => {
                 alert('订单计划表请求失败')

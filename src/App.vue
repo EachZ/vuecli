@@ -8,7 +8,8 @@
       <router-link :to="{path:'/page2'}">资源甘特图</router-link> |
       <router-link :to="{path:'/page3'}">增删改查</router-link> |
       <router-link :to="{path:'/page4'}">设置时间</router-link> |
-      <router-link to="/page6">实验页面</router-link>
+      <router-link to="/page6">实验页面</router-link> |
+      <router-link to="/page7">甘特图实验</router-link>
       <Time @current-virtual-time="getTime"></Time>
 
     </div>
