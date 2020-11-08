@@ -645,11 +645,43 @@
                         "                                <span>"+graphData[j].resourceName+"</span>\n" +
                         "                            </li>\n";
                     for(let i=0;i<graphData[j].loadRate.length;i++){
+                        let sateArr=["state0","state1","state2","state3","state4","state5",];
+                        let index;
+                        // let rate=Number(graphData[j].loadRate[i].rate);
+                        let rate=Number(200);
+                        let h=80*rate/120;
+                        // let h=80*graphData[j].loadRate[i].rate/120;
+
+                        if(0<=rate && rate<=20){
+                            index=0;
+                        }else if(20<=rate && rate<=40){
+                            index=1;
+                        }else if(40<=rate && rate<=60){
+                            index=2;
+                        }else if(60<=rate && rate<=80){
+                            index=3;
+                        }else if(80<=rate && rate<=100){
+                            index=4;
+                        }else if(rate>100){
+                            index=5;
+                            h=78
+                        }
+                        console.log(sateArr[index]);
                         theHTML +=
                             "                            <li>\n"+
                             // "<span>"+this.splitDate(graphData[j].loadRate[i].time)+"**</span>"+
-                            "<el-progress type='circle' class='huan' :percentage='55'></el-progress>"+
-                        // "<span>"+graphData[j].loadRate[i].rate+"%</span>"+
+                            // "<el-progress type='circle' class='huan' :percentage='55'>"+graphData[j].loadRate[i].rate+"%</el-progress>"+
+                            "        <div style=\"z-index:0;float:left;width:80px; height:80px;\n" +
+                            "            margin:3px 10px 0 10px;position:relative;border-style:solid;border-width:1px;\">\n" +
+                            // "<hr style='position: absolute'/>" +
+                            "            <div style=\"left: 20px;position:absolute;z-index:999\">\n" +
+                            rate+
+                            "            %</div>\n" +
+                            "            <div class="+sateArr[index]+
+                            " style=\"z-index:0;height:"+h+"px;width:78px;position:absolute;bottom:0\">\n" +
+                            "            </div>\n" +
+                            "        </div>"+
+                            // "<span>"+graphData[j].loadRate[i].rate+"%</span>"+
                             "                            </li>\n";
                     }
                     // theHTML +=
@@ -697,7 +729,9 @@
 
             console.log("显示日期:");
 
+            //一周的开始时间
             let sDate =this.days[0];
+            //一周的结束时间
             let eDate =this.days[6];
 
             this.testAxiosGET1(sDate,eDate);
@@ -756,6 +790,31 @@
         width:80px;
         height: 80px;
         background-color: red;
+        border: #2c3e50 1px solid;
+    }
+    /*0~20*/
+    .state0{
+        background-color:#3a8ee6;
+    }
+    /*20~40*/
+    .state1{
+        background-color:#5daf34;
+    }
+    /*40~60*/
+    .state2{
+        background-color:#c795f5;
+    }
+    /*60~80*/
+    .state3{
+        background-color:#2c3e50;
+    }
+    /*80~100*/
+    .state4{
+        background-color:#cf9236;
+    }
+    /*100以上*/
+    .state5{
+        background-color:#f56c6c;
     }
     #container{
         display: grid;
