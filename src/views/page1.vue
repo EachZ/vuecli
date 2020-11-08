@@ -50,6 +50,8 @@
         },
         data() {
             return {
+                GETcontent :'',
+                POSTcontent:'',
                 currentYear: 1970, // 年份
                 currentMonth: 1, // 月份
                 currentDay: 1, // 日期
@@ -127,145 +129,294 @@
             this.initData(null);
         },
         methods: {
+            testAxiosGET() {
+                // 由于 main.js 里全局定义的 axios,此处直接使用 $axios 即可。
+                // 由于 main.js 里定义了每个请求前缀，此处的 / 即为 /api/，
+                // 经过 vue.config.js 配置文件的代理设置，会自动转为 target中的网址，从而解决跨域问题
+                // get方法
+                let year1=(this.newDate.toString()).substring(0,4);
+                let month1=(this.newDate.toString()).substring(5,7);
+                let day1=(this.newDate.toString()).substring(8,10);
+                console.log(year1);
+                console.log(month1);
+                console.log(day1);
+                let date1=year1+"/"+month1+"/"+day1;
+                console.log(date1);
+
+                this.$axios.get("/orders/gantt?date="+date1).then(response => {
+                    console.log("GET请求发出了");
+                    if (response.data) {
+                        console.log(response.data.data);
+                        this.GETcontent=response.data.data;
+                        let data=this.GETcontent;
+                        console.log(data[0])
+
+                        // date: "2008-11-05 00:00:00"
+                        // expectedDelivery: "2008-11-06 20:00:00"
+                        // finishPercent: "100%;44.44%"
+                        // orderId: 36
+                        // orderNumber: 764098
+                        // orderRecordId: 1
+                        let orderList = data.map(function (item) {
+                            return item.orderNumber;
+                        });
+                        let stateList=data.map(function (item) {
+                            if(item.finishState===0){
+                                return 0.1;
+                            }else if(item.finishState===2){
+                                return 0.2;
+                            }
+                            return 0.3;
+                        });
+                        let yanList=data.map(function (item) {
+                            if(item.isDelivery===0){
+                                return 0.1;
+                            }
+                            return 0.2;
+                        });
+                        console.log(orderList);
+                        let dataList=data.map(function (item) {
+                            let poetryArr = item.finishPercent.split(";")
+                            let sub=poetryArr[0].substring(0,poetryArr[0].length-1);
+                            return parseInt(sub)/100;
+                        });
+                        console.log(dataList);
+                        let dataList2=data.map(function (item) {
+                            let poetryArr1 = item.finishPercent.split(";")
+                            console.log(poetryArr1);
+                            console.log(poetryArr1.length);
+                            if(poetryArr1.length===1){
+                                console.log("第二项没有");
+                                return 0;
+                            }
+                            else{
+                                let sub=poetryArr1[1].substring(0,poetryArr1[1].length-1);
+                                console.log(sub);
+                                return parseInt(sub)/100;
+                            }
+                        });
+                        console.log(dataList2);
+
+
+                        let dataList3=data.map(function (item) {
+                            let poetryArr3 = item.finishPercent.split(";")
+                            if(poetryArr3.length!==3){
+                                console.log("第三项没有");
+                                return 0;
+                            }
+                            else{
+                                let sub=poetryArr3[2].substring(0,poetryArr3[1].length-1);
+                                console.log(sub);
+                                return parseInt(sub)/100;
+                            }
+                        });
+
+                        let data1={
+                            order:orderList,
+                            data2:dataList,//装配
+                            data3:dataList2,//测试
+                            data5:dataList3,
+                            //data4:[1,1.5,0.5,1,1.5,1.5]//状态
+                            data4:stateList
+                        };
+                        //上面的小方块的数组、y轴的数组、产品的series数组
+                        this.drawLine(data1);
+                    }
+                }).catch(err => {
+                    alert('请求失败')
+                })
+            },
             getData(){
-                let data={
-                    order:["100000001","100000002","100000003","100000004","100000005","100000006"],
-                    data2:[0.3,0.3,1,0.5,0.7,0.5],//装配
-                    data3:[0.1,0.3,0.5,0,0.2,0.3],//测试
-                    //data4:[1,1.5,0.5,1,1.5,1.5]//状态
-                    data4:[1,1.5,0.5,1,1.5,1.5]
-                };
-                //上面的小方块的数组、y轴的数组、产品的series数组
-                this.drawLine(data);
+                this.testAxiosGET();
             },
             drawLine(data1) {
                 console.log(data1);
                 let Gantt=this.$echarts.init(document.getElementById('Gantt'));
                 Gantt.setOption({
-                    title: {
-                        text: "订单甘特图",
-                        padding: 20,
-                        textStyle: {
-                            fontSize: 17,
-                            fontWeight: "bolder",
-                            color: "#333"
-                        },
-                        subtext:"该表展示订单编号及其对应的完成状态",
-                        subtextStyle: {
-                            fontSize: 13,
-                            fontWeight: "bolder"
-                        }
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                        }
-                    },
-                    legend:{
-                        data:["装配完成度","测试完成度"]
-                    },
-                    grid: {
-                        left: '10%',
-                        right: '4%',
-                    },
-                    xAxis: [
-                        {
-                            type: 'value'
-                        }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'category',
-                            axisTick: {
-                                show: false
+                        title: {
+                            text: "订单甘特图",
+                            padding: 20,
+                            textStyle: {
+                                fontSize: 17,
+                                fontWeight: "bolder",
+                                color: "#333"
                             },
-                            data: data1.order
-                        }
-                    ],
-                    series: [
-                        {
-                            name: '装配完成度',
-                            type: 'bar',
-                            stack:'数据',
-                            itemStyle: {
-                                normal: {
-                                    //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
-                                    color:'#87c3ba'
-                                }
+                            subtext:"该表展示订单编号及其对应的完成状态",
+                            subtextStyle: {
+                                fontSize: 13,
+                                fontWeight: "bolder"
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            }
+                        },
+                        legend:{
+                            data:["步骤1","步骤2","步骤3"]
+                        },
+                        grid: {
+                            left: '10%',
+                            right: '4%',
+                        },
+                        xAxis: [
+                            {
+                                type: 'value'
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'category',
+                                axisTick: {
+                                    show: false
+                                },
+                                data: data1.order
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '步骤1',
+                                type: 'bar',
+                                stack:'数据',
+                                itemStyle: {
+                                    normal: {
+                                        //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                        color:'#87c3ba'
+                                    }
                                 },
 
-                            label: {
-                                show: true,
+                                label: {
+                                    show: true,
+                                },
+                                data: data1.data3
                             },
-                            data: data1.data3
-                        },
-                        {
-                            name: '测试完成度',
-                            type: 'bar',
-                            itemStyle: {
-                                normal: {
-                                    //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
-                                    color:'#7e9ac3'
-                                }
-                            },
-                            stack:'数据',
-                            label: {
-                                show: true
-                            },
-                            data: data1.data2
-                        },
-                        {
-                            name: '状态',
-                            type: 'bar',
-                            stack:'状态',
-                            label: {
-                                show: true
-                            },
-                            itemStyle: {
-                                normal: {
-                                    //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
-                                    color: function(params) {
-                                        var colorList = [
-                                            '#C1232B','#B5C334','#FCCE10'
-                                        ];
-                                        console.log(params);
-                                        if(params.data==1){
-                                            return colorList[1];
-                                        }else if(params.data==0.5){
-                                            return colorList[2]
-                                        }
-                                        return colorList[0]
+                            {
+                                name: '步骤2',
+                                type: 'bar',
+                                itemStyle: {
+                                    normal: {
+                                        //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                        color:'#7e9ac3'
+                                    }
+                                },
+                                stack:'数据',
+                                label: {
+                                    show: true
+                                },
+                                data: data1.data2
+                            },{
+                                name: '步骤3',
+                                type: 'bar',
+                                stack:'数据',
+                                itemStyle: {
+                                    normal: {
+                                        //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                        color:'#baadc3'
+                                    }
+                                },
 
-                                    },
-                                    //以下为是否显示，显示位置和显示格式的设置了
-                                    // label: {
-                                    //     show: true,
-                                    //     position: 'top',
-                                    //     formatter: '{b}\n{c}'
-                                    // }
-                                    label: {
+                                label: {
+                                    show: true,
+                                },
+                                data: data1.data5
+                            },
+                            {
+                                name: '状态',
+                                type: 'bar',
+                                stack:'状态',
+                                label: {
+                                    show: true
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                        color: function(params) {
+                                            var colorList = [
+                                                '#C1232B','#B5C334','#FCCE10'
+                                            ];
+                                            console.log(params);
+                                            if(params.data==0.2){
+                                                return colorList[1];
+                                            }else if(params.data==0.3){
+                                                return colorList[2]
+                                            }
+                                            return colorList[0]
+
+                                        },
+                                        //以下为是否显示，显示位置和显示格式的设置了
+                                        // label: {
+                                        //     show: true,
+                                        //     position: 'top',
+                                        //     formatter: '{b}\n{c}'
+                                        // }
+                                        label: {
                                             show: true,
                                             position: 'inside',
                                             formatter: function(params) {
                                                 console.log(params);
-                                                if(params.data==1){
+                                                if(params.data==0.3){
                                                     return '已完成';
-                                                }else if(params.data==0.5){
-                                                    return '未完成';
+                                                }else if(params.data==0.2){
+                                                    return '正在进行';
                                                 }
-                                                return '延期';
+                                                return '未开始';
 
                                             }
+                                        }
                                     }
-                                }
 
+                                },
+                                data: data1.data4
                             },
-                            data: data1.data4
-                        }
-                    ]
-                }
-            );
+                            {
+                                name: '状态',
+                                type: 'bar',
+                                stack:'状态',
+                                label: {
+                                    show: true
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        //好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                                        color: function(params) {
+                                            var colorList = [
+                                                '#c1675e','#6ac35d'
+                                            ];
+                                            console.log(params);
+                                            if(params.data==0.1){
+                                                return colorList[1];
+                                            }
+                                            return colorList[0]
+
+                                        },
+                                        //以下为是否显示，显示位置和显示格式的设置了
+                                        // label: {
+                                        //     show: true,
+                                        //     position: 'top',
+                                        //     formatter: '{b}\n{c}'
+                                        // }
+                                        label: {
+                                            show: true,
+                                            position: 'inside',
+                                            formatter: function(params) {
+                                                console.log(params);
+                                                if(params.data==0.2){
+                                                    return '延期';
+                                                }
+                                                return '未延期';
+
+                                            }
+                                        }
+                                    }
+
+                                },
+                                data: data1.data4
+                            }
+
+                        ]
+                    }
+                );
 
 
 
@@ -368,122 +519,117 @@
                     ]
                 });
             },
-            increase() {
-                this.percentage += 10;
-                if (this.percentage > 100) {
-                    this.percentage = 100;
-                }
-            },
-            decrease() {
-                this.percentage -= 10;
-                if (this.percentage < 0) {
-                    this.percentage = 0;
-                }
-            },
-            formatDate(year, month, day) {
-                const y = year;
-                let m = month;
-                if (m < 10) m = `0${m}`;
-                let d = day;
-                if (d < 10) d = `0${d}`;
-                return `${y}-${m}-${d}`;
-            },
+            // increase() {
+            //     this.percentage += 10;
+            //     if (this.percentage > 100) {
+            //         this.percentage = 100;
+            //     }
+            // },
+            // decrease() {
+            //     this.percentage -= 10;
+            //     if (this.percentage < 0) {
+            //         this.percentage = 0;
+            //     }
+            // },
+            // formatDate(year, month, day) {
+            //     const y = year;
+            //     let m = month;
+            //     if (m < 10) m = `0${m}`;
+            //     let d = day;
+            //     if (d < 10) d = `0${d}`;
+            //     return `${y}-${m}-${d}`;
+            // },
             pickDate(date) {
                 let that = this;
                 that.newDate = moment(date).format("YYYY-MM-DD");
-                that.$emit("dateValue", that.newDate);
-                console.log("this.newDate: ", that.newDate);
-                that.initData(that.newDate);
-                const index = _.findIndex(that.days, function(o) {
-                    return o.getDate() === new Date(that.newDate).getDate();
-                });
-                // console.log("index: ", index);
-                this.tabIndex = index;
+                console.log("选的时间");
+                console.log(this.newDate);
+                this.testAxiosGET();
             },
-            initData(cur) {
-                let date = "";
-                if (cur) {
-                    date = new Date(cur);
-                } else {
-                    date = new Date();
-                }
-                this.currentDay = date.getDate(); // 今日日期 几号
-                this.currentYear = date.getFullYear(); // 当前年份
-                this.currentMonth = date.getMonth() + 1; // 当前月份
-                this.currentWeek = date.getDay(); // 1...6,0  // 星期几
-                if (this.currentWeek === 0) {
-                    this.currentWeek = 7;
-                }
-                const str = this.formatDate(
-                    this.currentYear,
-                    this.currentMonth,
-                    this.currentDay
-                ); // 今日日期 年-月-日
-                this.days.length = 0;
-                // 今天是周日，放在第一行第7个位置，前面6个 这里默认显示一周，如果需要显示一个月，则第二个循环为 i<= 35- this.currentWeek
-                /* eslint-disabled */
-                // 今天
-                for (let i = this.currentWeek - 1; i >= 0; i -= 1) {
-                    const d = new Date(str);
-                    d.setDate(d.getDate() - i);
-                    // console.log(y:" + d.getDate())
-                    // console.log('d: ', d);
-                    this.days.push(d);
-                }
-                // 这个星期
-                for (let i = 1; i <= 7 - this.currentWeek; i += 1) {
-                    const d = new Date(str);
-                    d.setDate(d.getDate() + i);
-                    this.days.push(d);
-                    // console.log('d1: ', d);
-                }
-            },
-            // 上个星期
-            weekPre() {
-                const d = this.days[0]; // 如果当期日期是7号或者小于7号
-                d.setDate(d.getDate() - 7);
-                this.initData(d);
-            },
-            // 下个星期
-            weekNext() {
-                const d = this.days[6]; // 如果当期日期是7号或者小于7号
-                d.setDate(d.getDate() + 7);
-                this.initData(d);
-            },
-            // 上一個月  传入当前年份和月份
-            pickPre(year, month) {
-                const d = new Date(this.formatDate(year, month, 1));
-                d.setDate(0);
-                this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
-            },
-            // 下一個月  传入当前年份和月份
-            pickNext(year, month) {
-                const d = new Date(this.formatDate(year, month, 1));
-                d.setDate(35);
-                this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
-            },
-            // 当前选择日期
-            pick(date, index) {
-                this.newDate = moment(date).format("YYYY-MM-DD");
-                this.$emit("dateValue", this.newDate);
-                // console.log("index: ", index);
-                this.tabIndex = index;
-                // alert(
-                //   this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
-                // );
-            },
-            pickTime(time, index) {
-                // console.log('time: ', time);
-                let timeArr = [];
-                timeArr.push(_.split(time.time, "~"));
-                // console.log("timeArr: ", timeArr);
-                this.$emit("timeValue", _.join(timeArr), "");
-                // console.log("index: ", index);
-                this.tabTimeIndex = index;
-                // alert(
-                //   this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
-                // );
-            }
+            // initData(cur) {
+            //     let date = "";
+            //     if (cur) {
+            //         date = new Date(cur);
+            //     } else {
+            //         date = new Date();
+            //     }
+            //     this.currentDay = date.getDate(); // 今日日期 几号
+            //     this.currentYear = date.getFullYear(); // 当前年份
+            //     this.currentMonth = date.getMonth() + 1; // 当前月份
+            //     this.currentWeek = date.getDay(); // 1...6,0  // 星期几
+            //     if (this.currentWeek === 0) {
+            //         this.currentWeek = 7;
+            //     }
+            //     const str = this.formatDate(
+            //         this.currentYear,
+            //         this.currentMonth,
+            //         this.currentDay
+            //     ); // 今日日期 年-月-日
+            //     this.days.length = 0;
+            //     // 今天是周日，放在第一行第7个位置，前面6个 这里默认显示一周，如果需要显示一个月，则第二个循环为 i<= 35- this.currentWeek
+            //     /* eslint-disabled */
+            //     // 今天
+            //     for (let i = this.currentWeek - 1; i >= 0; i -= 1) {
+            //         const d = new Date(str);
+            //         d.setDate(d.getDate() - i);
+            //         // console.log(y:" + d.getDate())
+            //         // console.log('d: ', d);
+            //         this.days.push(d);
+            //     }
+            //     // 这个星期
+            //     for (let i = 1; i <= 7 - this.currentWeek; i += 1) {
+            //         const d = new Date(str);
+            //         d.setDate(d.getDate() + i);
+            //         this.days.push(d);
+            //         // console.log('d1: ', d);
+            //     }
+            // },
+            // // 上个星期
+            // weekPre() {
+            //     const d = this.days[0]; // 如果当期日期是7号或者小于7号
+            //     d.setDate(d.getDate() - 7);
+            //     this.initData(d);
+            // },
+            // // 下个星期
+            // weekNext() {
+            //     const d = this.days[6]; // 如果当期日期是7号或者小于7号
+            //     d.setDate(d.getDate() + 7);
+            //     this.initData(d);
+            // },
+            // // 上一個月  传入当前年份和月份
+            // pickPre(year, month) {
+            //     const d = new Date(this.formatDate(year, month, 1));
+            //     d.setDate(0);
+            //     this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+            // },
+            // // 下一個月  传入当前年份和月份
+            // pickNext(year, month) {
+            //     const d = new Date(this.formatDate(year, month, 1));
+            //     d.setDate(35);
+            //     this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
+            // },
+            // // 当前选择日期
+            // pick(date, index) {
+            //     this.newDate = moment(date).format("YYYY-MM-DD");
+            //     this.$emit("dateValue", this.newDate);
+            //     // console.log("index: ", index);
+            //     this.tabIndex = index;
+            //     // alert(
+            //     //   this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
+            //     // );
+            // },
+            // pickTime(time, index) {
+            //     // console.log('time: ', time);
+            //     let timeArr = [];
+            //     timeArr.push(_.split(time.time, "~"));
+            //     // console.log("timeArr: ", timeArr);
+            //     this.$emit("timeValue", _.join(timeArr), "");
+            //     // console.log("index: ", index);
+            //     this.tabTimeIndex = index;
+            //     // alert(
+            //     //   this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
+            //     // );
+            // }
         }
     };
 
