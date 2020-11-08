@@ -7,6 +7,11 @@ import Page3 from '../views/page3'
 import Page5 from '../views/page5'
 import Page6 from '../views/page6'
 import Page7 from '../views/page7'
+import Table1 from '../views/table1'
+import Table2 from '../views/table2'
+import Table3 from '../views/table3'
+import Table4 from '../views/table4'
+
 
 
 
@@ -15,8 +20,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Page5',
-    component: Page5
+    name: 'Table1',
+    component: Table1
   },
   {
     path: '/home',
@@ -55,6 +60,26 @@ const routes = [
     path:'/page7',
     name:'Page7',
     component:Page7
+  },
+  // {
+  //   path:'/table1',
+  //   name:'Table1',
+  //   component:Table1
+  // },
+  {
+    path:'/table2',
+    name:'Table2',
+    component:Table2
+  },
+  {
+    path:'/table3',
+    name:'Table3',
+    component:Table3
+  },
+  {
+    path:'/table4',
+    name:'Table4',
+    component:Table4
   }
 ];
 

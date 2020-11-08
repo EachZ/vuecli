@@ -240,7 +240,7 @@
                 // let postMinute=this.currentVirtualTime.getMinutes();
                 // let postSecond=this.currentVirtualTime.getSeconds();
 
-                let postDateString=postYear+"/"+postMonth+"/"+postDay+"00:00:00";
+                let postDateString=postYear+"/"+postMonth+"/"+postDay+" 00:00:00";
 
                 this.$axios.post('/schedule',{
                     params:{

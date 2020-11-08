@@ -1,67 +1,54 @@
 <template>
     <div>
-<!--        四个表格-->
+        <div id="nav">
+            <router-link :to="{path:'/table1'}">表1</router-link> |
+            <router-link :to="{path:'/table2'}">表2</router-link> |
+            <router-link :to="{path:'/table3'}">表3</router-link> |
+            <router-link :to="{path:'/table4'}">表4</router-link>
+
+        </div>
+        <!--        四个表格-->
 <!--        <div>-->
 <!--            <TryTable></TryTable>-->
 <!--            <br/>-->
 <!--        </div>-->
 <!--        第一个表格-->
-        <div class="table1">
-            <Table1></Table1>
-            <br/>
-<!--            <a-table :columns="columns" :data-source="data">-->
-<!--                <a slot="name" slot-scope="text">{{ text }}</a>-->
-<!--                <span slot="customTitle"><a-icon type="smile-o" /> Name</span>-->
-<!--                <span slot="tags" slot-scope="tags">-->
-<!--      <a-tag-->
-<!--              v-for="tag in tags"-->
-<!--              :key="tag"-->
-<!--              :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"-->
-<!--      >-->
-<!--        {{ tag.toUpperCase() }}-->
-<!--      </a-tag>-->
-<!--    </span>-->
-<!--                <span slot="action" slot-scope="text, record">-->
-<!--      <a>Invite 一 {{ record.name }}</a>-->
-<!--      <a-divider type="vertical" />-->
-<!--      <a>Delete</a>-->
-<!--      <a-divider type="vertical" />-->
-<!--      <a class="ant-dropdown-link"> More actions <a-icon type="down" /> </a>-->
-<!--    </span>-->
-<!--            </a-table>-->
-        </div>
+<!--        <div class="table1">-->
+<!--            <Table1></Table1>-->
+<!--            <br/>-->
+<!--        </div>-->
 
 <!--        第二个表格-->
-        <div class="table2">
-            <Table2></Table2>
-            <br/>
-        </div>
+<!--        <div class="table2">-->
+<!--            <Table2></Table2>-->
+<!--            <br/>-->
+<!--        </div>-->
 
 <!--        第三个表格-->
-        <div class="table3">
-            <Table3></Table3>
-            <br/>
-        </div>
+<!--        <div class="table3">-->
+<!--            <Table3></Table3>-->
+<!--            <br/>-->
+<!--        </div>-->
 
 <!--        第四个表格-->
-        <div class="table4">
-            <Table4></Table4>
-            <br/>
-        </div>
-
+<!--        <div class="table4">-->
+<!--            <Table4></Table4>-->
+<!--            <br/>-->
+<!--        </div>-->
+        <router-view/>
     </div>
 </template>
 
 <script>
-    import Table1 from '../components/table1'
-    import Table2 from '../components/table2'
-    import Table3 from '../components/table3'
-    import Table4 from '../components/table4'
+    // import Table1 from '../components/table1'
+    // import Table2 from '../components/table2'
+    // import Table3 from '../components/table3'
+    // import Table4 from '../components/table4'
     // import TryTable from '../components/tryTable'
 
 
     export default {
-        components: {Table1,Table2,Table3,Table4},
+        // components: {Table1,Table2,Table3,Table4},
     }
     // const columns = [
     //     {
@@ -128,5 +115,16 @@
 </script>
 
 <style scoped>
+    #nav {
+        padding: 30px;
+    }
 
+    #nav a {
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    #nav a.router-link-exact-active {
+        color: #42b983;
+    }
 </style>

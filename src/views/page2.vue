@@ -718,8 +718,8 @@
 
             this.$axios.get('/resource/gantt/running',{
                 params:{
-                    startDate: "2018/11/19 12:00:00",
-                    endDate: "2018/11/21 12:00:00"
+                    startDate: "2018/11/19 00:00:00",
+                    endDate: "2018/11/21 00:00:00"
                 }
             }).then(response => {
                 // console.log("GET请求发出了");

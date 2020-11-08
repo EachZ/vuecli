@@ -18,6 +18,46 @@
                 <el-progress type="circle" :percentage=percentages1></el-progress>
             </div>
         </div>
+        <div style="width:800px;height:80px;margin:0 auto">
+<!--            <h3>图例</h3>-->
+            <br/>
+            <div class="0">
+                <div style="float:left;width:100px; height:40px;margin:3px 10px 0 10px;background-color:lightseagreen; position:relative;border-style:solid;border-width:1px;">
+                    <div style="left:20px;top:10px;position:absolute">0%~20%</div>
+                    <div style="height:10px;width:78px;position:absolute;bottom:0"></div>
+                </div>
+            </div>
+            <div class="1">
+                <div style="float:left;width:100px; height:40px;margin:3px 10px 0 10px;background-color:cornflowerblue; position:relative;border-style:solid;border-width:1px;">
+                    <div style="left:20px;top:10px;position:absolute">20%~40%</div>
+                    <div style="height:10px;width:78px;position:absolute;bottom:0"></div>
+                </div>
+            </div>
+            <div class="2">
+                <div style="float:left;width:100px; height:40px;margin:3px 10px 0 10px;background-color:mediumpurple; position:relative;border-style:solid;border-width:1px;">
+                    <div style="left:20px;top:10px;position:absolute">40%~60%</div>
+                    <div style="height:10px;width:78px;position:absolute;bottom:0"></div>
+                </div>
+            </div>
+            <div class="3">
+                <div style="float:left;width:100px; height:40px;margin:3px 10px 0 10px;background-color:deeppink; position:relative;border-style:solid;border-width:1px;">
+                    <div style="left:20px;top:10px;position:absolute">60%~80%</div>
+                    <div style="height:10px;width:78px;position:absolute;bottom:0"></div>
+                </div>
+            </div>
+            <div class="4">
+                <div style="float:left;width:100px; height:40px;margin:3px 10px 0 10px;background-color:orange; position:relative;border-style:solid;border-width:1px;">
+                    <div style="left:20px;top:10px;position:absolute">80%~100%</div>
+                    <div style="height:10px;width:78px;position:absolute;bottom:0"></div>
+                </div>
+            </div>
+            <div class="5">
+                <div style="float:left;width:100px; height:40px;margin:3px 10px 0 10px;background-color:red; position:relative;border-style:solid;border-width:1px;">
+                    <div style="left:20px;top:10px;position:absolute"><span> > 100%</span></div>
+                    <div style="height:10px;width:78px;position:absolute;bottom:0"></div>
+                </div>
+            </div>
+        </div>
         <div class="date">
             <el-date-picker
                     class="right-pick-btn"
@@ -28,6 +68,7 @@
                     type="date"
                     placeholder="按日期查询"
             />
+            <hr/>
             <el-row>
                 <el-col :span="24">
                     <div class="weeks">
@@ -501,12 +542,12 @@
                 let sDateYear=sDate.getFullYear();
                 let sDateMonth=sDate.getMonth()+1;
                 let sDateDay=sDate.getDate();
-                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 12:00:00";
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
 
                 let eDateYear=eDate.getFullYear();
                 let eDateMonth=eDate.getMonth()+1;
                 let eDateDay=eDate.getDate();
-                let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 12:00:00";
+                let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 00:00:00";
 
                 //向后端调用方法
                 this.testAxiosGET1(sDate,eDate);
@@ -526,7 +567,6 @@
                     if (response.data) {
                         console.log(response.data.data);
                         this.renderHTML(response.data.data);
-                        console.log("获取渲染图形的参数");
                     }
                 }).catch(err => {
                     alert('请求资源负载图失败');
@@ -645,8 +685,8 @@
                     for(let i=0;i<graphData[j].loadRate.length;i++){
                         let sateArr=["state0","state1","state2","state3","state4","state5",];
                         let index;
-                        // let rate=Number(graphData[j].loadRate[i].rate);
-                        let rate=Number(200);
+                        let rate=Number(graphData[j].loadRate[i].rate);
+                        // let rate=Number(200);
                         let h=80*rate/120;
                         // let h=80*graphData[j].loadRate[i].rate/120;
 
@@ -658,19 +698,19 @@
                             index=2;
                         }else if(60<=rate && rate<=80){
                             index=3;
-                        }else if(80<=rate && rate<=100){
+                        }else if(80<=rate && rate<100){
                             index=4;
-                        }else if(rate>100){
+                        }else if(rate>=100){
                             index=5;
                             h=78
                         }
-                        console.log(sateArr[index]);
+                        // console.log(sateArr[index]);
                         theHTML +=
                             "                            <li>\n"+
                             // "<span>"+this.splitDate(graphData[j].loadRate[i].time)+"**</span>"+
                             // "<el-progress type='circle' class='huan' :percentage='55'>"+graphData[j].loadRate[i].rate+"%</el-progress>"+
                             "        <div style=\"z-index:0;float:left;width:80px; height:80px;\n" +
-                            "            margin:3px 10px 0 10px;position:relative;border-style:solid;border-width:1px;\">\n" +
+                            "            margin:3px 10px 0 10px;background-color:whitesmoke; position:relative;border-style:solid;border-width:1px;\">\n" +
                             // "<hr style='position: absolute'/>" +
                             "            <div style=\"left: 20px;position:absolute;z-index:999\">\n" +
                             rate+
@@ -737,12 +777,12 @@
             let sDateYear=sDate.getFullYear();
             let sDateMonth=sDate.getMonth()+1;
             let sDateDay=sDate.getDate();
-            let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 12:00:00";
+            let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
 
             let eDateYear=eDate.getFullYear();
             let eDateMonth=eDate.getMonth()+1;
             let eDateDay=eDate.getDate();
-            let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 12:00:00";
+            let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 00:00:00";
 
             console.log(sDateString);
             console.log(eDateString);
@@ -758,7 +798,7 @@
                     //要改成日历上的结束时间
                     endDate: eDateString,
                     // endDate: "2018/11/21 12:00:00",
-                    frequency :1
+                    // frequency :1
                 }
             }).then(response => {
                 console.log("资源甘特图get传参数");
@@ -792,27 +832,27 @@
     }
     /*0~20*/
     .state0{
-        background-color:#3a8ee6;
+        background-color:lightseagreen;
     }
     /*20~40*/
     .state1{
-        background-color:#5daf34;
+        background-color:cornflowerblue;
     }
     /*40~60*/
     .state2{
-        background-color:#c795f5;
+        background-color:mediumpurple;
     }
     /*60~80*/
     .state3{
-        background-color:#2c3e50;
+        background-color:deeppink;
     }
     /*80~100*/
     .state4{
-        background-color:#cf9236;
+        background-color:orange;
     }
     /*100以上*/
     .state5{
-        background-color:#f56c6c;
+        background-color:red;
     }
     #container{
         display: grid;
