@@ -3,7 +3,7 @@
         <div class="item">
             <!--            按期交货率-->
             <h4>按期交货率</h4>
-            <h5>2020年10月1日之前</h5>
+            <h5>{{dateView}}</h5>
             <el-progress type="circle" :percentage=percentages></el-progress>
 
         </div>
@@ -50,6 +50,7 @@
         },
         data() {
             return {
+                dateView:"2020-11-07",
                 percentages:50,
                 GETcontent :'',
                 POSTcontent:'',
@@ -249,6 +250,7 @@
                 })
             },
             getData(){
+                this.dateView=(this.newDate).toString();
                 this.testAxiosGET1();
                 this.testAxiosGET();
             },
@@ -565,6 +567,7 @@
             pickDate(date) {
                 let that = this;
                 that.newDate = moment(date).format("YYYY-MM-DD");
+                this.dateView=(this.newDate).toString();
                 console.log("选的时间");
                 console.log(this.newDate);
                 this.testAxiosGET();
