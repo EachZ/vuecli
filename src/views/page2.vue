@@ -452,6 +452,15 @@
                     yAxis: {
                         title: '资源名',
                         categories:this.categoryData,
+                        labels:{
+                            step:1,
+                            rotation: -45,
+                            style: {
+                                // color: '#19a0f5',//颜色bai
+                                fontSize:'4px'  //字体du
+                            }
+                        },
+                        // gridLineWidth:10,
                         // min: 0,
                         // max: 2
                     },
