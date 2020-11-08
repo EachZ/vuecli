@@ -439,11 +439,53 @@
                 that.$emit("dateValue", that.newDate);
                 console.log("this.newDate: ", that.newDate);
                 that.initData(that.newDate);
+
+                console.log("选择了之后的days:");
+                console.log(this.days);
+                console.log("++++++++++++++++++");
+                let sDate =this.days[0];
+                let eDate =this.days[6];
+
+                let sDateYear=sDate.getFullYear();
+                let sDateMonth=sDate.getMonth()+1;
+                let sDateDay=sDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 12:00:00";
+
+                let eDateYear=eDate.getFullYear();
+                let eDateMonth=eDate.getMonth()+1;
+                let eDateDay=eDate.getDate();
+                let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 12:00:00";
+
+                //向后端调用方法
+                console.log("资源甘特图 axios get");
+                this.$axios.get('/resource/gantt/loading',{
+                    params:{
+                        //要改成日历上的开始时间
+                        // startDate: "2018/11/19 12:00:00",
+                        startDate: sDateString,
+                        //要改成日历上的结束时间
+                        endDate: eDateString,
+                        // endDate: "2018/11/21 12:00:00",
+                        frequency :1
+                    }
+                }).then(response => {
+                    console.log("资源甘特图get传参数");
+                    if (response.data) {
+                        console.log(response.data.data);
+                        this.renderHTML(response.data.data);
+                        console.log("获取渲染图形的参数");
+                    }
+                }).catch(err => {
+                    alert('请求资源负载图失败');
+                });
+
+
                 const index = _.findIndex(that.days, function(o) {
                     return o.getDate() === new Date(that.newDate).getDate();
                 });
                 // console.log("index: ", index);
                 this.tabIndex = index;
+
             },
             initData(cur) {
                 let date = "";
@@ -531,7 +573,7 @@
             },
             splitDate(s){
               let sArr=s.split(" ");
-              console.log(sArr);
+              // console.log(sArr);
               return sArr[0]
             },
             renderHTML(graphData){
@@ -549,8 +591,9 @@
                     for(let i=0;i<graphData[j].loadRate.length;i++){
                         theHTML +=
                             "                            <li>\n"+
-                            "<span>"+this.splitDate(graphData[j].loadRate[i].time)+"</span>"+
-                            "<span>"+graphData[j].loadRate[i].rate+"%</span>"+
+                            // "<span>"+this.splitDate(graphData[j].loadRate[i].time)+"**</span>"+
+                            "<el-progress type='circle' class='huan' :percentage='55'></el-progress>"+
+                        // "<span>"+graphData[j].loadRate[i].rate+"%</span>"+
                             "                            </li>\n";
                     }
                     // theHTML +=
@@ -596,12 +639,35 @@
             // console.log("index: ", index);
             // this.tabIndex = index;
 
+            console.log("显示日期:");
+
+            let sDate =this.days[0];
+            let eDate =this.days[6];
+
+            let sDateYear=sDate.getFullYear();
+            let sDateMonth=sDate.getMonth()+1;
+            let sDateDay=sDate.getDate();
+            let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 12:00:00";
+
+            let eDateYear=eDate.getFullYear();
+            let eDateMonth=eDate.getMonth()+1;
+            let eDateDay=eDate.getDate();
+            let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 12:00:00";
+
+            console.log(sDateString);
+            console.log(eDateString);
+            console.log("ppppppppppppppppppppp");
+
             //向后端调用方法
             console.log("资源甘特图 axios get");
             this.$axios.get('/resource/gantt/loading',{
                 params:{
-                    startDate: "2008/11/03 19:00:00",
-                    endDate: "2008/11/10 19:00:00",
+                    //要改成日历上的开始时间
+                    // startDate: "2018/11/19 12:00:00",
+                    startDate: sDateString,
+                    //要改成日历上的结束时间
+                    endDate: eDateString,
+                    // endDate: "2018/11/21 12:00:00",
                     frequency :1
                 }
             }).then(response => {
@@ -628,6 +694,11 @@
 </script>
 
 <style lang="less">
+    .huan{
+        width:80px;
+        height: 80px;
+        background-color: red;
+    }
     #container{
         display: grid;
         grid-template-columns: 250px 250px;

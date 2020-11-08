@@ -80,8 +80,8 @@
             // console.log("订单-生产单关系表get请求");
             this.$axios.get('/orders/productionForm',{
                 params:{
-                    startDate: "2008/11/05 12:00:00",
-                    endDate: "2008/11/07 12:00:00"
+                    startDate: "2018/11/19 12:00:00",
+                    endDate: "2018/11/21 12:00:00"
                 }
             }).then(response => {
                 // console.log("GET请求发出了");
