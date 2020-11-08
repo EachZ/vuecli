@@ -8,13 +8,13 @@
             <div class="device item">
                 <!--              设备总负载-->
                 <h4>设备总负载</h4>
-                <h5>2020年10月1-7日</h5>
+                <h5>{{timeString}}</h5>
                 <el-progress type="circle" :percentage=percentages></el-progress>
             </div>
             <div class="staff item">
         <!--                人员总负载-->
                 <h4>人员总负载</h4>
-                <h5>2020年10月1-7日</h5>
+                <h5>{{timeString}}</h5>
                 <el-progress type="circle" :percentage=percentages1></el-progress>
             </div>
         </div>
@@ -407,6 +407,7 @@
                 ],
                 percentages:0,
                 percentages1:0,
+                timeString:"",
                 currentYear: 1970, // 年份
                 currentMonth: 1, // 月份
                 currentDay: 1, // 日期
@@ -459,6 +460,7 @@
             testAxiosGET1(sDate,eDate) {
                 let dateS=moment(sDate).format("YYYY-MM-DD");
                 let dateE=moment(eDate).format("YYYY-MM-DD");
+                this.timeString=dateS.toString()+" 到 "+dateE.toString();
 
                 let year1=(dateS.toString()).substring(0,4);
                 let month1=(dateS.toString()).substring(5,7);
