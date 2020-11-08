@@ -2,8 +2,8 @@
     <div class="page1">
         <div class="item">
             <!--            按期交货率-->
-            <h4>按期交货率</h4>
-            <h5>{{dateView}}</h5>
+            <h3>按期交货率</h3>
+            <h4>{{dateView}}<span>之前</span></h4>
             <el-progress type="circle" :percentage=percentages></el-progress>
 
         </div>
@@ -20,9 +20,9 @@
                         placeholder="按日期查询"
                 />
             </div>
-            <div class="late">
-                红色表示延期订单
-            </div>
+<!--            <div class="late">-->
+<!--                红色表示延期订单-->
+<!--            </div>-->
         </div>
         <br/>
         <br/>
@@ -127,9 +127,9 @@
         mounted(){
             this.getData();
         },
-        created() {
-            this.initData(null);
-        },
+        // created() {
+        //     this.initData(null);
+        // },
         methods: {
             testAxiosGET1() {
                 let year1=(this.newDate.toString()).substring(0,4);
@@ -143,9 +143,9 @@
                         this.GETcontent=response.data.data;
                         let data=this.GETcontent;
                         if(isNaN(data))
-                            this.percentages=100;
+                            this.percentages=Number(100);
                         else{
-                            this.percentages= parseFloat((data*100).toString()).toFixed(2);
+                            this.percentages= Number(parseFloat((data*100).toString()).toFixed(2));
                         }
                     }
                 }).catch(err => {
@@ -246,7 +246,7 @@
                         this.drawLine(data1);
                     }
                 }).catch(err => {
-                    alert('请求失败')
+                    alert('请求1失败')
                 })
             },
             getData(){
@@ -361,9 +361,9 @@
                                                 '#C1232B','#B5C334','#FCCE10'
                                             ];
                                             console.log(params);
-                                            if(params.data==0.2){
+                                            if(Number(params.data)===0.2){
                                                 return colorList[1];
-                                            }else if(params.data==0.3){
+                                            }else if(Number(params.data)===0.3){
                                                 return colorList[2]
                                             }
                                             return colorList[0]
@@ -380,9 +380,9 @@
                                             position: 'inside',
                                             formatter: function(params) {
                                                 console.log(params);
-                                                if(params.data==0.3){
+                                                if(Number(params.data)===0.3){
                                                     return '已完成';
-                                                }else if(params.data==0.2){
+                                                }else if(Number(params.data)===0.2){
                                                     return '正在进行';
                                                 }
                                                 return '未开始';
@@ -409,7 +409,7 @@
                                                 '#c1675e','#6ac35d'
                                             ];
                                             console.log(params);
-                                            if(params.data==0.1){
+                                            if(Number(params.data)===0.1){
                                                 return colorList[1];
                                             }
                                             return colorList[0]
@@ -426,7 +426,8 @@
                                             position: 'inside',
                                             formatter: function(params) {
                                                 console.log(params);
-                                                if(params.data==0.2){
+                                                if(Number(params.data)===0.2){
+                                                    console.log(Number(params.data));
                                                     return '延期';
                                                 }
                                                 return '未延期';
@@ -442,107 +443,6 @@
                         ]
                     }
                 );
-
-
-
-                // 基于准备好的dom，初始化echarts实例
-                let myChart = this.$echarts.init(document.getElementById('myChart'));
-                // 绘制图表
-                myChart.setOption({
-                    // title: {text: '在Vue中使用echarts'},
-                    // tooltip: {},
-                    // xAxis: {
-                    //     data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-                    // },
-                    // yAxis: {},
-                    // series: [{
-                    //     name: '销量',
-                    //     type: 'bar',
-                    //     data: [5, 20, 36, 10, 10, 20]
-                    // }]
-                    title: {
-                        text: '阶梯瀑布图',
-                        subtext: 'From ExcelHome',
-                        sublink: 'http://e.weibo.com/1341556070/Aj1J2x5a5'
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                        },
-                        formatter: function (params) {
-                            var tar;
-                            if (params[1].value !== '-') {
-                                tar = params[1];
-                            }
-                            else {
-                                tar = params[0];
-                            }
-                            return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
-                        }
-                    },
-                    legend: {
-                        data: ['支出', '收入']
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'category',
-                        splitLine: {show: false},
-                        data: function () {
-                            var list = [];
-                            for (var i = 1; i <= 11; i++) {
-                                list.push('11月' + i + '日');
-                            }
-                            return list;
-                        }()
-                    },
-                    yAxis: {
-                        type: 'value'
-                    },
-                    series: [
-                        {
-                            name: '辅助',
-                            type: 'bar',
-                            stack: '总量',
-                            itemStyle: {
-                                barBorderColor: 'rgba(0,0,0,0)',
-                                color: 'rgba(0,0,0,0)'
-                            },
-                            emphasis: {
-                                itemStyle: {
-                                    barBorderColor: 'rgba(0,0,0,0)',
-                                    color: 'rgba(0,0,0,0)'
-                                }
-                            },
-                            data: [0, 900, 1245, 1530, 1376, 1376, 1511, 1689, 1856, 1495, 1292]
-                        },
-                        {
-                            name: '收入',
-                            type: 'bar',
-                            stack: '总量',
-                            label: {
-                                show: true,
-                                position: 'top'
-                            },
-                            data: [900, 345, 393, '-', '-', 135, 178, 286, '-', '-', '-']
-                        },
-                        {
-                            name: '支出',
-                            type: 'bar',
-                            stack: '总量',
-                            label: {
-                                show: true,
-                                position: 'bottom'
-                            },
-                            data: ['-', '-', '-', 108, 154, '-', '-', '-', 119, 361, 203]
-                        }
-                    ]
-                });
             },
             // increase() {
             //     this.percentage += 10;

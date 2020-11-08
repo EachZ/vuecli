@@ -7,13 +7,13 @@
 
             <div class="device item">
                 <!--              设备总负载-->
-                <h4>设备总负载</h4>
+                <h3>设备总负载</h3>
                 <h5>{{timeString}}</h5>
                 <el-progress type="circle" :percentage=percentages></el-progress>
             </div>
             <div class="staff item">
         <!--                人员总负载-->
-                <h4>人员总负载</h4>
+                <h3>人员总负载</h3>
                 <h5>{{timeString}}</h5>
                 <el-progress type="circle" :percentage=percentages1></el-progress>
             </div>
@@ -859,7 +859,7 @@
     #container{
         display: grid;
         grid-template-columns: 250px 250px;
-        grid-template-rows: 250px;
+        grid-template-rows: 190px;
         margin-left: 30%;
     }
     .item {
