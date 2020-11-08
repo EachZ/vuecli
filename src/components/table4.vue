@@ -3,8 +3,8 @@
         <h1>4. 生产单-资源关系表</h1>
         <a-table :columns="columns" :data-source="data" :rowClassName="rowClassName">
 <!--            ↓是每一行第一列的内容-->
-            <span slot="orderID" slot-scope="text">{{ text }}</span>
-            <span slot="customTitle">二级生产单号</span>
+<!--            <span slot="secondaryProductionNumber" slot-scope="text">{{ text }}</span>-->
+<!--            <span slot="customTitle">二级生产单号</span>-->
             <span slot="manpower" slot-scope="manpower">{{manpower}}</span>
 
         </a-table>
@@ -16,10 +16,9 @@
     const columns = [
         //第一列:资源
         {
-            dataIndex: 'orderID',
-            key: 'orderID',
-            slots: { title: 'customTitle' },
-            scopedSlots: { customRender: 'orderID' },
+            title: '二级生产单号',
+            dataIndex: 'secondaryProductionNumber',
+            key: 'secondaryProductionNumber',
         },
         //第二列:资源名称
         {
@@ -47,28 +46,28 @@
     const data = [
         {
             key: '1',
-            orderID: '123',
+            secondaryProductionNumber: '123',
             resourceName: 'line1',
             category: '设备',
             manpower:123,
         },
         {
             key: '2',
-            orderID: '123',
+            secondaryProductionNumber: '123',
             resourceName: 'line2',
             category: '设备',
             manpower:544,
         },
         {
             key: '3',
-            orderID: '123',
+            secondaryProductionNumber: '123',
             resourceName: '张三',
             category: '人员',
             manpower:2,
         },
         {
             key: '4',
-            orderID: '123',
+            secondaryProductionNumber: '123',
             resourceName: '李四',
             category: '人员',
             manpower:5,
@@ -93,19 +92,18 @@
         mounted() {
             //请求后端的获取生产单-资源关系表
             //要需要传首尾日期？？？
-            console.log("生产单-资源关系表get请求");
+            // console.log("生产单-资源关系表get请求");
             this.$axios.get('/resource/productionForm',{
                 params:{
-                    startDate: "2008-11-07",
-                    endDate: "2008-11-09"
+                    startDate: "2008/11/05 12:00:00",
+                    endDate: "2008/11/07 12:00:00"
                 }
             }).then(response => {
-                console.log("GET请求发出了");
+                // console.log("GET请求发出了");
                 if (response.data) {
-                    console.log("生产单-资源关系表数据:");
-                    console.log(response.data);
-                    this.dataGroups=response.data.data;
-                    console.log(response.data.data);
+                    // console.log("生产单-资源关系表数据:");
+                    // console.log(response.data.data);
+                    this.data=response.data.data;
                 }
             }).catch(err => {
                 alert('生产单-资源关系表请求失败');
