@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>3. 生产单</h1>
+<!--        <h1>3. 生产单</h1>-->
         <a-table :pagination="{defaultPageSize: 999, hideOnSinglePage: true }"
                  :columns="outColumns" :dataSource="dataGroups" :rowKey="item => item.resourceId"
                  :rowClassName="rowClassName"

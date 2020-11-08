@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>4. 生产单-资源关系表</h1>
+<!--        <h1>4. 生产单-资源关系表</h1>-->
         <a-table :columns="columns" :data-source="data" :rowClassName="rowClassName">
 <!--            ↓是每一行第一列的内容-->
 <!--            <span slot="secondaryProductionNumber" slot-scope="text">{{ text }}</span>-->
