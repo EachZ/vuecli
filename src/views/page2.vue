@@ -17,6 +17,8 @@
         name: "page2",
         data(){
             return{
+                pageWidth: 0,
+                pageHeight: 0,
                 //可以用于处理的数据
                 standardData:[],
                 //甘特图实例？？
@@ -317,13 +319,18 @@
                     ],
                 colors: ['#058DC7',
                     '#50B432',
-                    '#ED561B',
-                    '#DDDF00',
-                    '#24CBE5',
-                    '#64E572',
-                    '#FF9655',
-                    '#FFF263',
-                    '#6AF9C4'
+                    '#FF3333',
+                    '#993366',
+                    '#FF9900',
+                    '#9900FF',
+                    '#336699',
+                    '#333333',
+                    '#336600',
+                    '#FF33FF',
+                    '#996633',
+                    '#339999',
+                    '#333366',
+                    '#FF6666'
                 ],
 
 
@@ -439,8 +446,10 @@
                 let chartO={
                     chart: {
                         type: 'xrange',
-                        height:750,
-                        width:1250
+                        // height:745,
+                        // width:1250
+                        height:this.pageHeight,
+                        width:this.pageWidth
                     },
                     credits:{
                         enabled:false
@@ -725,12 +734,14 @@
             }
         },
         mounted(){
+            this.pageWidth=document.body.clientWidth;
+            this.pageHeight=document.body.clientHeight+50;
             //随机生成colorNum个颜色
-            let colorNum=1000;
-            this.colors=[];
-            for(let i=0;i<colorNum;i++){
-                this.createdRandomManyColors();
-            }
+            // let colorNum=1000;
+            // this.colors=[];
+            // for(let i=0;i<colorNum;i++){
+            //     this.createdRandomManyColors();
+            // }
             // console.log("资源甘特图get请求");
 
             //改一下url名字
