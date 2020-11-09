@@ -183,6 +183,15 @@
                         let orderList = data.map(function (item) {
                             return item.orderNumber;
                         });
+                        let exDateList = data.map(function (item) {
+                            return item.expectedDelivery;
+                        });
+                        let exDateList1 = data.map(function (item) {
+                            return item.deadline;
+                        });
+                        let nameList = data.map(function (item) {
+                            return item.materialCoding;
+                        })
                         let stateList=data.map(function (item) {
                             if(item.finishState===0){
                                 return 0.1;
@@ -241,7 +250,10 @@
                             data5:dataList3,
                             //data4:[1,1.5,0.5,1,1.5,1.5]//状态
                             data4:stateList,
-                            data6:yanList
+                            data6:yanList,
+                            exDateList:exDateList,
+                            exDateList1:exDateList1,
+                            nameList: nameList,
                         };
                         //上面的小方块的数组、y轴的数组、产品的series数组
                         this.drawLine(data1);
@@ -276,7 +288,31 @@
                         tooltip: {
                             trigger: 'axis',
                             axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                                type: 'shadow',// 默认为直线，可选为：'line' | 'shadow'
+                                label:{
+                                    show:true,
+                                    formatter: function(params) {
+                                        // exDateList
+                                        console.log("biaoqian:");
+                                        console.log(params.value);
+                                        let reIn=0;
+                                        let i=0;
+                                        for (;i<data1.order.length;i++)
+                                        {
+                                            if(params===data1.order[i]) {
+                                                reIn=i;
+                                            }
+                                        }
+                                        let re= "生产产品：";
+                                        re=re+data1.nameList[reIn];
+                                        re=re+"\n预计日期是：";
+                                        re=re+data1.exDateList[reIn];
+                                        re=re+"\n实际日期是：";
+                                        re=re+data1.exDateList1[reIn];
+                                        return re;
+
+                                    },
+                                },
                             }
                         },
                         legend:{
