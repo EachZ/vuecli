@@ -445,6 +445,9 @@
                     credits:{
                         enabled:false
                     },
+                    // exporting:{
+                    //   buttons:
+                    // },
                     title: {
                         text: '资源甘特图'
                     },

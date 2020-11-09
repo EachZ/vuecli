@@ -28,7 +28,11 @@ import HighchartsVue from 'highcharts-vue'
 Vue.use(HighchartsVue);
 import Highcharts from 'highcharts'
 import xrange from 'highcharts/modules/xrange'
+import loadExporting from 'highcharts/modules/exporting'
+import exportExcel from 'highcharts/modules/export-data.src'
 xrange(Highcharts);
+loadExporting(Highcharts);
+exportExcel(Highcharts);
 
 
 new Vue({

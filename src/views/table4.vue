@@ -28,7 +28,7 @@
         },
         //第三列:人力
         {
-            title: '人力',
+            title: '资源量',
             key: 'manpower',
             dataIndex: 'manpower',
             scopedSlots: { customRender: 'manpower' },
