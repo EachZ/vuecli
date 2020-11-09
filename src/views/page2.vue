@@ -429,7 +429,7 @@
                     let tempSeriesJSONs={
                         name: pName,
                         borderRadius: 0,
-                        pointWidth: 10,
+                        pointWidth: 5,
                         data:dataArr
                     };
                     mySeries.push(tempSeriesJSONs);
@@ -439,7 +439,7 @@
                 let chartO={
                     chart: {
                         type: 'xrange',
-                        height:2000,
+                        height:750,
                         width:1250
                     },
                     credits:{
@@ -462,7 +462,7 @@
                             // rotation: -45,
                             style: {
                                 // color: '#19a0f5',//颜色bai
-                                fontSize:'15px',  //字体du
+                                fontSize:'13px',  //字体du
                             }
                         },
                         // gridLineWidth:10,
