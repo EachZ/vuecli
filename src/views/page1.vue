@@ -240,7 +240,8 @@
                             data3:dataList2,//测试
                             data5:dataList3,
                             //data4:[1,1.5,0.5,1,1.5,1.5]//状态
-                            data4:stateList
+                            data4:stateList,
+                            data6:yanList
                         };
                         //上面的小方块的数组、y轴的数组、产品的series数组
                         this.drawLine(data1);
@@ -286,8 +287,10 @@
                             right: '4%',
                         },
                         xAxis: [
+
                             {
-                                type: 'value'
+                                type: 'value',
+                                show: false
                             }
                         ],
                         yAxis: [
@@ -313,6 +316,10 @@
 
                                 label: {
                                     show: true,
+                                    // position:-20,
+                                    // margin:3,
+                                    // color:'rgba(0,0,0,1)',
+                                    // formatter: 'some text',
                                 },
                                 data: data1.data3
                             },
@@ -437,7 +444,7 @@
                                     }
 
                                 },
-                                data: data1.data4
+                                data: data1.data6
                             }
 
                         ]
