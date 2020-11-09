@@ -1,7 +1,12 @@
 <template>
     <div>
-<!--        <h1>4. 生产单-资源关系表</h1>-->
-        <a-table :columns="columns" :data-source="data" :rowClassName="rowClassName">
+        <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: cornflowerblue">导出生产单-资源关系表</a-button>
+        <br/>
+        <br/>
+        <a-table :columns="columns" :data-source="data" :rowClassName="rowClassName"
+                 id="exportXlsx"
+                 :pagination="pagination"
+        >
 <!--            ↓是每一行第一列的内容-->
 <!--            <span slot="secondaryProductionNumber" slot-scope="text">{{ text }}</span>-->
 <!--            <span slot="customTitle">二级生产单号</span>-->
@@ -12,6 +17,8 @@
 </template>
 
 <script>
+    import FileSaver from 'file-saver'
+    import XLSX from 'xlsx'
     //一共有4列
     const columns = [
         //第一列:资源
@@ -80,6 +87,13 @@
             return {
                 data,
                 columns,
+                pagination: {
+                    total: 0,
+                    pageSize: 10,//每页中显示10条数据
+                    showSizeChanger: true,
+                    pageSizeOptions: ["10", "20", "50", "100"],//每页中显示的数据
+                    showTotal: total => `共有 ${total} 条数据`,  //分页中显示总的数据
+                },
             };
         },
         methods:{
@@ -87,7 +101,28 @@
                 let className = "light-row";
                 if (index % 2 === 1) className = "dark-row";
                 return className;
-            }
+            },
+            exportExcel() {
+                //取消分页，获取表格全部数据
+                this.pagination.pageSize=10000;
+                this.$nextTick(function () {
+                    //根据给的id获取table表，选取元素的时候加上，{raw:true}可以使表格正常导出，消除科学计数法
+                    let wb = XLSX.utils.table_to_book(document.getElementById('exportXlsx'), {
+                        raw: true
+                    });
+
+                    let wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'array'});
+                    try {
+                        //给xlsx文件赋值名字
+                        FileSaver.saveAs(new Blob([wbout], {type: 'application/octet-stream'}), '生产单-资源关系表.xlsx')
+                    } catch (e) {
+                        if (typeof console !== 'undefined') console.log(e, wbout)
+                    }
+                    //恢复分页
+                    this.pagination.pageSize = 10;
+                    return wbout
+                })
+            },
         },
         mounted() {
             //请求后端的获取生产单-资源关系表
@@ -115,7 +150,7 @@
 
 <style>
     .ant-table-thead >tr >th{
-        background-color: #c0ccda;
+        background-color: lightsteelblue;
     }
     .light-row {background-color: #fff;}
     .dark-row {background-color: #f2f4f5;}

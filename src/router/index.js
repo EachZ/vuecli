@@ -21,12 +21,13 @@ const routes = [
   {
     path: '/',
     name: 'Table1',
-    component: Table1
+    component: () => import(/* webpackChunkName: "table1" */ '../views/table1.vue')
   },
   {
     path: '/home',
     name: 'Home',
-    component: Home
+    // component: Home
+    component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue')
   },
   {
     path: '/about',
@@ -39,27 +40,27 @@ const routes = [
   {
     path:'/page1',
     name:'Page1',
-    component:Page1
+    component: () => import(/* webpackChunkName: "page1" */ '../views/page1.vue')
   },
   {
     path:'/page2',
     name:'Page2',
-    component:Page2
+    component: () => import(/* webpackChunkName: "page2" */ '../views/page2.vue')
   },
   {
     path:'/page3',
     name:'Page3',
-    component:Page3
+    component: () => import(/* webpackChunkName: "page3" */ '../views/page3.vue')
   },
   {
     path:'/page6',
     name:'Page6',
-    component:Page6
+    component: () => import(/* webpackChunkName: "page6" */ '../views/page6.vue')
   },
   {
     path:'/page7',
     name:'Page7',
-    component:Page7
+    component: () => import(/* webpackChunkName: "page7" */ '../views/page7.vue')
   },
   // {
   //   path:'/table1',
@@ -69,17 +70,17 @@ const routes = [
   {
     path:'/table2',
     name:'Table2',
-    component:Table2
+    component: () => import(/* webpackChunkName: "table2" */ '../views/table2.vue')
   },
   {
     path:'/table3',
     name:'Table3',
-    component:Table3
+    component: () => import(/* webpackChunkName: "table3" */ '../views/table3.vue')
   },
   {
     path:'/table4',
     name:'Table4',
-    component:Table4
+    component: () => import(/* webpackChunkName: "table4" */ '../views/table4.vue')
   }
 ];
 

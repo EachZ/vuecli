@@ -379,7 +379,7 @@
                                 let tempJSON={
                                     startTime: sTime,
                                     endTime: eTime,
-                                    resourceIndex: rIndex
+                                    resourceMark: rIndex
                                 };
                                 jsonArr.push(tempJSON);
                             }
@@ -411,7 +411,7 @@
                     let tList=data[i].timeList;
                     let dataArr=[];
                     for(let j=0;j<tList.length;j++){
-                        let rIndex=tList[j].resourceIndex;
+                        let rIndex=tList[j].resourceMark;
                         let sTime=new Date(tList[j].startTime);
                         let eTime=new Date(tList[j].endTime);
                         let tempDataJSON={
@@ -733,6 +733,7 @@
             }
             // console.log("资源甘特图get请求");
 
+            //改一下url名字
             this.$axios.get('/resource/gantt/running',{
                 params:{
                     startDate: "2018/11/19 00:00:00",
@@ -746,7 +747,9 @@
                     //res应该是providedData格式
                     console.log(response.data.data);
                     //将从后端传回来的数据标准化
-                    this.turnIntoStandardData(response.data.data);
+                    // this.turnIntoStandardData(response.data.data);
+                    this.categoryData=response.data.data.resourceNames;
+                    this.standardData=response.data.data.productList;
                     //将已经标准化的数据渲染进甘特图里
                     this.handleStandardData(this.standardData);
                 }

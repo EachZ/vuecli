@@ -1,14 +1,22 @@
 <template>
     <div>
 <!--        <h1>3. 生产单</h1>-->
-        <a-table :pagination="{defaultPageSize: 999, hideOnSinglePage: true }"
-                 :columns="outColumns" :dataSource="dataGroups" :rowKey="item => item.resourceId"
+        <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: cornflowerblue">导出生产单</a-button>
+        <br/>
+        <br/>
+        <a-table :pagination="pagination"
+                 :columns="outColumns"
+                 :dataSource="dataGroups"
+                 :rowKey="item => item.resourceId"
                  :rowClassName="rowClassName"
+                 :defaultExpandedRowKeys="tempIDs"
+                 id="exportXlsx"
+
         >
-            <a-table :pagination="{defaultPageSize: 999, hideOnSinglePage: true }"
+            <a-table :pagination="pagination1"
                      :columns="columns"
                      slot="expandedRowRender" slot-scope="parentData"
-                     :dataSource="parentData.productAndTime" :rowKey="item => item.id"
+                     :dataSource="parentData.productAndTimeVO" :rowKey="item => item.id"
                      :locale="{emptyText: '该类别 暂无节点'}"
                      :rowClassName="rowClassName"
             >
@@ -19,9 +27,30 @@
 </template>
 
 <script>
+    import XLSX from "xlsx";
+    import FileSaver from "file-saver";
+
     export default {
         data() {
             return {
+                IDs:[],
+                tempIDs:[],
+                pagination: {
+                    total: 0,
+                    pageSize: 10,//每页中显示10条数据
+                    showSizeChanger: true,
+                    pageSizeOptions: ["5", "10", "20", "100"],//每页中显示的数据
+                    showTotal: total => `共有 ${total} 条数据`,  //分页中显示总的数据
+                    // defaultPageSize: 999, hideOnSinglePage: true
+                },
+                pagination1: {
+                    total: 0,
+                    pageSize: 2,//每页中显示10条数据
+                    showSizeChanger: true,
+                    pageSizeOptions: ["2", "4", "6", "8", "10"],//每页中显示的数据
+                    showTotal: total => `共有 ${total} 条数据`,  //分页中显示总的数据
+                    // defaultPageSize: 999, hideOnSinglePage: true
+                },
                 dataGroups: [
                     // {
                     //     resourceName: '张三',
@@ -127,13 +156,36 @@
                 let className = "light-row";
                 if (index % 2 === 1) className = "dark-row";
                 return className;
-            }
+            },
+            exportExcel() {
+                //取消分页，获取表格全部数据
+                this.pagination.pageSize=this.tempIDs.length;
+                this.pagination1.pageSize=10000;
+                this.$nextTick(function () {
+                    //根据给的id获取table表，选取元素的时候加上，{raw:true}可以使表格正常导出，消除科学计数法
+                    let wb = XLSX.utils.table_to_book(document.getElementById('exportXlsx'), {
+                        raw: true
+                    });
+
+                    let wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'array'});
+                    try {
+                        //给xlsx文件赋值名字
+                        FileSaver.saveAs(new Blob([wbout], {type: 'application/octet-stream'}), '生产单.xlsx')
+                    } catch (e) {
+                        if (typeof console !== 'undefined') console.log(e, wbout)
+                    }
+                    //恢复分页
+                    this.pagination.pageSize = 10;
+                    this.pagination1.pageSize= 2;
+                    return wbout
+                })
+            },
         },
         mounted() {
             //请求后端的获取生产单
             //要需要传首尾日期？？？
             console.log("生产单get请求");
-            this.$axios.get('/resource/gantt/running',{
+            this.$axios.get('/productionForm',{
                 params:{
                     startDate: "2018/11/19 00:00:00",
                     endDate: "2018/11/21 00:00:00"
@@ -144,10 +196,17 @@
                     console.log("生产单数据:");
                     console.log(response.data.data);
                     this.dataGroups=response.data.data;
+
+                    for(let i=0;i<this.dataGroups.length;i++){
+                        this.tempIDs.push(Number(this.dataGroups[i].resourceId));
+                    }
+                    // console.log(this.IDs);
                 }
             }).catch(err => {
                 alert('生产单请求失败')
-            })
+            });
+
+
         }
     }
 </script>
