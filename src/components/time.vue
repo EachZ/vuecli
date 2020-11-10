@@ -54,6 +54,7 @@
         name:"time",
         data(){
             return{
+                target: 'http://123.57.239.79:3180',
                 date:new Date().toLocaleString(),
                 // date: new Date("2019/9/9 12:20:05").toLocaleString(),
                 // start_time: '2020-11-4 12:00:00',
@@ -242,7 +243,7 @@
 
                 let postDateString=postYear+"/"+postMonth+"/"+postDay+" 00:00:00";
 
-                this.$axios.post('/schedule',{
+                this.$axios.post(this.target+'/schedule',{
                     params:{
                         date: postDateString
                     }

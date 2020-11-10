@@ -336,6 +336,7 @@
         },
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 text: '',
                 loadData:[
                     // {
@@ -475,7 +476,7 @@
                 console.log(date1);
                 console.log(date2);
 
-                this.$axios.get("/rate/load/machine?startDate="+date1+"&endDate="+date2).then(response => {
+                this.$axios.get(this.target+"/rate/load/machine?startDate="+date1+"&endDate="+date2).then(response => {
                     console.log("jiqifuzai GET请求发出了");
                     if (response.data) {
                         console.log(response.data.data);
@@ -491,7 +492,7 @@
                     alert('请求失败')
                 })
 
-                this.$axios.get("/rate/load/people?startDate="+date1+"&endDate="+date2).then(response => {
+                this.$axios.get(this.target+"/rate/load/people?startDate="+date1+"&endDate="+date2).then(response => {
                     console.log("jiqifuzai GET请求发出了");
                     if (response.data) {
                         console.log(response.data.data);
@@ -554,7 +555,7 @@
                 //向后端调用方法
                 this.testAxiosGET1(sDate,eDate);
                 console.log("资源甘特图 axios get");
-                this.$axios.get('/resource/gantt/loading',{
+                this.$axios.get(this.target+'/resource/gantt/loading',{
                     params:{
                         //要改成日历上的开始时间
                         // startDate: "2018/11/19 12:00:00",
@@ -792,7 +793,7 @@
 
             //向后端调用方法
             console.log("资源甘特图 axios get");
-            this.$axios.get('/resource/gantt/loading',{
+            this.$axios.get(this.target+'/resource/gantt/loading',{
                 params:{
                     //要改成日历上的开始时间
                     // startDate: "2018/11/19 12:00:00",

@@ -18,6 +18,7 @@
         // components: {Gantt},
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 //各种图例的颜色
                 colorData:["red","yellow","green","blue","skyblue","black","pink","purple"],
                 //产品，各种图例
@@ -218,7 +219,7 @@
         },
         mounted(){
             console.log("资源甘特图get请求");
-            this.$axios.get('/resource/gantt/running',{
+            this.$axios.get(this.target+'/resource/gantt/running',{
                 params:{
                     startDate: "2008/11/05 12:00:00",
                     endDate: "2008/11/07 12:00:00"

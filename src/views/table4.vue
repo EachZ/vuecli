@@ -85,6 +85,7 @@
         name: "table4",
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 data,
                 columns,
                 pagination: {
@@ -128,7 +129,7 @@
             //请求后端的获取生产单-资源关系表
             //要需要传首尾日期？？？
             // console.log("生产单-资源关系表get请求");
-            this.$axios.get('/resource/productionForm',{
+            this.$axios.get(this.target+'/resource/productionForm',{
                 params:{
                     startDate: "2018/11/19 00:00:00",
                     endDate: "2018/11/21 00:00:00"

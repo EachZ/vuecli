@@ -71,6 +71,7 @@
         name: "page6",
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 // repositoryUrl : '',
                 // repositoryName : ''
                 GETcontent: '',
@@ -117,7 +118,7 @@
                 // 由于 main.js 里定义了每个请求前缀，此处的 / 即为 /api/，
                 // 经过 vue.config.js 配置文件的代理设置，会自动转为 target中的网址，从而解决跨域问题
                 // get方法
-                this.$axios.get('/orderScheduleForm').then(response => {
+                this.$axios.get(this.target+'/orderScheduleForm').then(response => {
                     console.log("GET请求发出了");
                     if (response.data) {
                         console.log(response.data);
@@ -137,7 +138,7 @@
                     frequency :1
 
                 };
-                this.$axios.get('/resourceById',{
+                this.$axios.get(this.target+'/resourceById',{
                     params:{
                         id:16
                     }
@@ -156,7 +157,7 @@
                 //请求后端的获取订单-生产单关系表
                 //要需要传首尾日期？？？
                 // console.log("订单-生产单关系表get请求");
-                this.$axios.get('/orders/productionForm',{
+                this.$axios.get(this.target+'/orders/productionForm',{
                     params:{
                         startDate: "2018/11/19 00:00:00",
                         endDate: "2018/11/21 00:00:00"

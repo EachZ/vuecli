@@ -50,6 +50,7 @@
         },
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 dateView:"2020-11-07",
                 percentages:50,
                 GETcontent :'',
@@ -136,7 +137,7 @@
                 let month1=(this.newDate.toString()).substring(5,7);
                 let day1=(this.newDate.toString()).substring(8,10);
                 let date1=year1+"/"+month1+"/"+day1;
-                this.$axios.get("/rate/ontimeDelivery?currentDate="+date1).then(response => {
+                this.$axios.get(this.target+"/rate/ontimeDelivery?currentDate="+date1).then(response => {
                     console.log("GET请求发出了");
                     if (response.data) {
                         console.log(response.data.data);
@@ -166,7 +167,7 @@
                 let date1=year1+"/"+month1+"/"+day1;
                 console.log(date1);
 
-                this.$axios.get("/orders/gantt?date="+date1).then(response => {
+                this.$axios.get(this.target+"/orders/gantt?date="+date1).then(response => {
                     console.log("GET请求发出了");
                     if (response.data) {
                         console.log(response.data.data);

@@ -30,6 +30,7 @@
     export default {
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 tempIDs:[],
                 pagination: {
                     total: 0,
@@ -103,7 +104,7 @@
                     //             id: '23',
                     //             craft: '2019',
                     //             startTime: '2019-12-24 23:12:00',
-                    //             endTime: '2019-12-26 21:00:00',
+                    //             endTime: '2019-12-26 21:00:0cue0',
                     //             count: '34'
                     //         },
                     //     ],
@@ -180,7 +181,7 @@
         mounted() {
             //请求后端的获取订单计划表
             console.log("==============订单计划表get请求");
-            this.$axios.get('/orderScheduleForm').then(response => {
+            this.$axios.get(this.target+'/orderScheduleForm').then(response => {
                 console.log("GET订单计划表请求发出了");
                 if (response.data) {
                     console.log("订单计划表数据:");

@@ -150,6 +150,7 @@
         },
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 isActive: false,
                 selected: -1,
                 selectedlist: {},

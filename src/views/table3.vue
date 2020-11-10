@@ -1,7 +1,7 @@
 <template>
     <div>
 <!--        <h1>3. 生产单</h1>-->
-        <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: cornflowerblue">导出生产单</a-button>
+        <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: cornflowerblue">导出生产单表</a-button>
         <br/>
         <br/>
         <a-table :pagination="pagination"
@@ -33,6 +33,7 @@
     export default {
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 IDs:[],
                 tempIDs:[],
                 pagination: {
@@ -185,7 +186,7 @@
             //请求后端的获取生产单
             //要需要传首尾日期？？？
             console.log("生产单get请求");
-            this.$axios.get('/productionForm',{
+            this.$axios.get(this.target+'/productionForm',{
                 params:{
                     startDate: "2018/11/19 00:00:00",
                     endDate: "2018/11/21 00:00:00"

@@ -17,6 +17,7 @@
         name: "page2",
         data(){
             return{
+                target: 'http://123.57.239.79:3180',
                 pageWidth: 0,
                 pageHeight: 0,
                 //可以用于处理的数据
@@ -745,7 +746,7 @@
             // console.log("资源甘特图get请求");
 
             //改一下url名字
-            this.$axios.get('/resource/gantt/running',{
+            this.$axios.get(this.target+'/resource/gantt/running',{
                 params:{
                     startDate: "2018/11/19 00:00:00",
                     endDate: "2018/11/21 00:00:00"

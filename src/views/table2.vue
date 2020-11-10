@@ -33,6 +33,7 @@
         name: "page6",
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 tempIDs:[],
                 pagination: {
                     total: 0,
@@ -169,7 +170,7 @@
             }
         },
         mounted() {
-            this.$axios.get('/orders/productionForm',{
+            this.$axios.get(this.target+'/orders/productionForm',{
                 params:{
                     startDate: "2018/11/19 00:00:00",
                     endDate: "2018/11/21 00:00:00"
