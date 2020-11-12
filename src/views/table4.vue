@@ -156,7 +156,7 @@
 <style>
     .ant-table-thead >tr >th{
         background-color: lightsteelblue;
-        /*background-color: #7899cf;*/
+        /*background-color: #b9c2d7;*/
     }
     .light-row {background-color: #fff;}
     .dark-row {background-color: #f2f4f5;}

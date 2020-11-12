@@ -629,12 +629,16 @@
                 const d = this.days[0]; // 如果当期日期是7号或者小于7号
                 d.setDate(d.getDate() - 7);
                 this.initData(d);
+                this.axiosToBackend();
+
             },
             // 下个星期
             weekNext() {
                 const d = this.days[6]; // 如果当期日期是7号或者小于7号
                 d.setDate(d.getDate() + 7);
                 this.initData(d);
+                this.axiosToBackend();
+
             },
             // 上一個月  传入当前年份和月份
             pickPre(year, month) {
@@ -760,6 +764,55 @@
 
                 testDom.innerHTML=theHTML;
                 document.getElementById("loading").style.display="none";
+            },
+            axiosToBackend(){
+                console.log("显示日期:");
+
+                //一周的开始时间
+                let sDate =this.days[0];
+                //一周的结束时间
+                let eDate =this.days[6];
+
+                this.newDate=sDate;
+
+                this.testAxiosGET1(sDate,eDate);
+
+                let sDateYear=sDate.getFullYear();
+                let sDateMonth=sDate.getMonth()+1;
+                let sDateDay=sDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+
+                let eDateYear=eDate.getFullYear();
+                let eDateMonth=eDate.getMonth()+1;
+                let eDateDay=eDate.getDate();
+                let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 00:00:00";
+
+                console.log(sDateString);
+                console.log(eDateString);
+                console.log("ppppppppppppppppppppp");
+
+                //向后端调用方法
+                console.log("资源甘特图 axios get");
+                this.$axios.get(this.target+'/resource/gantt/loading',{
+                    params:{
+                        //要改成日历上的开始时间
+                        // startDate: "2018/11/19 12:00:00",
+                        startDate: sDateString,
+                        //要改成日历上的结束时间
+                        endDate: eDateString,
+                        // endDate: "2018/11/21 12:00:00",
+                        // frequency :1
+                    }
+                }).then(response => {
+                    console.log("资源甘特图get传参数");
+                    if (response.data) {
+                        console.log(response.data.data);
+                        this.renderHTML(response.data.data);
+                        console.log("获取渲染图形的参数");
+                    }
+                }).catch(err => {
+                    alert('请求资源负载图失败');
+                });
             }
         },
         mounted() {
@@ -771,51 +824,7 @@
             // console.log("index: ", index);
             // this.tabIndex = index;
 
-            console.log("显示日期:");
-
-            //一周的开始时间
-            let sDate =this.days[0];
-            //一周的结束时间
-            let eDate =this.days[6];
-
-            this.testAxiosGET1(sDate,eDate);
-
-            let sDateYear=sDate.getFullYear();
-            let sDateMonth=sDate.getMonth()+1;
-            let sDateDay=sDate.getDate();
-            let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
-
-            let eDateYear=eDate.getFullYear();
-            let eDateMonth=eDate.getMonth()+1;
-            let eDateDay=eDate.getDate();
-            let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 00:00:00";
-
-            console.log(sDateString);
-            console.log(eDateString);
-            console.log("ppppppppppppppppppppp");
-
-            //向后端调用方法
-            console.log("资源甘特图 axios get");
-            this.$axios.get(this.target+'/resource/gantt/loading',{
-                params:{
-                    //要改成日历上的开始时间
-                    // startDate: "2018/11/19 12:00:00",
-                    startDate: sDateString,
-                    //要改成日历上的结束时间
-                    endDate: eDateString,
-                    // endDate: "2018/11/21 12:00:00",
-                    // frequency :1
-                }
-            }).then(response => {
-                console.log("资源甘特图get传参数");
-                if (response.data) {
-                    console.log(response.data.data);
-                    this.renderHTML(response.data.data);
-                    console.log("获取渲染图形的参数");
-                }
-            }).catch(err => {
-                alert('请求资源负载图失败');
-            });
+            this.axiosToBackend();
 
             const index = _.findIndex(this.days, function(o) {
                 // console.log('o: ', o.getDate());
