@@ -45,6 +45,11 @@
             <a-button type="primary" size="small" @click="hideSpeed">确定</a-button>
         </div>
 
+        <div v-show="setTime">
+<!--            <a-button>测试零点传数据</a-button>-->
+            <p>{{timeString}}</p>
+        </div>
+
 
     </div>
 </template>
@@ -56,6 +61,7 @@
             return{
                 target: 'http://123.57.239.79:3180',
                 date:new Date().toLocaleString(),
+                timeString:"",
                 // date: new Date("2019/9/9 12:20:05").toLocaleString(),
                 // start_time: '2020-11-4 12:00:00',
                 start_time:new Date(),
@@ -236,7 +242,7 @@
             postSchedule(){
                 let postYear=this.currentVirtualTime.getFullYear();
                 let postMonth=this.currentVirtualTime.getMonth()+1;
-                let postDay=this.currentVirtualTime.getDate();
+                let postDay=this.currentVirtualTime.getDate()+1;
                 // let postHour=this.currentVirtualTime.getHours();
                 // let postMinute=this.currentVirtualTime.getMinutes();
                 // let postSecond=this.currentVirtualTime.getSeconds();
@@ -252,6 +258,7 @@
                     console.log(postDateString);
                     console.log("成功");
                     console.log(response);
+                    this.timeString="发送时间"+postDateString+"成功";
                 }).catch(err => {
                     alert('请求失败')
                 })

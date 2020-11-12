@@ -1,7 +1,10 @@
 <template>
     <div>
 <!--        <h1>2. 订单-生产单关系表</h1>-->
-        <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: cornflowerblue">导出订单-生产单关系表</a-button>
+        <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: #42b983;border:none">导出订单-生产单关系表</a-button>
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
         <br/>
         <br/>
         <a-table :pagination=pagination
@@ -172,8 +175,8 @@
         mounted() {
             this.$axios.get(this.target+'/orders/productionForm',{
                 params:{
-                    startDate: "2018/11/19 00:00:00",
-                    endDate: "2018/11/21 00:00:00"
+                    startDate: "2018/11/20 00:00:00",
+                    endDate: "2018/11/26 00:00:00"
                 }
             }).then(response => {
                 // console.log("GET请求发出了");
@@ -181,6 +184,7 @@
                     // console.log("订单-生产单关系表数据:");
                     // console.log(response.data);
                     // this.dataGroups=response.data.data;
+                    document.getElementById("loading").style.display="none";
                     console.log(response.data.data);
                     this.turnIntoStandardData(response.data.data);
                 }

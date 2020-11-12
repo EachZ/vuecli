@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <a-button type="primary" shape="circle" id="loading" loading/>
         <div id="container">
 <!--            {{this.$route.query.year}}-->
 <!--            {{this.$route.query.month}}-->
@@ -18,7 +19,7 @@
                 <el-progress type="circle" :percentage=percentages1></el-progress>
             </div>
         </div>
-        <div style="width:800px;height:80px;margin:0 auto">
+        <div style="width:720px;height:80px;margin:0 auto">
 <!--            <h3>图例</h3>-->
             <br/>
             <div class="0">
@@ -123,6 +124,7 @@
 <!--                            </li>-->
                         </ul>
 <!--                        资源负载-->
+
                         <div id="theResources">
 
 <!--                        <ul class="resources">-->
@@ -757,6 +759,7 @@
                 }
 
                 testDom.innerHTML=theHTML;
+                document.getElementById("loading").style.display="none";
             }
         },
         mounted() {

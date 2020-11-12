@@ -27,7 +27,9 @@
         <br/>
         <br/>
         <br/>
-
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
         <div id="Gantt" :style="{width: '1000px', height: '500px'}"></div>
 
     </div>
@@ -171,6 +173,7 @@
                     console.log("GET请求发出了");
                     if (response.data) {
                         console.log(response.data.data);
+                        document.getElementById("loading").style.display="none";
                         this.GETcontent=response.data.data;
                         let data=this.GETcontent;
                         console.log(data[0])

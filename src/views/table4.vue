@@ -1,6 +1,9 @@
 <template>
     <div>
-        <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: cornflowerblue">导出生产单-资源关系表</a-button>
+        <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: #42b983;border:none">导出生产单-资源关系表</a-button>
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
         <br/>
         <br/>
         <a-table :columns="columns" :data-source="data" :rowClassName="rowClassName"
@@ -131,14 +134,15 @@
             // console.log("生产单-资源关系表get请求");
             this.$axios.get(this.target+'/resource/productionForm',{
                 params:{
-                    startDate: "2018/11/19 00:00:00",
-                    endDate: "2018/11/21 00:00:00"
+                    startDate: "2018/11/20 00:00:00",
+                    endDate: "2018/11/26 00:00:00"
                 }
             }).then(response => {
                 // console.log("GET请求发出了");
                 if (response.data) {
                     // console.log("生产单-资源关系表数据:");
                     // console.log(response.data.data);
+                    document.getElementById("loading").style.display="none";
                     this.data=response.data.data;
                 }
             }).catch(err => {
@@ -152,6 +156,7 @@
 <style>
     .ant-table-thead >tr >th{
         background-color: lightsteelblue;
+        /*background-color: #7899cf;*/
     }
     .light-row {background-color: #fff;}
     .dark-row {background-color: #f2f4f5;}

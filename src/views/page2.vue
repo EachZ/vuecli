@@ -1,12 +1,13 @@
 <template>
     <div>
-        <!--        <a-button @click="freshPage">返回</a-button>-->
+        <a-button type="primary" shape="circle" id="loading" loading/>
         <div id="high">
             <highcharts :options="chartOptions" :highcharts="hcInstance"></highcharts>
         </div>
         <!--        <div>-->
         <!--            <img alt="Vue logo" src="../assets/logo.png">-->
         <!--        </div>-->
+        <a-button id="returnButton" @click="freshPage">返回</a-button>
     </div>
 
 </template>
@@ -341,7 +342,8 @@
         methods: {
             //刷新页面
             freshPage(){
-                window.location.reload();
+                // window.location.reload();
+                window.open(window.location.href);
             },
             //将后端传回来的数据providedData转为渲染甘特图需要的标准数据
             turnIntoStandardData(oldData){
@@ -506,6 +508,7 @@
                         series: {
                             events: {
                                 legendItemClick: function(e) {
+                                    document.getElementById("returnButton").style.display="inline";
                                     /*
                                     * 默认实现是显示或隐藏当前数据列，e 代表事件， this 为当前数据列
                                      */
@@ -735,6 +738,7 @@
             }
         },
         mounted(){
+            document.getElementById("returnButton").style.display="none";
             this.pageWidth=document.body.clientWidth;
             this.pageHeight=document.body.clientHeight+50;
             //随机生成colorNum个颜色
@@ -748,8 +752,8 @@
             //改一下url名字
             this.$axios.get(this.target+'/resource/gantt/running',{
                 params:{
-                    startDate: "2018/11/19 00:00:00",
-                    endDate: "2018/11/21 00:00:00"
+                    startDate: "2018/11/20 00:00:00",
+                    endDate: "2018/11/26 00:00:00"
                 }
             }).then(response => {
                 // console.log("GET请求发出了");
@@ -760,6 +764,7 @@
                     console.log(response.data.data);
                     //将从后端传回来的数据标准化
                     // this.turnIntoStandardData(response.data.data);
+                    document.getElementById("loading").style.display="none";
                     this.categoryData=response.data.data.resourceNames;
                     this.standardData=response.data.data.productList;
                     //将已经标准化的数据渲染进甘特图里

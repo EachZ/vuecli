@@ -1,7 +1,10 @@
 <template>
     <div>
 <!--        <h1>1. 订单计划表</h1>-->
-        <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: cornflowerblue">导出订单计划表</a-button>
+        <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: #42b983;border:none">导出订单计划表</a-button>
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
         <br/>
         <br/>
         <a-table :pagination=pagination
@@ -184,6 +187,7 @@
             this.$axios.get(this.target+'/orderScheduleForm').then(response => {
                 console.log("GET订单计划表请求发出了");
                 if (response.data) {
+                    document.getElementById("loading").style.display="none";
                     console.log("订单计划表数据:");
                     // console.log(response.data);
                     this.dataGroups=response.data.data;
@@ -203,4 +207,13 @@
 <style>
     .light-row {background-color: #fff;}
     .dark-row {background-color: #f2f4f5;}
+    #loading{
+        background-color: crimson;
+        border: none;
+    }
+    #loadingDiv{
+        width: 5px;
+        height:5px;
+        margin: 0 auto;
+    }
 </style>
