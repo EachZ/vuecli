@@ -7,6 +7,7 @@ import Page3 from '../views/page3'
 import Page5 from '../views/page5'
 import Page6 from '../views/page6'
 import Page7 from '../views/page7'
+import Page8 from '../views/page8'
 import Table1 from '../views/table1'
 import Table2 from '../views/table2'
 import Table3 from '../views/table3'
@@ -61,6 +62,16 @@ const routes = [
     path:'/page7',
     name:'Page7',
     component: () => import(/* webpackChunkName: "page7" */ '../views/page7.vue')
+  },
+  {
+    path:'/page8',
+    name:'Page8',
+    component: () => import(/* webpackChunkName: "page8" */ '../views/page8.vue')
+  },
+  {
+    path:'/temp',
+    name:'Temp',
+    component: () => import(/* webpackChunkName: "temp" */ '../views/temp.vue')
   },
   // {
   //   path:'/table1',

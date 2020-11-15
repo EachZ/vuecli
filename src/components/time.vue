@@ -11,6 +11,7 @@
             <div v-show="setTime">
                 <a-button type="primary" size="small" @click="showOverlay" style="margin-right: 10px" v-show="visibleSet">设置时间</a-button>
                 <a-button type="primary" size="small" @click="showSpeed" v-show="visibleSpeed">设置流速</a-button>
+<!--                <a-button type="primary" size="small" @click="reload" icon="reload">刷新</a-button>-->
             </div>
         </div>
 <!--        <br/>-->
@@ -99,6 +100,9 @@
             }
         },
         methods: {
+            reload(){
+                window.location.reload();
+            },
             showOverlay(){
                 this.year=this.currentVirtualTime.getFullYear();
                 this.month=this.currentVirtualTime.getMonth()+1;
