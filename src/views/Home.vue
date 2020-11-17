@@ -19,6 +19,7 @@
                 <el-progress type="circle" :percentage=percentages1></el-progress>
             </div>
         </div>
+
         <div style="width:720px;height:80px;margin:0 auto">
 <!--            <h3>图例</h3>-->
             <br/>
@@ -59,6 +60,9 @@
                 </div>
             </div>
         </div>
+        <a-affix :offset-top="400">
+            <a-button type="primary" shape="circle" icon="to-top" size="large" style="left:560px" @click="toTop"/>
+        </a-affix>
         <div class="date">
             <el-date-picker
                     class="right-pick-btn"
@@ -463,6 +467,9 @@
             this.initData(null);
         },
         methods: {
+            toTop(){
+                window.scrollTo(0,0);
+            },
             testAxiosGET1(sDate,eDate) {
                 let dateS=moment(sDate).format("YYYY-MM-DD");
                 let dateE=moment(eDate).format("YYYY-MM-DD");

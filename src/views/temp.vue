@@ -1,6 +1,6 @@
 <template>
     <div>
-        {{href}}
+<!--        {{href}}-->
 <!--        <div>-->
 <!--            {{tempHref}}-->
 <!--        </div>-->
@@ -26,8 +26,8 @@
             window.setInterval(() => {
                 //tempHref用于保存href之前的值
                 this.tempHref=this.href;
-                console.log("tempHref");
-                console.log(this.tempHref);
+                // console.log("tempHref");
+                // console.log(this.tempHref);
                 //如果变成新的一天了，就改变网址里day参数的值
                 // if(this.tempHref.indexOf("day")!==-1){
                 //     let str = this.tempHref.match(/(\S*)day/)[1];

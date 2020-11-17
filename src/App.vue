@@ -36,9 +36,15 @@
             <a-menu-item key="clock">
                 <router-link :to="{path:'/page4'}"><a-icon type="clock-circle" />设置时间</router-link>
             </a-menu-item>
-          <a-menu-item key="try">
-            <router-link :to="{path:'/page8',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="bulb" />实验页面</router-link>
-          </a-menu-item>
+            <a-menu-item key="orderPage">
+                <router-link :to="{path:'/orderPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="schedule" />管理订单</router-link>
+            </a-menu-item>
+            <a-menu-item key="resourcePage">
+                <router-link :to="{path:'/resourcePage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="project" />管理资源</router-link>
+            </a-menu-item>
+<!--          <a-menu-item key="try">-->
+<!--            <router-link :to="{path:'/page8',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="bulb" />实验页面</router-link>-->
+<!--          </a-menu-item>-->
             <a-menu-item key="temp">
                 <router-link :to="{path:'/temp'}">temp</router-link>
             </a-menu-item>
@@ -63,7 +69,7 @@
 <!--      <router-link to="/page6">实验页面</router-link> |-->
 <!--      <router-link to="/page7">甘特图实验</router-link>-->
       <Time @current-virtual-time="getTime"></Time>
-        <Temp v-bind:href="href"></Temp>
+<!--        <Temp v-bind:href="href"></Temp>-->
     </div>
 <!--    <div class="time">-->
 <!--      <clock :time="time"></clock>-->
@@ -80,7 +86,8 @@
   import Temp from './views/temp'
   export default{
     // components: {Clock},
-    components:{Time,Temp},
+      components:{Time},
+      // components:{Time,Temp},
     data(){
       return{
         currentVirtualTime: new Date(),
