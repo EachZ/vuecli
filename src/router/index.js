@@ -24,7 +24,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/table1',
     name: 'Table1',
     component: () => import(/* webpackChunkName: "table1" */ '../views/table1.vue')
   },
@@ -114,7 +114,7 @@ const routes = [
   }
   ,
   {
-    path:'/routingPage',
+    path:'/',
     name:'RoutingPage',
     component: () => import(/* webpackChunkName: "routingPage" */ '../views/routingPage.vue')
   }

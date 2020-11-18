@@ -1,16 +1,16 @@
 <template>
     <div>
-            <div class="block datePick">
-                <span class="demonstration">今天是</span>
-                <el-date-picker
-                        class="right-pick-btn"
-                        :clearable="false"
-                        @change="pickDate"
-                        v-model="newDate"
-                        type="date"
-                        placeholder="按日期查询"
-                />
-            </div>
+        <div class="block datePick">
+            <span class="demonstration">今天是</span>
+            <a-date-picker
+                    class="right-pick-btn"
+                    :clearable="false"
+                    @change="pickDate"
+                    v-model="newDate"
+                    type="date"
+                    placeholder="按日期查询"
+            />
+        </div>
         <a-button type="primary" shape="circle" id="loading" style="display: none" loading/>
         <div id="high">
             <highcharts :options="chartOptions" :highcharts="hcInstance"></highcharts>
@@ -777,6 +777,7 @@
                 console.log("往后端传的开始时间和结束时间");
                 console.log(sDateString);
                 console.log(eDateString);
+                document.getElementById("loading").style.display="inline";
                 this.$axios.get(this.target+'/resource/gantt/running',{
                     params:{
                         // startDate: "2018/11/20 00:00:00",
@@ -809,6 +810,7 @@
             document.getElementById("returnButton").style.display="none";
             this.pageWidth=document.body.clientWidth;
             this.pageHeight=document.body.clientHeight+50;
+            this.axiosDateToBackend();
             //随机生成colorNum个颜色
             // let colorNum=1000;
             // this.colors=[];

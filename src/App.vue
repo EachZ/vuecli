@@ -3,19 +3,22 @@
     <div>
       <a-affix :offset-top="top">
         <a-menu v-model="current" mode="horizontal">
+            <a-menu-item key="routingPage">
+                <router-link :to="{path:'/'}"><a-icon type="cluster" />工艺路线</router-link>
+            </a-menu-item>
           <a-sub-menu>
           <span slot="title" class="submenu-title-wrapper"><a-icon type="table" />输出表单</span>
               <a-menu-item key="table:1">
-                <router-link to="/">订单计划表</router-link>
+                <router-link :to="{path:'/table1',query:{year:this.year,month:this.month,day:this.day}}">订单计划表</router-link>
               </a-menu-item>
               <a-menu-item key="table:2">
-                <router-link to="/table2">订单-生产单关系表</router-link>
+                <router-link :to="{path:'/table2',query:{year:this.year,month:this.month,day:this.day}}">订单-生产单关系表</router-link>
               </a-menu-item>
               <a-menu-item key="table:3">
-                <router-link to="/table3">生产单表</router-link>
+                <router-link :to="{path:'/table3',query:{year:this.year,month:this.month,day:this.day}}">生产单表</router-link>
               </a-menu-item>
               <a-menu-item key="table:4">
-                <router-link to="/table4">生产单-资源关系表</router-link>
+                <router-link :to="{path:'/table4',query:{year:this.year,month:this.month,day:this.day}}">生产单-资源关系表</router-link>
               </a-menu-item>
           </a-sub-menu>
           <a-sub-menu>
@@ -41,9 +44,6 @@
             </a-menu-item>
             <a-menu-item key="devicePage">
                 <router-link :to="{path:'/devicePage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="deployment-unit" />管理设备</router-link>
-            </a-menu-item>
-            <a-menu-item key="routingPage">
-                <router-link :to="{path:'/routingPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="cluster" />工艺路线</router-link>
             </a-menu-item>
 <!--          <a-menu-item key="try">-->
 <!--            <router-link :to="{path:'/page8',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="bulb" />实验页面</router-link>-->
