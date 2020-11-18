@@ -15,6 +15,7 @@ import Table4 from '../views/table4'
 import OrderPage from '../views/orderPage'
 import StaffPage from '../views/staffPage'
 import DevicePage from '../views/devicePage'
+import RoutingPage from '../views/routingPage'
 
 
 
@@ -110,6 +111,12 @@ const routes = [
     path:'/devicePage',
     name:'DevicePage',
     component: () => import(/* webpackChunkName: "devicePage" */ '../views/devicePage.vue')
+  }
+  ,
+  {
+    path:'/routingPage',
+    name:'RoutingPage',
+    component: () => import(/* webpackChunkName: "routingPage" */ '../views/routingPage.vue')
   }
 ];
 
