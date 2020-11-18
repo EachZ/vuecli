@@ -13,7 +13,8 @@ import Table2 from '../views/table2'
 import Table3 from '../views/table3'
 import Table4 from '../views/table4'
 import OrderPage from '../views/orderPage'
-import ResourcePage from '../views/resourcePage'
+import StaffPage from '../views/staffPage'
+import DevicePage from '../views/devicePage'
 
 
 
@@ -101,9 +102,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "orderPage" */ '../views/orderPage.vue')
   },
   {
-    path:'/resourcePage',
-    name:'ResourcePage',
-    component: () => import(/* webpackChunkName: "resourcePage" */ '../views/resourcePage.vue')
+    path:'/staffPage',
+    name:'StaffPage',
+    component: () => import(/* webpackChunkName: "staffPage" */ '../views/staffPage.vue')
+  },
+  {
+    path:'/devicePage',
+    name:'DevicePage',
+    component: () => import(/* webpackChunkName: "devicePage" */ '../views/devicePage.vue')
   }
 ];
 

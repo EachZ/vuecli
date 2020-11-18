@@ -27,7 +27,7 @@
               <router-link :to="{path:'/page1',query:{year:this.year,month:this.month,day:this.day}}">订单甘特图</router-link> |
             </a-menu-item>
             <a-menu-item key="graph:3">
-              <router-link :to="{path:'/page2'}">资源甘特图</router-link> |
+              <router-link :to="{path:'/page2',query:{year:this.year,month:this.month,day:this.day}}">资源甘特图</router-link> |
             </a-menu-item>
           </a-sub-menu>
           <a-menu-item key="CRUD">
@@ -39,8 +39,11 @@
             <a-menu-item key="orderPage">
                 <router-link :to="{path:'/orderPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="schedule" />管理订单</router-link>
             </a-menu-item>
-            <a-menu-item key="resourcePage">
-                <router-link :to="{path:'/resourcePage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="project" />管理资源</router-link>
+            <a-menu-item key="staffPage">
+                <router-link :to="{path:'/staffPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="team" />管理人员</router-link>
+            </a-menu-item>
+            <a-menu-item key="devicePage">
+                <router-link :to="{path:'/devicePage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="deployment-unit" />管理设备</router-link>
             </a-menu-item>
 <!--          <a-menu-item key="try">-->
 <!--            <router-link :to="{path:'/page8',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="bulb" />实验页面</router-link>-->
