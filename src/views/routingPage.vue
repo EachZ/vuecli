@@ -165,8 +165,6 @@
             },
         },
         mounted() {
-            //请求后端的获取生产单-资源关系表
-            // console.log("生产单-资源关系表get请求");
             this.axiosDateToBackend();
         }
     };

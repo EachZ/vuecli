@@ -275,7 +275,7 @@
                 setTimeout(this.fun, 0);
                 //向父组件传值
                 this.$emit('current-virtual-time',this.currentVirtualTime);
-                if((this.$route.path.toString())==="/page4"){
+                if((this.$route.path.toString())==="/"){
                     this.setTime=true;
                 }else{
                     this.setTime=false;

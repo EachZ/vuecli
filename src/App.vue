@@ -3,8 +3,8 @@
     <div>
       <a-affix :offset-top="top">
         <a-menu v-model="current" mode="horizontal">
-            <a-menu-item key="routingPage">
-                <router-link :to="{path:'/'}"><a-icon type="cluster" />工艺路线</router-link>
+            <a-menu-item key="clock">
+                <router-link :to="{path:'/'}"><a-icon type="clock-circle" />设置时间</router-link>
             </a-menu-item>
           <a-sub-menu>
           <span slot="title" class="submenu-title-wrapper"><a-icon type="table" />输出表单</span>
@@ -23,19 +23,32 @@
           </a-sub-menu>
           <a-sub-menu>
             <span slot="title" class="submenu-title-wrapper"><a-icon type="bar-chart" />资源图表</span>
-            <a-menu-item key="graph:1">
-              <router-link :to="{path:'/home',query:{year:this.year,month:this.month,day:this.day}}">资源负载图</router-link> |
-            </a-menu-item>
+              <a-sub-menu key="graph:1" title="资源负载图">
+                  <a-menu-item key="graph:1-1">
+                      <router-link :to="{path:'/resourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">人员&设备负载图</router-link>
+                  </a-menu-item>
+                  <a-menu-item key="graph:1-2">
+                      <router-link :to="{path:'/resourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">人员负载图</router-link>
+                  </a-menu-item>
+                  <a-menu-item key="graph:1-3">
+                      <router-link :to="{path:'/resourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">设备负载图</router-link>
+                  </a-menu-item>
+              </a-sub-menu>
             <a-menu-item key="graph:2">
-              <router-link :to="{path:'/page1',query:{year:this.year,month:this.month,day:this.day}}">订单甘特图</router-link> |
+              <router-link :to="{path:'/orderGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">订单甘特图</router-link>
             </a-menu-item>
-            <a-menu-item key="graph:3">
-              <router-link :to="{path:'/page2',query:{year:this.year,month:this.month,day:this.day}}">资源甘特图</router-link> |
-            </a-menu-item>
+              <a-sub-menu key="graph:3" title="资源甘特图">
+                  <a-menu-item key="graph:3-1">
+                      <router-link :to="{path:'/resourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">人员&设备甘特图</router-link>
+                  </a-menu-item>
+                  <a-menu-item key="graph:3-2">
+                      <router-link :to="{path:'/resourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">人员甘特图</router-link>
+                  </a-menu-item>
+                  <a-menu-item key="graph:3-3">
+                      <router-link :to="{path:'/resourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">设备甘特图</router-link>
+                  </a-menu-item>
+              </a-sub-menu>
           </a-sub-menu>
-            <a-menu-item key="clock">
-                <router-link :to="{path:'/page4'}"><a-icon type="clock-circle" />设置时间</router-link>
-            </a-menu-item>
             <a-menu-item key="orderPage">
                 <router-link :to="{path:'/orderPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="schedule" />管理订单</router-link>
             </a-menu-item>
@@ -45,6 +58,10 @@
             <a-menu-item key="devicePage">
                 <router-link :to="{path:'/devicePage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="deployment-unit" />管理设备</router-link>
             </a-menu-item>
+            <a-menu-item key="routingPage">
+                <router-link :to="{path:'/routing'}"><a-icon type="cluster" />工艺路线</router-link>
+            </a-menu-item>
+
 <!--          <a-menu-item key="try">-->
 <!--            <router-link :to="{path:'/page8',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="bulb" />实验页面</router-link>-->
 <!--          </a-menu-item>-->

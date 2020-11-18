@@ -4,14 +4,14 @@
             <!--            按期交货率-->
             <h3>按期交货率</h3>
             <h4>{{dateView}}<span>之前</span></h4>
-            <el-progress type="circle" :percentage=percentages></el-progress>
+            <a-progress type="circle" :percentage=percentages></a-progress>
 
         </div>
         <br/>
         <div>
             <div class="block datePick">
                 <span class="demonstration">今天是</span>
-                <el-date-picker
+                <a-date-picker
                         class="right-pick-btn"
                         :clearable="false"
                         @change="pickDate"

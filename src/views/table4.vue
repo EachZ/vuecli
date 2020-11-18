@@ -1,24 +1,29 @@
 <template>
     <div>
         <div class="block datePick">
-            <span class="demonstration">开始日期 </span>
-            <a-date-picker
-                    class="right-pick-btn"
-                    :clearable="false"
-                    @change="pickStartDate"
-                    v-model="newStartDate"
-                    type="date"
-                    placeholder="开始日期"
+            <a-range-picker
+                    :placeholder="['开始日期','结束日期']"
+                    :value="[newStartDate,newEndDate]"
+                    @change="pickDate"
             />
-            <span class="demonstration"> 结束日期 </span>
-            <a-date-picker
-                    class="right-pick-btn"
-                    :clearable="false"
-                    @change="pickEndDate"
-                    v-model="newEndDate"
-                    type="date"
-                    placeholder="结束日期"
-            />
+<!--            <span class="demonstration">开始日期 </span>-->
+<!--            <a-date-picker-->
+<!--                    class="right-pick-btn"-->
+<!--                    :clearable="false"-->
+<!--                    @change="pickStartDate"-->
+<!--                    v-model="newStartDate"-->
+<!--                    type="date"-->
+<!--                    placeholder="开始日期"-->
+<!--            />-->
+<!--            <span class="demonstration"> 结束日期 </span>-->
+<!--            <a-date-picker-->
+<!--                    class="right-pick-btn"-->
+<!--                    :clearable="false"-->
+<!--                    @change="pickEndDate"-->
+<!--                    v-model="newEndDate"-->
+<!--                    type="date"-->
+<!--                    placeholder="结束日期"-->
+<!--            />-->
         </div>
         <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: #42b983;border:none">导出生产单-资源关系表</a-button>
         <div id="loadingDiv">
@@ -124,20 +129,28 @@
             };
         },
         methods:{
-            pickStartDate(date){
+            pickDate(date,dateString){
                 let that = this;
-                that.newStartDate = moment(date).format("YYYY-MM-DD");
+                that.newStartDate = date[0];
+                that.newEndDate = date[1];
                 //将选的时间传给后端
                 this.axiosDateToBackend();
                 document.getElementById("loading").style.display="inline";
             },
-            pickEndDate(date){
-                let that = this;
-                that.newEndDate = moment(date).format("YYYY-MM-DD");
-                //将选的时间传给后端
-                this.axiosDateToBackend();
-                document.getElementById("loading").style.display="inline";
-            },
+            // pickStartDate(date){
+            //     let that = this;
+            //     that.newStartDate = moment(date).format("YYYY-MM-DD");
+            //     //将选的时间传给后端
+            //     this.axiosDateToBackend();
+            //     document.getElementById("loading").style.display="inline";
+            // },
+            // pickEndDate(date){
+            //     let that = this;
+            //     that.newEndDate = moment(date).format("YYYY-MM-DD");
+            //     //将选的时间传给后端
+            //     this.axiosDateToBackend();
+            //     document.getElementById("loading").style.display="inline";
+            // },
             axiosDateToBackend(){
                 let tempStartDate= new Date(this.newStartDate);
                 let tempEndDate= new Date(this.newEndDate);
@@ -202,8 +215,13 @@
             },
         },
         mounted() {
-            //请求后端的获取生产单-资源关系表
-            // console.log("生产单-资源关系表get请求");
+            let tempEndDate= new Date(this.newEndDate);
+
+            let eDateYear=tempEndDate.getFullYear();
+            let eDateMonth=tempEndDate.getMonth()+1;
+            let eDateDay=tempEndDate.getDate()+6;
+            let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay;
+            this.newEndDate=moment(new Date(eDateString)).format("YYYY-MM-DD");
             this.axiosDateToBackend();
         }
     };
