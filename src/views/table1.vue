@@ -45,7 +45,7 @@
                 },
                 pagination1: {
                     total: 0,
-                    pageSize: 5,//每页中显示10条数据
+                    pageSize: 4,//每页中显示10条数据
                     showSizeChanger: true,
                     pageSizeOptions: ["2", "4", "6", "8", "10"],//每页中显示的数据
                     showTotal: total => `共有 ${total} 条数据`,  //分页中显示总的数据
