@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Page1 from '../views/page1'
-import Page2 from '../views/page2'
+import ResourceLoadGraph from '../views/resourceLoadGraph.vue'
+import OrderGanttGraph from '../views/orderGanttGraph'
+import ResourceGanttGraph from '../views/resourceGanttGraph'
 import Page3 from '../views/page3'
 import Page5 from '../views/page5'
 import Page6 from '../views/page6'
@@ -13,7 +13,9 @@ import Table2 from '../views/table2'
 import Table3 from '../views/table3'
 import Table4 from '../views/table4'
 import OrderPage from '../views/orderPage'
-import ResourcePage from '../views/resourcePage'
+import StaffPage from '../views/staffPage'
+import DevicePage from '../views/devicePage'
+import RoutingPage from '../views/routingPage'
 
 
 
@@ -22,15 +24,15 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/table1',
     name: 'Table1',
     component: () => import(/* webpackChunkName: "table1" */ '../views/table1.vue')
   },
   {
-    path: '/home',
-    name: 'Home',
-    // component: Home
-    component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue')
+    path: '/resourceLoadGraph',
+    name: 'ResourceLoadGraph',
+    // component: ResourceLoadGraph
+    component: () => import(/* webpackChunkName: "ResourceLoadGraph" */ '../views/resourceLoadGraph.vue')
   },
   {
     path: '/about',
@@ -41,14 +43,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path:'/page1',
-    name:'Page1',
-    component: () => import(/* webpackChunkName: "page1" */ '../views/page1.vue')
+    path:'/orderGanttGraph',
+    name:'OrderGanttGraph',
+    component: () => import(/* webpackChunkName: "OrderGanttGraph" */ '../views/orderGanttGraph.vue')
   },
   {
-    path:'/page2',
-    name:'Page2',
-    component: () => import(/* webpackChunkName: "page2" */ '../views/page2.vue')
+    path:'/resourceGanttGraph',
+    name:'ResourceGanttGraph',
+    component: () => import(/* webpackChunkName: "ResourceGanttGraph" */ '../views/resourceGanttGraph.vue')
   },
   {
     path:'/page3',
@@ -101,9 +103,20 @@ const routes = [
     component: () => import(/* webpackChunkName: "orderPage" */ '../views/orderPage.vue')
   },
   {
-    path:'/resourcePage',
-    name:'ResourcePage',
-    component: () => import(/* webpackChunkName: "resourcePage" */ '../views/resourcePage.vue')
+    path:'/staffPage',
+    name:'StaffPage',
+    component: () => import(/* webpackChunkName: "staffPage" */ '../views/staffPage.vue')
+  },
+  {
+    path:'/devicePage',
+    name:'DevicePage',
+    component: () => import(/* webpackChunkName: "devicePage" */ '../views/devicePage.vue')
+  }
+  ,
+  {
+    path:'/routing',
+    name:'RoutingPage',
+    component: () => import(/* webpackChunkName: "routingPage" */ '../views/routingPage.vue')
   }
 ];
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        资源管理页面
+        人员管理页面
     </div>
 </template>
 

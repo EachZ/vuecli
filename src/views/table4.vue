@@ -1,5 +1,30 @@
 <template>
     <div>
+        <div class="block datePick">
+            <a-range-picker
+                    :placeholder="['开始日期','结束日期']"
+                    :value="[newStartDate,newEndDate]"
+                    @change="pickDate"
+            />
+<!--            <span class="demonstration">开始日期 </span>-->
+<!--            <a-date-picker-->
+<!--                    class="right-pick-btn"-->
+<!--                    :clearable="false"-->
+<!--                    @change="pickStartDate"-->
+<!--                    v-model="newStartDate"-->
+<!--                    type="date"-->
+<!--                    placeholder="开始日期"-->
+<!--            />-->
+<!--            <span class="demonstration"> 结束日期 </span>-->
+<!--            <a-date-picker-->
+<!--                    class="right-pick-btn"-->
+<!--                    :clearable="false"-->
+<!--                    @change="pickEndDate"-->
+<!--                    v-model="newEndDate"-->
+<!--                    type="date"-->
+<!--                    placeholder="结束日期"-->
+<!--            />-->
+        </div>
         <a-button size="small" type="primary" icon="download" @click="exportExcel" style="float:right;margin-right: 10px;background-color: #42b983;border:none">导出生产单-资源关系表</a-button>
         <div id="loadingDiv">
             <a-button type="primary" shape="circle" id="loading" loading/>
@@ -22,6 +47,7 @@
 <script>
     import FileSaver from 'file-saver'
     import XLSX from 'xlsx'
+    import moment from "moment";
     //一共有4列
     const columns = [
         //第一列:资源
@@ -89,6 +115,8 @@
         data() {
             return {
                 target: 'http://123.57.239.79:3180',
+                newStartDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
+                newEndDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
                 data,
                 columns,
                 pagination: {
@@ -101,6 +129,64 @@
             };
         },
         methods:{
+            pickDate(date,dateString){
+                let that = this;
+                that.newStartDate = date[0];
+                that.newEndDate = date[1];
+                //将选的时间传给后端
+                this.axiosDateToBackend();
+                document.getElementById("loading").style.display="inline";
+            },
+            // pickStartDate(date){
+            //     let that = this;
+            //     that.newStartDate = moment(date).format("YYYY-MM-DD");
+            //     //将选的时间传给后端
+            //     this.axiosDateToBackend();
+            //     document.getElementById("loading").style.display="inline";
+            // },
+            // pickEndDate(date){
+            //     let that = this;
+            //     that.newEndDate = moment(date).format("YYYY-MM-DD");
+            //     //将选的时间传给后端
+            //     this.axiosDateToBackend();
+            //     document.getElementById("loading").style.display="inline";
+            // },
+            axiosDateToBackend(){
+                let tempStartDate= new Date(this.newStartDate);
+                let tempEndDate= new Date(this.newEndDate);
+
+                let sDateYear=tempStartDate.getFullYear();
+                let sDateMonth=tempStartDate.getMonth()+1;
+                let sDateDay=tempStartDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+
+                let eDateYear=tempEndDate.getFullYear();
+                let eDateMonth=tempEndDate.getMonth()+1;
+                let eDateDay=tempEndDate.getDate();
+                let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 00:00:00";
+
+                console.log("table4");
+                console.log(sDateString);
+                console.log(eDateString);
+                this.$axios.get(this.target+'/resource/productionForm',{
+                    params:{
+                        startDate:sDateString,
+                        endDate:eDateString
+                        // startDate: "2018/11/20 00:00:00",
+                        // endDate: "2018/11/26 00:00:00"
+                    }
+                }).then(response => {
+                    // console.log("GET请求发出了");
+                    if (response.data) {
+                        // console.log("生产单-资源关系表数据:");
+                        // console.log(response.data.data);
+                        document.getElementById("loading").style.display="none";
+                        this.data=response.data.data;
+                    }
+                }).catch(err => {
+                    alert('生产单-资源关系表请求失败');
+                })
+            },
             rowClassName(record,index) {
                 let className = "light-row";
                 if (index % 2 === 1) className = "dark-row";
@@ -129,25 +215,14 @@
             },
         },
         mounted() {
-            //请求后端的获取生产单-资源关系表
-            //要需要传首尾日期？？？
-            // console.log("生产单-资源关系表get请求");
-            this.$axios.get(this.target+'/resource/productionForm',{
-                params:{
-                    startDate: "2018/11/20 00:00:00",
-                    endDate: "2018/11/26 00:00:00"
-                }
-            }).then(response => {
-                // console.log("GET请求发出了");
-                if (response.data) {
-                    // console.log("生产单-资源关系表数据:");
-                    // console.log(response.data.data);
-                    document.getElementById("loading").style.display="none";
-                    this.data=response.data.data;
-                }
-            }).catch(err => {
-                alert('生产单-资源关系表请求失败');
-            })
+            let tempEndDate= new Date(this.newEndDate);
+
+            let eDateYear=tempEndDate.getFullYear();
+            let eDateMonth=tempEndDate.getMonth()+1;
+            let eDateDay=tempEndDate.getDate()+6;
+            let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay;
+            this.newEndDate=moment(new Date(eDateString)).format("YYYY-MM-DD");
+            this.axiosDateToBackend();
         }
     };
 </script>

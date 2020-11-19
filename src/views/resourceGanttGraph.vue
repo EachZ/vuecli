@@ -1,6 +1,17 @@
 <template>
     <div>
-        <a-button type="primary" shape="circle" id="loading" loading/>
+        <div class="block datePick">
+            <span class="demonstration">今天是</span>
+            <a-date-picker
+                    class="right-pick-btn"
+                    :clearable="false"
+                    @change="pickDate"
+                    v-model="newDate"
+                    type="date"
+                    placeholder="按日期查询"
+            />
+        </div>
+        <a-button type="primary" shape="circle" id="loading" style="display: none" loading/>
         <div id="high">
             <highcharts :options="chartOptions" :highcharts="hcInstance"></highcharts>
         </div>
@@ -14,6 +25,7 @@
 
 <script>
     import Highcharts from 'highcharts'
+    import moment from "moment";
     export default {
         name: "page2",
         data(){
@@ -21,6 +33,9 @@
                 target: 'http://123.57.239.79:3180',
                 pageWidth: 0,
                 pageHeight: 0,
+                newDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
+                //给后端传的日期
+                postDate:new Date(),
                 //可以用于处理的数据
                 standardData:[],
                 //甘特图实例？？
@@ -340,6 +355,15 @@
             }
         },
         methods: {
+            pickDate(date){
+                let that = this;
+                that.newDate = moment(date).format("YYYY-MM-DD");
+                console.log("选的时间");
+                console.log(this.newDate);
+                //将选的时间传给后端
+                this.axiosDateToBackend();
+                document.getElementById("loading").style.display="inline";
+            },
             //刷新页面
             freshPage(){
                 // window.location.reload();
@@ -735,12 +759,58 @@
                 //         }
                 //     }
                 // });
+            },
+            axiosDateToBackend(){
+                //改一下url名字
+                let tempDate= new Date(this.newDate);
+
+                let sDateYear=tempDate.getFullYear();
+                let sDateMonth=tempDate.getMonth()+1;
+                let sDateDay=tempDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 07:00:00";
+
+                let eDateYear=tempDate.getFullYear();
+                let eDateMonth=tempDate.getMonth()+1;
+                let eDateDay=tempDate.getDate()+1;
+                let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 07:00:00";
+
+                console.log("往后端传的开始时间和结束时间");
+                console.log(sDateString);
+                console.log(eDateString);
+                document.getElementById("loading").style.display="inline";
+                this.$axios.get(this.target+'/resource/gantt/running',{
+                    params:{
+                        // startDate: "2018/11/20 00:00:00",
+                        // endDate: "2018/11/26 00:00:00"
+                        startDate: sDateString,
+                        endDate: eDateString
+                    }
+                }).then(response => {
+                    // console.log("GET请求发出了");
+                    if (response.data) {
+                        console.log("资源甘特图数据:");
+                        // console.log(response.data.data);
+                        //res应该是providedData格式
+                        console.log(response.data.data);
+                        //将从后端传回来的数据标准化
+                        // this.turnIntoStandardData(response.data.data);
+                        document.getElementById("loading").style.display="none";
+                        this.categoryData=response.data.data.resourceNames;
+                        this.standardData=response.data.data.productList;
+                        //将已经标准化的数据渲染进甘特图里
+                        this.handleStandardData(this.standardData);
+                    }
+                }).catch(err => {
+                    alert('资源甘特图数据请求失败');
+                })
+
             }
         },
         mounted(){
             document.getElementById("returnButton").style.display="none";
             this.pageWidth=document.body.clientWidth;
             this.pageHeight=document.body.clientHeight+50;
+            this.axiosDateToBackend();
             //随机生成colorNum个颜色
             // let colorNum=1000;
             // this.colors=[];
@@ -748,34 +818,6 @@
             //     this.createdRandomManyColors();
             // }
             // console.log("资源甘特图get请求");
-
-            //改一下url名字
-            this.$axios.get(this.target+'/resource/gantt/running',{
-                params:{
-                    startDate: "2018/11/20 00:00:00",
-                    endDate: "2018/11/26 00:00:00"
-                }
-            }).then(response => {
-                // console.log("GET请求发出了");
-                if (response.data) {
-                    console.log("资源甘特图数据:");
-                    // console.log(response.data.data);
-                    //res应该是providedData格式
-                    console.log(response.data.data);
-                    //将从后端传回来的数据标准化
-                    // this.turnIntoStandardData(response.data.data);
-                    document.getElementById("loading").style.display="none";
-                    this.categoryData=response.data.data.resourceNames;
-                    this.standardData=response.data.data.productList;
-                    //将已经标准化的数据渲染进甘特图里
-                    this.handleStandardData(this.standardData);
-                }
-            }).catch(err => {
-                alert('资源甘特图数据请求失败');
-            })
-
-
-
             // Highcharts.setOptions(this.chartOptions);
             // this.renderHighchart(this.hcInstance);
         },
