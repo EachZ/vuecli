@@ -52,9 +52,21 @@
             <a-menu-item key="orderPage">
                 <router-link :to="{path:'/orderPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="schedule" />管理订单</router-link>
             </a-menu-item>
-            <a-menu-item key="staffPage">
-                <router-link :to="{path:'/staffPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="team" />管理人员</router-link>
-            </a-menu-item>
+<!--            <a-sub-menu>-->
+<!--                <span slot="title" class="submenu-title-wrapper"><a-icon type="team" />管理人员</span>-->
+                <a-menu-item key="staff:1">
+                    <router-link :to="{path:'/staffPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="team" />管理人员</router-link>
+                </a-menu-item>
+<!--                <a-menu-item key="staff:2">-->
+<!--                    <router-link :to="{path:'/addStaffPage',query:{year:this.year,month:this.month,day:this.day}}">新增人员</router-link>-->
+<!--                </a-menu-item>-->
+<!--                <a-menu-item key="staff:3" disabled>-->
+<!--                    <router-link :to="{path:'/modifyStaffPage',query:{year:this.year,month:this.month,day:this.day}}">修改人员</router-link>-->
+<!--                </a-menu-item>-->
+<!--                <a-menu-item key="staff:4" disabled>-->
+<!--                    <router-link :to="{path:'/deleteStaffPage',query:{year:this.year,month:this.month,day:this.day}}">删除人员</router-link>-->
+<!--                </a-menu-item>-->
+<!--            </a-sub-menu>-->
             <a-menu-item key="devicePage">
                 <router-link :to="{path:'/devicePage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="deployment-unit" />管理设备</router-link>
             </a-menu-item>

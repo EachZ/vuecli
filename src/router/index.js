@@ -14,6 +14,9 @@ import Table3 from '../views/table3'
 import Table4 from '../views/table4'
 import OrderPage from '../views/orderPage'
 import StaffPage from '../views/staffPage'
+import AddStaffPage from '../views/addStaffPage';
+import ModifyStaffPage from '../views/modifyStaffPage'
+import DeleteStaffPage from '../views/deleteStaffPage'
 import DevicePage from '../views/devicePage'
 import RoutingPage from '../views/routingPage'
 
@@ -106,6 +109,21 @@ const routes = [
     path:'/staffPage',
     name:'StaffPage',
     component: () => import(/* webpackChunkName: "staffPage" */ '../views/staffPage.vue')
+  },
+  {
+    path:'/addStaffPage',
+    name:'AddStaffPage',
+    component: () => import(/* webpackChunkName: "addStaffPage" */ '../views/addStaffPage.vue')
+  },
+  {
+    path:'/modifyStaffPage',
+    name:'ModifyStaffPage',
+    component: () => import(/* webpackChunkName: "modifyStaffPage" */ '../views/modifyStaffPage.vue')
+  },
+  {
+    path:'/deleteStaffPage',
+    name:'DeleteStaffPage',
+    component: () => import(/* webpackChunkName: "deleteStaffPage" */ '../views/deleteStaffPage.vue')
   },
   {
     path:'/devicePage',
