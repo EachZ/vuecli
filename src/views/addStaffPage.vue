@@ -50,10 +50,10 @@
             <template slot="operation" slot-scope="text, record">
                 <a-popconfirm
                         v-if="dataSource.length"
-                        title="Sure to delete?"
+                        title="确定删除？"
                         @confirm="() => onDelete(record.key)"
                 >
-                    <a href="javascript:;">Delete</a>
+                    <a href="javascript:;">删除</a>
                 </a-popconfirm>
             </template>
         </a-table>
@@ -177,7 +177,7 @@
                         key: 'ability',
                         scopedSlots: { customRender: 'ability' },
                     }, {
-                        title: 'operation',
+                        title: '操作',
                         dataIndex: 'operation',
                         scopedSlots: { customRender: 'operation' },
                     },
@@ -228,9 +228,9 @@
                 const newData = {
                     key: count,
                     resourceId: 0,
-                    name: "6组-李  倩（4）",
-                    workShift: 1,
-                    manpower: 4,
+                    name: "",
+                    workShift: 0,
+                    manpower: 0,
                 };
                 this.dataSource = [...dataSource, newData];
                 this.count = count + 1;

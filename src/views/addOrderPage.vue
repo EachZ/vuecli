@@ -1,55 +1,37 @@
 <template>
     <div>
-        <h3>修改人员</h3>
+        <a-button size="small" type="primary" icon="plus" @click="handleAdd" style="background-color: #42b983;border:none">新增订单</a-button>
+        <br/>
+        <br/>
         <a-table bordered
                  :data-source="dataSource"
                  :columns="columns"
-                 :rowKey="item => item.resourceId"
+                 :rowKey="item => item.key"
         >
-            <template slot="name" slot-scope="text, record">
-                <editable-cell :text="text" @change="onCellChange(record.resourceId, 'name', $event)" />
+            <template slot="orderNumber" slot-scope="text, record">
+                <editable-cell :text="text" @change="onCellChange(record.key, 'orderNumber', $event)" />
             </template>
-            <template slot="workShift" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.resourceId, 'workShift', $event)" />
+            <template slot="materialCoding" slot-scope="text, record">
+                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'materialCoding', $event)" />
             </template>
-            <template slot="manpower" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.resourceId, 'manpower', $event)" />
+            <template slot="count" slot-scope="text, record">
+                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'count', $event)" />
             </template>
-            <!--            多选下拉-->
-            <!--            工作日期-->
-            <template slot="workDate" slot-scope="text, record">
-                <a-select
-                        mode="multiple"
-                        :default-value="dataSource[record.resourceId-1].workDate"
-                        style="width: 100%"
-                        placeholder="请选择工作日期"
-                        @change="handleSelectChange($event, record.resourceId,'workDate')"
-                >
-                    <a-select-option v-for="item in weekDays" :key="item.key">
-                        {{item.value}}
-                    </a-select-option>
-                </a-select>
+            <template slot="deadline" slot-scope="text, record">
+                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'deadline', $event)" />
             </template>
-
-            <template slot="ability" slot-scope="text, record">
-                <a-select
-                        mode="multiple"
-                        :default-value="dataSource[record.resourceId-1].ability"
-                        style="width: 100%"
-                        placeholder="请选择工艺路线"
-                        @change="handleSelectChange($event, record.resourceId,'ability')"
-                >
-                    <a-select-option v-for="item in abilities" :key="item.key">
-                        {{item.value}}
-                    </a-select-option>
-                </a-select>
+            <template slot="remainingCount" slot-scope="text, record">
+                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'remainingCount', $event)" />
+            </template>
+            <template slot="state" slot-scope="text, record">
+                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'state', $event)" />
             </template>
 
             <template slot="operation" slot-scope="text, record">
                 <a-popconfirm
                         v-if="dataSource.length"
                         title="确定删除？"
-                        @confirm="() => onDelete(record.resourceId)"
+                        @confirm="() => onDelete(record.key)"
                 >
                     <a href="javascript:;">删除</a>
                 </a-popconfirm>
@@ -57,7 +39,7 @@
         </a-table>
 
         <a-button type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
-        <a-button @click="backToStaffPage">取消</a-button>
+        <a-button @click="backToOrderPage">取消</a-button>
     </div>
 </template>
 <script>
@@ -70,7 +52,6 @@
         data() {
             return {
                 newDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
-                selectedData:this.$route.query.selectedData,
                 value: [],
                 weekDays:[
                     {
@@ -112,7 +93,13 @@
                     },{
                         key:5,
                         value:"5"
-                    }
+                    },{
+                        key:6,
+                        value:"6"
+                    },{
+                        key:7,
+                        value:"7"
+                    },
                 ],
                 dataSource: [
                     // {
@@ -138,53 +125,54 @@
                 count: 1,
                 columns: [
                     {
-                        title: '人员ID',
-                        dataIndex: 'resourceId',
-                        key: 'resourceId',
-                        // width: '30%',
-                        //下面这行很重要
-                        scopedSlots: { customRender: 'resourceId' },
+                        title: '订单ID',
+                        dataIndex: 'orderId',
+                        key: 'orderId',
+                    }, {
+                        title: '订单号',
+                        dataIndex: 'orderNumber',
+                        key: 'orderNumber',
+                        scopedSlots: { customRender: 'orderNumber' },
                     },{
-                        title: '人员名称',
-                        dataIndex: 'name',
-                        key: 'name',
-                        scopedSlots: { customRender: 'name' },
+                        title: '生产目标编码',
+                        dataIndex: 'materialCoding',
+                        key: 'materialCoding',
+                        scopedSlots: { customRender: 'materialCoding' },
                     },{
-                        title: '工作班次',
-                        dataIndex: 'workShift',
-                        key: 'workShift',
-                        scopedSlots: { customRender: 'workShift' },
+                        title: '订单数量',
+                        dataIndex: 'count',
+                        key: 'count',
+                        scopedSlots: { customRender: 'count' },
                     },{
-                        title: '人力数量',
-                        dataIndex: 'manpower',
-                        key: 'manpower',
-                        scopedSlots: { customRender: 'manpower' },
+                        title: '订单状态',
+                        dataIndex: 'state',
+                        key: 'state',
+                        scopedSlots: { customRender: 'state' },
                     },{
-                        title: '工作日期',
-                        dataIndex: 'workDate',
-                        key: 'workDate',
-                        scopedSlots: { customRender: 'workDate' },
+                        title: '交期',
+                        dataIndex: 'deadline',
+                        key: 'deadline',
+                        scopedSlots: { customRender: 'deadline' },
                     },{
-                        title: '工作能力',
-                        dataIndex: 'ability',
-                        key: 'ability',
-                        scopedSlots: { customRender: 'ability' },
+                        title: '剩余各个步骤数量',
+                        dataIndex: 'remainingCount',
+                        key: 'remainingCount',
+                        scopedSlots: { customRender: 'remainingCount' },
                     }, {
                         title: '操作',
                         dataIndex: 'operation',
                         scopedSlots: { customRender: 'operation' },
-                    },
+                    }
                 ],
             };
         },
         methods: {
-            //把修改的多组数据传给后端
+            //把新增的多组数据传给后端
             axiosToBackend(){
-                console.log("将这些数据传给后端");
                 console.log(this.dataSource);
             },
-            //返回查看人员界面
-            backToStaffPage(){
+            //返回查看订单界面
+            backToOrderPage(){
                 let tempDate= new Date(this.newDate);
 
                 let DateYear=tempDate.getFullYear();
@@ -192,14 +180,14 @@
                 let DateDay=tempDate.getDate();
                 let DateString="?year="+DateYear+"&month="+DateMonth+"&day="+DateDay;
                 //?year=2020&month=11&day=19
-                this.$router.replace('/staffPage'+DateString);
+                this.$router.replace('/OrderPage'+DateString);
             },
             //要把选择的值存进dataSource里
             handleSelectChange(value,key,dataIndex) {
-                // console.log(`selectedWeekDay ${value}`);
-                // console.log(key);
+                console.log(`selectedWeekDay ${value}`);
+                console.log(key);
                 const dataSource = [...this.dataSource];
-                const target = dataSource.find(item => item.resourceId === key);
+                const target = dataSource.find(item => item.key === key);
                 if (target) {
                     target[dataIndex] = value;
                     this.dataSource = dataSource;
@@ -207,7 +195,7 @@
             },
             onCellChange(key, dataIndex, value) {
                 const dataSource = [...this.dataSource];
-                const target = dataSource.find(item => item.resourceId === key);
+                const target = dataSource.find(item => item.key === key);
                 if (target) {
                     target[dataIndex] = value;
                     this.dataSource = dataSource;
@@ -215,20 +203,24 @@
             },
             onDelete(key) {
                 const dataSource = [...this.dataSource];
-                this.dataSource = dataSource.filter(item => item.resourceId !== key);
+                this.dataSource = dataSource.filter(item => item.key !== key);
+            },
+            handleAdd() {
+                const { count, dataSource } = this;
+                const newData = {
+                    key: count,
+                    orderId: 0,
+                    orderNumber: 0,
+                    materialCoding: "",
+                    count: 0,
+                    state:0,
+                    deadline: "",
+                    remainingCount: "",
+                };
+                this.dataSource = [...dataSource, newData];
+                this.count = count + 1;
             },
         },
-        mounted(){
-            this.dataSource=this.selectedData;
-            this.abilities=[];
-            for(let i=1;i<=20;i++){
-                let tempJSON={
-                    key:i,
-                    value:String(i)
-                };
-                this.abilities.push(tempJSON);
-            }
-        }
     };
 </script>
 <style>

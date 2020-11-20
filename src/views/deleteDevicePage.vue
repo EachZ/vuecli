@@ -1,49 +1,63 @@
 <template>
     <div>
-        <h3>修改人员</h3>
+        <h3>删除设备</h3>
         <a-table bordered
                  :data-source="dataSource"
                  :columns="columns"
                  :rowKey="item => item.resourceId"
         >
-            <template slot="name" slot-scope="text, record">
-                <editable-cell :text="text" @change="onCellChange(record.resourceId, 'name', $event)" />
-            </template>
-            <template slot="workShift" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.resourceId, 'workShift', $event)" />
-            </template>
-            <template slot="manpower" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.resourceId, 'manpower', $event)" />
-            </template>
+            <!--            <template slot="name" slot-scope="text, record">-->
+            <!--                <editable-cell :text="text" @change="onCellChange(record.resourceId, 'name', $event)" />-->
+            <!--            </template>-->
+            <!--            <template slot="workShift" slot-scope="text, record">-->
+            <!--                <editable-cell :text="String(text)" @change="onCellChange(record.resourceId, 'workShift', $event)" />-->
+            <!--            </template>-->
+            <!--            <template slot="manpower" slot-scope="text, record">-->
+            <!--                <editable-cell :text="String(text)" @change="onCellChange(record.resourceId, 'manpower', $event)" />-->
+            <!--            </template>-->
             <!--            多选下拉-->
             <!--            工作日期-->
-            <template slot="workDate" slot-scope="text, record">
-                <a-select
-                        mode="multiple"
-                        :default-value="dataSource[record.resourceId-1].workDate"
-                        style="width: 100%"
-                        placeholder="请选择工作日期"
-                        @change="handleSelectChange($event, record.resourceId,'workDate')"
-                >
-                    <a-select-option v-for="item in weekDays" :key="item.key">
-                        {{item.value}}
-                    </a-select-option>
-                </a-select>
-            </template>
+            <!--            <template slot="workDate" slot-scope="text, record">-->
+            <!--                <a-select-->
+            <!--                        mode="multiple"-->
+            <!--                        :default-value="dataSource[record.resourceId-1].workDate"-->
+            <!--                        style="width: 100%"-->
+            <!--                        placeholder="请选择工作日期"-->
+            <!--                        @change="handleSelectChange($event, record.resourceId,'workDate')"-->
+            <!--                >-->
+            <!--                    <a-select-option v-for="item in weekDays" :key="item.key">-->
+            <!--                        {{item.value}}-->
+            <!--                    </a-select-option>-->
+            <!--                </a-select>-->
+            <!--            </template>-->
 
-            <template slot="ability" slot-scope="text, record">
-                <a-select
-                        mode="multiple"
-                        :default-value="dataSource[record.resourceId-1].ability"
-                        style="width: 100%"
-                        placeholder="请选择工艺路线"
-                        @change="handleSelectChange($event, record.resourceId,'ability')"
-                >
-                    <a-select-option v-for="item in abilities" :key="item.key">
-                        {{item.value}}
-                    </a-select-option>
-                </a-select>
-            </template>
+            <!--            <template slot="ability" slot-scope="text, record">-->
+            <!--                <a-select-->
+            <!--                        mode="multiple"-->
+            <!--                        :default-value="dataSource[record.resourceId-1].ability"-->
+            <!--                        style="width: 100%"-->
+            <!--                        placeholder="请选择工艺路线"-->
+            <!--                        @change="handleSelectChange($event, record.resourceId,'ability')"-->
+            <!--                >-->
+            <!--                    <a-select-option v-for="item in abilities" :key="item.key">-->
+            <!--                        {{item.value}}-->
+            <!--                    </a-select-option>-->
+            <!--                </a-select>-->
+            <!--            </template>-->
+            <span slot="workDate" slot-scope="workDate">
+              <a-tag
+                      v-for="day in workDate"
+                      :key="day">
+                {{day}}
+              </a-tag>
+            </span>
+            <span slot="ability" slot-scope="ability">
+              <a-tag
+                      v-for="a in ability"
+                      :key="a">
+                {{a}}
+              </a-tag>
+            </span>
 
             <template slot="operation" slot-scope="text, record">
                 <a-popconfirm
@@ -57,15 +71,15 @@
         </a-table>
 
         <a-button type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
-        <a-button @click="backToStaffPage">取消</a-button>
+        <a-button @click="backToDevicePage">取消</a-button>
     </div>
 </template>
 <script>
-    import EditableCell from '../components/EditableCell'
+    // import EditableCell from '../components/EditableCell'
     import moment from "moment";
     export default {
         components: {
-            EditableCell,
+            // EditableCell,
         },
         data() {
             return {
@@ -138,14 +152,14 @@
                 count: 1,
                 columns: [
                     {
-                        title: '人员ID',
+                        title: '设备ID',
                         dataIndex: 'resourceId',
                         key: 'resourceId',
                         // width: '30%',
                         //下面这行很重要
                         scopedSlots: { customRender: 'resourceId' },
                     },{
-                        title: '人员名称',
+                        title: '设备名称',
                         dataIndex: 'name',
                         key: 'name',
                         scopedSlots: { customRender: 'name' },
@@ -183,8 +197,8 @@
                 console.log("将这些数据传给后端");
                 console.log(this.dataSource);
             },
-            //返回查看人员界面
-            backToStaffPage(){
+            //返回查看设备界面
+            backToDevicePage(){
                 let tempDate= new Date(this.newDate);
 
                 let DateYear=tempDate.getFullYear();
@@ -192,7 +206,7 @@
                 let DateDay=tempDate.getDate();
                 let DateString="?year="+DateYear+"&month="+DateMonth+"&day="+DateDay;
                 //?year=2020&month=11&day=19
-                this.$router.replace('/staffPage'+DateString);
+                this.$router.replace('/devicePage'+DateString);
             },
             //要把选择的值存进dataSource里
             handleSelectChange(value,key,dataIndex) {

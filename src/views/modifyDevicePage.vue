@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>修改人员</h3>
+        <h3>修改设备</h3>
         <a-table bordered
                  :data-source="dataSource"
                  :columns="columns"
@@ -57,7 +57,7 @@
         </a-table>
 
         <a-button type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
-        <a-button @click="backToStaffPage">取消</a-button>
+        <a-button @click="backToDevicePage">取消</a-button>
     </div>
 </template>
 <script>
@@ -138,14 +138,14 @@
                 count: 1,
                 columns: [
                     {
-                        title: '人员ID',
+                        title: '设备ID',
                         dataIndex: 'resourceId',
                         key: 'resourceId',
                         // width: '30%',
                         //下面这行很重要
                         scopedSlots: { customRender: 'resourceId' },
                     },{
-                        title: '人员名称',
+                        title: '设备名称',
                         dataIndex: 'name',
                         key: 'name',
                         scopedSlots: { customRender: 'name' },
@@ -183,8 +183,8 @@
                 console.log("将这些数据传给后端");
                 console.log(this.dataSource);
             },
-            //返回查看人员界面
-            backToStaffPage(){
+            //返回查看设备界面
+            backToDevicePage(){
                 let tempDate= new Date(this.newDate);
 
                 let DateYear=tempDate.getFullYear();
@@ -192,7 +192,7 @@
                 let DateDay=tempDate.getDate();
                 let DateString="?year="+DateYear+"&month="+DateMonth+"&day="+DateDay;
                 //?year=2020&month=11&day=19
-                this.$router.replace('/staffPage'+DateString);
+                this.$router.replace('/devicePage'+DateString);
             },
             //要把选择的值存进dataSource里
             handleSelectChange(value,key,dataIndex) {

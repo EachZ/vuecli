@@ -49,6 +49,9 @@
                   </a-menu-item>
               </a-sub-menu>
           </a-sub-menu>
+            <a-menu-item key="routingPage">
+                <router-link :to="{path:'/routing'}"><a-icon type="cluster" />工艺路线</router-link>
+            </a-menu-item>
             <a-menu-item key="orderPage">
                 <router-link :to="{path:'/orderPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="schedule" />管理订单</router-link>
             </a-menu-item>
@@ -70,19 +73,17 @@
             <a-menu-item key="devicePage">
                 <router-link :to="{path:'/devicePage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="deployment-unit" />管理设备</router-link>
             </a-menu-item>
-            <a-menu-item key="routingPage">
-                <router-link :to="{path:'/routing'}"><a-icon type="cluster" />工艺路线</router-link>
-            </a-menu-item>
+
 
 <!--          <a-menu-item key="try">-->
 <!--            <router-link :to="{path:'/page8',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="bulb" />实验页面</router-link>-->
 <!--          </a-menu-item>-->
-            <a-menu-item key="CRUD">
-                <router-link :to="{path:'/page3'}"><a-icon type="form" />增删改查废弃版本</router-link>
-            </a-menu-item>
-            <a-menu-item key="temp">
-                <router-link :to="{path:'/temp'}">temp</router-link>
-            </a-menu-item>
+<!--            <a-menu-item key="CRUD">-->
+<!--                <router-link :to="{path:'/page3'}"><a-icon type="form" />增删改查废弃版本</router-link>-->
+<!--            </a-menu-item>-->
+<!--            <a-menu-item key="temp">-->
+<!--                <router-link :to="{path:'/temp'}">temp</router-link>-->
+<!--            </a-menu-item>-->
 
         </a-menu>
       </a-affix>

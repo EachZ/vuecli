@@ -13,11 +13,20 @@ import Table2 from '../views/table2'
 import Table3 from '../views/table3'
 import Table4 from '../views/table4'
 import OrderPage from '../views/orderPage'
+import AddOrderPage from '../views/addOrderPage';
+import ModifyOrderPage from '../views/modifyOrderPage'
+import DeleteOrderPage from '../views/deleteOrderPage'
+
 import StaffPage from '../views/staffPage'
 import AddStaffPage from '../views/addStaffPage';
 import ModifyStaffPage from '../views/modifyStaffPage'
 import DeleteStaffPage from '../views/deleteStaffPage'
+
 import DevicePage from '../views/devicePage'
+import AddDevicePage from '../views/addDevicePage';
+import ModifyDevicePage from '../views/modifyDevicePage'
+import DeleteDevicePage from '../views/deleteDevicePage'
+
 import RoutingPage from '../views/routingPage'
 
 
@@ -106,6 +115,21 @@ const routes = [
     component: () => import(/* webpackChunkName: "orderPage" */ '../views/orderPage.vue')
   },
   {
+    path:'/addOrderPage',
+    name:'AddOrderPage',
+    component: () => import(/* webpackChunkName: "addOrderPage" */ '../views/addOrderPage.vue')
+  },
+  {
+    path:'/modifyOrderPage',
+    name:'ModifyOrderPage',
+    component: () => import(/* webpackChunkName: "modifyOrderPage" */ '../views/modifyOrderPage.vue')
+  },
+  {
+    path:'/deleteOrderPage',
+    name:'DeleteOrderPage',
+    component: () => import(/* webpackChunkName: "deleteOrderPage" */ '../views/deleteOrderPage.vue')
+  },
+  {
     path:'/staffPage',
     name:'StaffPage',
     component: () => import(/* webpackChunkName: "staffPage" */ '../views/staffPage.vue')
@@ -129,8 +153,22 @@ const routes = [
     path:'/devicePage',
     name:'DevicePage',
     component: () => import(/* webpackChunkName: "devicePage" */ '../views/devicePage.vue')
-  }
-  ,
+  },
+  {
+    path:'/addDevicePage',
+    name:'AddDevicePage',
+    component: () => import(/* webpackChunkName: "addDevicePage" */ '../views/addDevicePage.vue')
+  },
+  {
+    path:'/modifyDevicePage',
+    name:'ModifyDevicePage',
+    component: () => import(/* webpackChunkName: "modifyDevicePage" */ '../views/modifyDevicePage.vue')
+  },
+  {
+    path:'/deleteDevicePage',
+    name:'DeleteDevicePage',
+    component: () => import(/* webpackChunkName: "deleteDevicePage" */ '../views/deleteDevicePage.vue')
+  },
   {
     path:'/routing',
     name:'RoutingPage',

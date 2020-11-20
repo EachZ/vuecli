@@ -1,29 +1,31 @@
 <template>
     <div>
-        <h3>修改人员</h3>
+        <a-button size="small" type="primary" icon="plus" @click="handleAdd" style="background-color: #42b983;border:none">新增设备</a-button>
+        <br/>
+        <br/>
         <a-table bordered
                  :data-source="dataSource"
                  :columns="columns"
-                 :rowKey="item => item.resourceId"
+                 :rowKey="item => item.key"
         >
             <template slot="name" slot-scope="text, record">
-                <editable-cell :text="text" @change="onCellChange(record.resourceId, 'name', $event)" />
+                <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)" />
             </template>
             <template slot="workShift" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.resourceId, 'workShift', $event)" />
+                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'workShift', $event)" />
             </template>
             <template slot="manpower" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.resourceId, 'manpower', $event)" />
+                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'manpower', $event)" />
             </template>
             <!--            多选下拉-->
             <!--            工作日期-->
             <template slot="workDate" slot-scope="text, record">
                 <a-select
                         mode="multiple"
-                        :default-value="dataSource[record.resourceId-1].workDate"
+                        :default-value="[1]"
                         style="width: 100%"
                         placeholder="请选择工作日期"
-                        @change="handleSelectChange($event, record.resourceId,'workDate')"
+                        @change="handleSelectChange($event, record.key,'workDate')"
                 >
                     <a-select-option v-for="item in weekDays" :key="item.key">
                         {{item.value}}
@@ -34,10 +36,10 @@
             <template slot="ability" slot-scope="text, record">
                 <a-select
                         mode="multiple"
-                        :default-value="dataSource[record.resourceId-1].ability"
+                        :default-value="[1]"
                         style="width: 100%"
                         placeholder="请选择工艺路线"
-                        @change="handleSelectChange($event, record.resourceId,'ability')"
+                        @change="handleSelectChange($event, record.key,'ability')"
                 >
                     <a-select-option v-for="item in abilities" :key="item.key">
                         {{item.value}}
@@ -49,7 +51,7 @@
                 <a-popconfirm
                         v-if="dataSource.length"
                         title="确定删除？"
-                        @confirm="() => onDelete(record.resourceId)"
+                        @confirm="() => onDelete(record.key)"
                 >
                     <a href="javascript:;">删除</a>
                 </a-popconfirm>
@@ -57,7 +59,7 @@
         </a-table>
 
         <a-button type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
-        <a-button @click="backToStaffPage">取消</a-button>
+        <a-button @click="backToDevicePage">取消</a-button>
     </div>
 </template>
 <script>
@@ -70,7 +72,6 @@
         data() {
             return {
                 newDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
-                selectedData:this.$route.query.selectedData,
                 value: [],
                 weekDays:[
                     {
@@ -112,7 +113,13 @@
                     },{
                         key:5,
                         value:"5"
-                    }
+                    },{
+                        key:6,
+                        value:"6"
+                    },{
+                        key:7,
+                        value:"7"
+                    },
                 ],
                 dataSource: [
                     // {
@@ -138,14 +145,14 @@
                 count: 1,
                 columns: [
                     {
-                        title: '人员ID',
+                        title: '设备ID',
                         dataIndex: 'resourceId',
                         key: 'resourceId',
                         // width: '30%',
                         //下面这行很重要
                         scopedSlots: { customRender: 'resourceId' },
                     },{
-                        title: '人员名称',
+                        title: '设备名称',
                         dataIndex: 'name',
                         key: 'name',
                         scopedSlots: { customRender: 'name' },
@@ -178,13 +185,12 @@
             };
         },
         methods: {
-            //把修改的多组数据传给后端
+            //把新增的多组数据传给后端
             axiosToBackend(){
-                console.log("将这些数据传给后端");
                 console.log(this.dataSource);
             },
-            //返回查看人员界面
-            backToStaffPage(){
+            //返回查看设备界面
+            backToDevicePage(){
                 let tempDate= new Date(this.newDate);
 
                 let DateYear=tempDate.getFullYear();
@@ -192,14 +198,14 @@
                 let DateDay=tempDate.getDate();
                 let DateString="?year="+DateYear+"&month="+DateMonth+"&day="+DateDay;
                 //?year=2020&month=11&day=19
-                this.$router.replace('/staffPage'+DateString);
+                this.$router.replace('/devicePage'+DateString);
             },
             //要把选择的值存进dataSource里
             handleSelectChange(value,key,dataIndex) {
-                // console.log(`selectedWeekDay ${value}`);
-                // console.log(key);
+                console.log(`selectedWeekDay ${value}`);
+                console.log(key);
                 const dataSource = [...this.dataSource];
-                const target = dataSource.find(item => item.resourceId === key);
+                const target = dataSource.find(item => item.key === key);
                 if (target) {
                     target[dataIndex] = value;
                     this.dataSource = dataSource;
@@ -207,7 +213,7 @@
             },
             onCellChange(key, dataIndex, value) {
                 const dataSource = [...this.dataSource];
-                const target = dataSource.find(item => item.resourceId === key);
+                const target = dataSource.find(item => item.key === key);
                 if (target) {
                     target[dataIndex] = value;
                     this.dataSource = dataSource;
@@ -215,20 +221,21 @@
             },
             onDelete(key) {
                 const dataSource = [...this.dataSource];
-                this.dataSource = dataSource.filter(item => item.resourceId !== key);
+                this.dataSource = dataSource.filter(item => item.key !== key);
+            },
+            handleAdd() {
+                const { count, dataSource } = this;
+                const newData = {
+                    key: count,
+                    resourceId: 0,
+                    name: "",
+                    workShift: 0,
+                    manpower: 0,
+                };
+                this.dataSource = [...dataSource, newData];
+                this.count = count + 1;
             },
         },
-        mounted(){
-            this.dataSource=this.selectedData;
-            this.abilities=[];
-            for(let i=1;i<=20;i++){
-                let tempJSON={
-                    key:i,
-                    value:String(i)
-                };
-                this.abilities.push(tempJSON);
-            }
-        }
     };
 </script>
 <style>
