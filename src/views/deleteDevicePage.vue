@@ -224,9 +224,23 @@
                     deleteResourceIdString=deleteResourceIdString+"resourceIds="+postIDs[i]+"&"
                 }
                 let deleteDateString="dateParam="+sDateString;
-                let deleteString=this.target+'/resources'+deleteResourceIdString+deleteDateString;
-                console.log(deleteString);
-                this.$axios.delete(this.target+'/resources'+deleteResourceIdString+deleteDateString,
+                // let deleteString=this.target+'/resources'+deleteResourceIdString+deleteDateString;
+                // console.log(deleteString);
+                // this.$axios.delete(this.target+'/resources'+deleteResourceIdString+deleteDateString,
+                // ).then(response => {
+                //     console.log(response);
+                //     this.backToDevicePage();
+                // }).catch(err => {
+                //     alert('删除一组设备资源失败')
+                // })
+                this.$axios.delete(this.target+'/resources', {
+                    params: {
+                        resourceIds: postIDs,
+                        dateParam: sDateString
+                    },
+                    paramsSerializer: params => {
+                        return Qs.stringify(params, { indices: false })
+                    }}
                 ).then(response => {
                     console.log(response);
                     this.backToDevicePage();

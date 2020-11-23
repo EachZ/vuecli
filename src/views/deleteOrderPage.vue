@@ -155,18 +155,33 @@
                     deleteOrderIdString=deleteOrderIdString+"orderNumberList="+postIDs[i]+"&"
                 }
                 let deleteDateString="dateParam="+sDateString;
-                let deleteString=this.target+'/orders'+deleteOrderIdString+deleteDateString;
-                console.log(deleteString);
-                this.$axios.delete(this.target+'/orders'+deleteOrderIdString+deleteDateString,
+                // let deleteString=this.target+'/orders'+deleteOrderIdString+deleteDateString;
+                // console.log(deleteString);
+                // this.$axios.delete(this.target+'/orders'+deleteOrderIdString+deleteDateString,
+                // ).then(response => {
+                //     if(response.data){
+                //         document.getElementById("loading").style.display="none";
+                //         console.log(response);
+                //         this.backToOrderPage();
+                //     }
+                // }).catch(err => {
+                //     alert('删除一组订单资源失败')
+                // })
+                this.$axios.delete(this.target+'/orders', {
+                    params: {
+                        orderNumberList: postIDs,
+                        dateParam: sDateString
+                    },
+                    paramsSerializer: params => {
+                        return Qs.stringify(params, { indices: false })
+                    }}
                 ).then(response => {
-                    if(response.data){
-                        document.getElementById("loading").style.display="none";
-                        console.log(response);
-                        this.backToOrderPage();
-                    }
+                    console.log(response);
+                    this.backToOrderPage();
                 }).catch(err => {
-                    alert('删除一组人员资源失败')
+                    alert('删除一组订单资源失败')
                 })
+
 
             },
             //返回查看人员界面

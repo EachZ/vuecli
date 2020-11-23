@@ -216,12 +216,8 @@
 
                 //post传数组类型报错
                 //报400错误
-                this.$axios.post(this.target+'/resources', {
+                this.$axios.post(this.target+'/resources',{
                     params:postData
-                },{
-                    headers: {
-                        'Content-Type': 'application/json;charset=UTF-8'
-                    }
                 }).then(response => {
                     console.log("成功");
                     console.log(response);
