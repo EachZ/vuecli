@@ -1,6 +1,11 @@
 <template>
     <div>
         <h3>删除订单</h3>
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
+        <br/>
+        <br/>
         <a-table bordered
                  :data-source="dataSource"
                  :columns="columns"
@@ -125,8 +130,44 @@
         methods: {
             //把修改的多组数据传给后端
             axiosToBackend(){
+                document.getElementById("loading").style.display="inline";
                 console.log("将这些数据传给后端");
                 console.log(this.dataSource);
+                let postIDs=[];
+                for(let i=0;i<this.dataSource.length;i++){
+                    postIDs.push(this.dataSource[i].orderId);
+                }
+                console.log(postIDs);
+                let tempStartDate= new Date(this.newDate);
+                let sDateYear=tempStartDate.getFullYear();
+                let sDateMonth=tempStartDate.getMonth()+1;
+                let sDateDay=tempStartDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+
+                const Qs = require('qs');
+
+                //delete请求
+                //删除一组资源
+                //报400错误
+                // http://123.57.239.79:3180/resources?resourceIds=3&resourceIds=4&dateParam=2008/11/1 12:00:00
+                let deleteOrderIdString="?";
+                for(let i=0;i<postIDs.length;i++){
+                    deleteOrderIdString=deleteOrderIdString+"orderNumberList="+postIDs[i]+"&"
+                }
+                let deleteDateString="dateParam="+sDateString;
+                let deleteString=this.target+'/orders'+deleteOrderIdString+deleteDateString;
+                console.log(deleteString);
+                this.$axios.delete(this.target+'/orders'+deleteOrderIdString+deleteDateString,
+                ).then(response => {
+                    if(response.data){
+                        document.getElementById("loading").style.display="none";
+                        console.log(response);
+                        this.backToOrderPage();
+                    }
+                }).catch(err => {
+                    alert('删除一组人员资源失败')
+                })
+
             },
             //返回查看人员界面
             backToOrderPage(){
@@ -164,6 +205,7 @@
             },
         },
         mounted(){
+            document.getElementById("loading").style.display="none";
             this.dataSource=this.selectedData;
             this.abilities=[];
             for(let i=1;i<=20;i++){

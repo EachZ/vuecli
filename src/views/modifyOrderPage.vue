@@ -1,6 +1,11 @@
 <template>
     <div>
         <h3>修改订单</h3>
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
+        <br/>
+        <br/>
         <a-table bordered
                  :data-source="dataSource"
                  :columns="columns"
@@ -203,6 +208,7 @@
             },
         },
         mounted(){
+            document.getElementById("loading").style.display="none";
             this.dataSource=this.selectedData;
             this.abilities=[];
             for(let i=1;i<=20;i++){

@@ -138,7 +138,14 @@
                 this.selectedRowKeys = selectedRowKeys;
                 this.selectedData=[];
                 for(let i=0;i<selectedRowKeys.length;i++){
-                    this.selectedData.push(this.data[selectedRowKeys[i]-1]);
+                    let temp;
+                    for(let j=0;j<this.data.length;j++){
+                        if(selectedRowKeys[i]===this.data[j].orderId){
+                            temp=this.data[j];
+                            break;
+                        }
+                    }
+                    this.selectedData.push(temp);
                 }
                 console.log('selectedData: ', this.selectedData)
             },

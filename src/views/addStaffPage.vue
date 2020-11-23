@@ -1,6 +1,9 @@
 <template>
     <div>
         <a-button size="small" type="primary" icon="plus" @click="handleAdd" style="background-color: #42b983;border:none">新增人员</a-button>
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
         <br/>
         <br/>
         <a-table bordered
@@ -198,18 +201,24 @@
                 let sDateDay=tempStartDate.getDate();
                 let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
 
+                const Qs = require('qs');
+
                 for(let i =0;i<postData.length;i++){
                     postData[i].date=sDateString;
                     postData[i].category=1;
                     postData[i].manpower=Number(postData[i].manpower);
                     postData[i].workShift=Number(postData[i].workShift);
+                    // postData[i].ability=Qs.stringify(postData[i].ability)
+                    // postData[i].workDate=Qs.stringify(postData[i].workDate);
 
                 }
                 console.log(postData);
 
                 //post传数组类型报错
                 //报400错误
-                this.$axios.post(this.target+'/resources',JSON.stringify(postData),{
+                this.$axios.post(this.target+'/resources', {
+                    params:postData
+                },{
                     headers: {
                         'Content-Type': 'application/json;charset=UTF-8'
                     }
@@ -267,6 +276,9 @@
                 this.count = count + 1;
             },
         },
+        mounted(){
+            document.getElementById("loading").style.display="none";
+        }
     };
 </script>
 <style>

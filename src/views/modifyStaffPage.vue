@@ -1,6 +1,11 @@
 <template>
     <div>
         <h3>修改人员</h3>
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
+        <br/>
+        <br/>
         <a-table bordered
                  :data-source="dataSource"
                  :columns="columns"
@@ -20,7 +25,7 @@
             <template slot="workDate" slot-scope="text, record">
                 <a-select
                         mode="multiple"
-                        :default-value="dataSource[record.resourceId-1].workDate"
+                        :default-value="dataSource.find(nub => nub.resourceId === record.resourceId).workDate"
                         style="width: 100%"
                         placeholder="请选择工作日期"
                         @change="handleSelectChange($event, record.resourceId,'workDate')"
@@ -34,7 +39,7 @@
             <template slot="ability" slot-scope="text, record">
                 <a-select
                         mode="multiple"
-                        :default-value="dataSource[record.resourceId-1].ability"
+                        :default-value="dataSource.find(nub => nub.resourceId === record.resourceId).ability"
                         style="width: 100%"
                         placeholder="请选择工艺路线"
                         @change="handleSelectChange($event, record.resourceId,'ability')"
@@ -223,8 +228,8 @@
             },
             //要把选择的值存进dataSource里
             handleSelectChange(value,key,dataIndex) {
-                // console.log(`selectedWeekDay ${value}`);
-                // console.log(key);
+                console.log(`selectedWeekDay ${value}`);
+                console.log(key);
                 const dataSource = [...this.dataSource];
                 const target = dataSource.find(item => item.resourceId === key);
                 if (target) {
@@ -246,6 +251,7 @@
             },
         },
         mounted(){
+            document.getElementById("loading").style.display="none";
             this.dataSource=this.selectedData;
             this.abilities=[];
             for(let i=1;i<=20;i++){

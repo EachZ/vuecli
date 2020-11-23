@@ -1,6 +1,11 @@
 <template>
     <div>
         <h3>删除人员</h3>
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
+        <br/>
+        <br/>
         <a-table bordered
                  :data-source="dataSource"
                  :columns="columns"
@@ -208,19 +213,23 @@
                 let sDateDay=tempStartDate.getDate();
                 let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
 
+                const Qs = require('qs');
+
                 //delete请求
                 //删除一组资源
                 //报400错误
-                this.$axios.delete(this.target+'/resources',{
-                    params:{
-                        resourceIds:postIDs,
-                        dateParam:sDateString
-                    },
-                    headers: {
-                        'Content-Type': 'application/json;charset=UTF-8'
-                    }
-                }).then(response => {
-
+                // http://123.57.239.79:3180/resources?resourceIds=3&resourceIds=4&dateParam=2008/11/1 12:00:00
+                let deleteResourceIdString="?";
+                for(let i=0;i<postIDs.length;i++){
+                    deleteResourceIdString=deleteResourceIdString+"resourceIds="+postIDs[i]+"&"
+                }
+                let deleteDateString="dateParam="+sDateString;
+                let deleteString=this.target+'/resources'+deleteResourceIdString+deleteDateString;
+                console.log(deleteString);
+                this.$axios.delete(this.target+'/resources'+deleteResourceIdString+deleteDateString,
+                ).then(response => {
+                    console.log(response);
+                    this.backToStaffPage();
                 }).catch(err => {
                     alert('删除一组人员资源失败')
                 })
@@ -262,6 +271,7 @@
             },
         },
         mounted(){
+            document.getElementById("loading").style.display="none";
             this.dataSource=this.selectedData;
             this.abilities=[];
             for(let i=1;i<=20;i++){

@@ -1,6 +1,11 @@
 <template>
     <div>
         <h3>删除设备</h3>
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
+        <br/>
+        <br/>
         <a-table bordered
                  :data-source="dataSource"
                  :columns="columns"
@@ -197,6 +202,38 @@
             axiosToBackend(){
                 console.log("将这些数据传给后端");
                 console.log(this.dataSource);
+                let postIDs=[];
+                for(let i=0;i<this.dataSource.length;i++){
+                    postIDs.push(this.dataSource[i].resourceId);
+                }
+                console.log(postIDs);
+                let tempStartDate= new Date(this.newDate);
+                let sDateYear=tempStartDate.getFullYear();
+                let sDateMonth=tempStartDate.getMonth()+1;
+                let sDateDay=tempStartDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+
+                const Qs = require('qs');
+
+                //delete请求
+                //删除一组资源
+                //报400错误
+                // http://123.57.239.79:3180/resources?resourceIds=3&resourceIds=4&dateParam=2008/11/1 12:00:00
+                let deleteResourceIdString="?";
+                for(let i=0;i<postIDs.length;i++){
+                    deleteResourceIdString=deleteResourceIdString+"resourceIds="+postIDs[i]+"&"
+                }
+                let deleteDateString="dateParam="+sDateString;
+                let deleteString=this.target+'/resources'+deleteResourceIdString+deleteDateString;
+                console.log(deleteString);
+                this.$axios.delete(this.target+'/resources'+deleteResourceIdString+deleteDateString,
+                ).then(response => {
+                    console.log(response);
+                    this.backToDevicePage();
+                }).catch(err => {
+                    alert('删除一组设备资源失败')
+                })
+
             },
             //返回查看设备界面
             backToDevicePage(){
@@ -234,6 +271,7 @@
             },
         },
         mounted(){
+            document.getElementById("loading").style.display="none";
             this.dataSource=this.selectedData;
             this.abilities=[];
             for(let i=1;i<=20;i++){

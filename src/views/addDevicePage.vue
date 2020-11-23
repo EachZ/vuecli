@@ -1,6 +1,9 @@
 <template>
     <div>
         <a-button size="small" type="primary" icon="plus" @click="handleAdd" style="background-color: #42b983;border:none">新增设备</a-button>
+        <div id="loadingDiv">
+            <a-button type="primary" shape="circle" id="loading" loading/>
+        </div>
         <br/>
         <br/>
         <a-table bordered
@@ -237,6 +240,9 @@
                 this.count = count + 1;
             },
         },
+        mounted(){
+            document.getElementById("loading").style.display="none";
+        }
     };
 </script>
 <style>
