@@ -71,6 +71,7 @@
         },
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 newDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
                 value: [],
                 weekDays:[
@@ -185,9 +186,39 @@
             };
         },
         methods: {
-            //把新增的多组数据传给后端
+            // 增加一组新资源
             axiosToBackend(){
-              console.log(this.dataSource);
+                // console.log(this.dataSource);
+                //要往后端传的数据
+                let postData=this.dataSource;
+
+                let tempStartDate= new Date(this.newDate);
+                let sDateYear=tempStartDate.getFullYear();
+                let sDateMonth=tempStartDate.getMonth()+1;
+                let sDateDay=tempStartDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+
+                for(let i =0;i<postData.length;i++){
+                    postData[i].date=sDateString;
+                    postData[i].category=1;
+                    postData[i].manpower=Number(postData[i].manpower);
+                    postData[i].workShift=Number(postData[i].workShift);
+
+                }
+                console.log(postData);
+
+                //post传数组类型报错
+                //报400错误
+                this.$axios.post(this.target+'/resources',JSON.stringify(postData),{
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    }
+                }).then(response => {
+                    console.log("成功");
+                    console.log(response);
+                }).catch(err => {
+                    alert('增加一组人员资源失败');
+                })
             },
             //返回查看人员界面
             backToStaffPage(){

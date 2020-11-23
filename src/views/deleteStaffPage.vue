@@ -83,6 +83,7 @@
         },
         data() {
             return {
+                target: 'http://123.57.239.79:3180',
                 newDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
                 selectedData:this.$route.query.selectedData,
                 value: [],
@@ -196,6 +197,34 @@
             axiosToBackend(){
                 console.log("将这些数据传给后端");
                 console.log(this.dataSource);
+                let postIDs=[];
+                for(let i=0;i<this.dataSource.length;i++){
+                    postIDs.push(this.dataSource[i].resourceId);
+                }
+                console.log(postIDs);
+                let tempStartDate= new Date(this.newDate);
+                let sDateYear=tempStartDate.getFullYear();
+                let sDateMonth=tempStartDate.getMonth()+1;
+                let sDateDay=tempStartDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+
+                //delete请求
+                //删除一组资源
+                //报400错误
+                this.$axios.delete(this.target+'/resources',{
+                    params:{
+                        resourceIds:postIDs,
+                        dateParam:sDateString
+                    },
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    }
+                }).then(response => {
+
+                }).catch(err => {
+                    alert('删除一组人员资源失败')
+                })
+
             },
             //返回查看人员界面
             backToStaffPage(){

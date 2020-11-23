@@ -218,7 +218,12 @@
                 let eDateString=eDateYear+"/"+eDateMonth+"/"+eDateDay+" 00:00:00";
 
                 //请求后端的获取订单计划表
-                this.$axios.get(this.target+'/orderScheduleForm').then(response => {
+                this.$axios.get(this.target+'/orderScheduleForm',{
+                    params:{
+                        startDate: sDateString,
+                        endDate: eDateString,
+                    }
+                }).then(response => {
                     console.log("GET订单计划表请求发出了");
                     if (response.data) {
                         document.getElementById("loading").style.display="none";

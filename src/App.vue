@@ -28,10 +28,10 @@
                       <router-link :to="{path:'/resourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">人员&设备负载图</router-link>
                   </a-menu-item>
                   <a-menu-item key="graph:1-2">
-                      <router-link :to="{path:'/resourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">人员负载图</router-link>
+                      <router-link :to="{path:'/staffResourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">人员负载图</router-link>
                   </a-menu-item>
                   <a-menu-item key="graph:1-3">
-                      <router-link :to="{path:'/resourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">设备负载图</router-link>
+                      <router-link :to="{path:'/deviceResourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">设备负载图</router-link>
                   </a-menu-item>
               </a-sub-menu>
             <a-menu-item key="graph:2">
@@ -42,10 +42,10 @@
                       <router-link :to="{path:'/resourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">人员&设备甘特图</router-link>
                   </a-menu-item>
                   <a-menu-item key="graph:3-2">
-                      <router-link :to="{path:'/resourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">人员甘特图</router-link>
+                      <router-link :to="{path:'/staffResourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">人员甘特图</router-link>
                   </a-menu-item>
                   <a-menu-item key="graph:3-3">
-                      <router-link :to="{path:'/resourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">设备甘特图</router-link>
+                      <router-link :to="{path:'/deviceResourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">设备甘特图</router-link>
                   </a-menu-item>
               </a-sub-menu>
           </a-sub-menu>

@@ -1,8 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import ResourceLoadGraph from '../views/resourceLoadGraph.vue'
+import StaffResourceLoadGraph from '../views/staffResourceLoadGraph'
+import DeviceResourceLoadGraph from '../views/deviceResourceLoadGraph'
+
 import OrderGanttGraph from '../views/orderGanttGraph'
 import ResourceGanttGraph from '../views/resourceGanttGraph'
+import StaffResourceGanttGraph from '../views/staffResourceGanttGraph'
+import DeviceResourceGanttGraph from '../views/deviceResourceGanttGraph'
+
 import Page3 from '../views/page3'
 import Page5 from '../views/page5'
 import Page6 from '../views/page6'
@@ -47,6 +54,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "ResourceLoadGraph" */ '../views/resourceLoadGraph.vue')
   },
   {
+    path: '/staffResourceLoadGraph',
+    name: 'StaffResourceLoadGraph',
+    component: () => import(/* webpackChunkName: "StaffResourceLoadGraph" */ '../views/staffResourceLoadGraph.vue')
+  },
+  {
+    path: '/deviceResourceLoadGraph',
+    name: 'DeviceResourceLoadGraph',
+    component: () => import(/* webpackChunkName: "DeviceResourceLoadGraph" */ '../views/deviceResourceLoadGraph.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -63,6 +80,16 @@ const routes = [
     path:'/resourceGanttGraph',
     name:'ResourceGanttGraph',
     component: () => import(/* webpackChunkName: "ResourceGanttGraph" */ '../views/resourceGanttGraph.vue')
+  },
+  {
+    path: '/staffResourceGanttGraph',
+    name: 'StaffResourceGanttGraph',
+    component: () => import(/* webpackChunkName: "StaffResourceGanttGraph" */ '../views/staffResourceGanttGraph.vue')
+  },
+  {
+    path: '/deviceResourceGanttGraph',
+    name: 'DeviceResourceGanttGraph',
+    component: () => import(/* webpackChunkName: "DeviceResourceGanttGraph" */ '../views/deviceResourceGanttGraph.vue')
   },
   {
     path:'/page3',

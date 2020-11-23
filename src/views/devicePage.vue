@@ -195,7 +195,7 @@
                     }});
             },
             axiosDateToBackend(){
-                this.$axios.get(this.target+'/resources').then(response => {
+                this.$axios.get(this.target+'/resources/category/0').then(response => {
                     if (response.data) {
                         document.getElementById("loading").style.display="none";
                         this.data=response.data.data;
