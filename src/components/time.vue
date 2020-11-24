@@ -254,7 +254,7 @@
                 let postDateString=postYear+"/"+postMonth+"/"+postDay+" 00:00:00";
 
                 this.$axios.post(this.target+'/schedule',{
-                    params:{
+                    data:{
                         date: postDateString
                     }
                 }).then(response => {

@@ -169,8 +169,34 @@
         methods: {
             //把修改的多组数据传给后端
             axiosToBackend(){
-                console.log("将这些数据传给后端");
-                console.log(this.dataSource);
+                //要往后端传的数据
+                let postData=this.dataSource;
+
+                let tempStartDate= new Date(this.newDate);
+                let sDateYear=tempStartDate.getFullYear();
+                let sDateMonth=tempStartDate.getMonth()+1;
+                let sDateDay=tempStartDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+
+                for(let i =0;i<postData.length;i++){
+                    postData[i].dateParam=sDateString;
+                    delete postData[i]["key"];
+                }
+                console.log(postData);
+
+                this.$axios.put(this.target+'/orders',{
+                    data:{
+                        orderParams:postData
+                    }},
+                ).then(response => {
+                    if(response.data){
+                        console.log("修改成功");
+                        console.log(response);
+                        this.backToOrderPage();
+                    }
+                }).catch(err => {
+                    alert('修改一组订单失败');
+                })
             },
             //返回查看订单界面
             backToOrderPage(){

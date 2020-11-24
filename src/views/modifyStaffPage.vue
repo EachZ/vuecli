@@ -204,13 +204,16 @@
                 }
                 console.log(postData);
 
-                this.$axios.put(this.target+'/resources',JSON.stringify(postData),{
-                    headers: {
-                        'Content-Type': 'application/json;charset=UTF-8'
+                this.$axios.put(this.target+'/resources',{
+                    data:{
+                        resourceInfoParams:postData
+                    }},
+                ).then(response => {
+                    if(response.data){
+                        console.log("修改成功");
+                        console.log(response);
+                        this.backToStaffPage();
                     }
-                }).then(response => {
-                    console.log("成功");
-                    console.log(response);
                 }).catch(err => {
                     alert('修改一组人员资源失败');
                 })

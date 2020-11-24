@@ -191,7 +191,46 @@
         methods: {
             //把新增的多组数据传给后端
             axiosToBackend(){
-                console.log(this.dataSource);
+                // console.log(this.dataSource);
+                //要往后端传的数据
+                let postData=this.dataSource;
+
+                let tempStartDate= new Date(this.newDate);
+                let sDateYear=tempStartDate.getFullYear();
+                let sDateMonth=tempStartDate.getMonth()+1;
+                let sDateDay=tempStartDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+
+                const Qs = require('qs');
+
+                for(let i =0;i<postData.length;i++){
+                    postData[i].date=sDateString;
+                    postData[i].category=1;
+                    postData[i].manpower=Number(postData[i].manpower);
+                    postData[i].workShift=Number(postData[i].workShift);
+                    delete postData[i]["key"];
+                    // postData[i].ability=Qs.stringify(postData[i].ability)
+                    // postData[i].workDate=Qs.stringify(postData[i].workDate);
+
+                }
+                console.log("[[");
+                console.log(postData);
+
+                //post传数组类型报错
+                //报400错误
+                //现在能够传递一个资源的数据
+                this.$axios.post(this.target+'/resources',{
+                    data:{
+                        resourceInfoParams:postData
+                    }}
+                ).then(response => {
+                    if(response.data){
+                        console.log(response);
+                        this.backToDevicePage();
+                    }
+                }).catch(err => {
+                    alert('增加一组设备资源失败');
+                })
             },
             //返回查看设备界面
             backToDevicePage(){
@@ -235,6 +274,8 @@
                     name: "",
                     workShift: 0,
                     manpower: 0,
+                    workDate:[1],
+                    ability:[1]
                 };
                 this.dataSource = [...dataSource, newData];
                 this.count = count + 1;

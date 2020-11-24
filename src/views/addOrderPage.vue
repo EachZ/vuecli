@@ -12,7 +12,7 @@
                  :rowKey="item => item.key"
         >
             <template slot="orderNumber" slot-scope="text, record">
-                <editable-cell :text="text" @change="onCellChange(record.key, 'orderNumber', $event)" />
+                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'orderNumber', $event)" />
             </template>
             <template slot="materialCoding" slot-scope="text, record">
                 <editable-cell :text="String(text)" @change="onCellChange(record.key, 'materialCoding', $event)" />
@@ -173,7 +173,40 @@
         methods: {
             //把新增的多组数据传给后端
             axiosToBackend(){
-                console.log(this.dataSource);
+// console.log(this.dataSource);
+                //要往后端传的数据
+                let postData=this.dataSource;
+
+                let tempStartDate= new Date(this.newDate);
+                let sDateYear=tempStartDate.getFullYear();
+                let sDateMonth=tempStartDate.getMonth()+1;
+                let sDateDay=tempStartDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+
+                const Qs = require('qs');
+
+                for(let i =0;i<postData.length;i++){
+                    postData[i].dateParam=sDateString;
+                    delete postData[i]["key"];
+                    // postData[i].ability=Qs.stringify(postData[i].ability)
+                    // postData[i].workDate=Qs.stringify(postData[i].workDate);
+
+                }
+                console.log("[[");
+                console.log(postData);
+
+                this.$axios.post(this.target+'/orders',{
+                    data:{
+                        orderParams:postData
+                    }}
+                ).then(response => {
+                    if(response.data){
+                        console.log(response);
+                        this.backToOrderPage();
+                    }
+                }).catch(err => {
+                    alert('增加一组订单失败');
+                })
             },
             //返回查看订单界面
             backToOrderPage(){

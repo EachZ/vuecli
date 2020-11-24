@@ -208,19 +208,24 @@
                     postData[i].category=1;
                     postData[i].manpower=Number(postData[i].manpower);
                     postData[i].workShift=Number(postData[i].workShift);
+                    delete postData[i]["key"];
                     // postData[i].ability=Qs.stringify(postData[i].ability)
                     // postData[i].workDate=Qs.stringify(postData[i].workDate);
 
                 }
+                console.log("[[");
                 console.log(postData);
 
-                //post传数组类型报错
-                //报400错误
+
                 this.$axios.post(this.target+'/resources',{
-                    params:postData
+                    data:{
+                        resourceInfoParams:postData
+                    }
                 }).then(response => {
-                    console.log("成功");
-                    console.log(response);
+                    if(response.data){
+                        console.log(response);
+                        this.backToStaffPage();
+                    }
                 }).catch(err => {
                     alert('增加一组人员资源失败');
                 })
@@ -267,12 +272,15 @@
                     name: "",
                     workShift: 0,
                     manpower: 0,
+                    workDate:[1],
+                    ability:[1]
                 };
                 this.dataSource = [...dataSource, newData];
                 this.count = count + 1;
             },
         },
         mounted(){
+
             document.getElementById("loading").style.display="none";
         }
     };

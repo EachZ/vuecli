@@ -186,8 +186,37 @@
         methods: {
             //把修改的多组数据传给后端
             axiosToBackend(){
-                console.log("将这些数据传给后端");
-                console.log(this.dataSource);
+                //要往后端传的数据
+                let postData=this.dataSource;
+
+                let tempStartDate= new Date(this.newDate);
+                let sDateYear=tempStartDate.getFullYear();
+                let sDateMonth=tempStartDate.getMonth()+1;
+                let sDateDay=tempStartDate.getDate();
+                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+
+                for(let i =0;i<postData.length;i++){
+                    postData[i].date=sDateString;
+                    postData[i].category=1;
+                    postData[i].manpower=Number(postData[i].manpower);
+                    postData[i].workShift=Number(postData[i].workShift);
+
+                }
+                console.log(postData);
+
+                this.$axios.put(this.target+'/resources',{
+                    data:{
+                        resourceInfoParams:postData
+                    }},
+                ).then(response => {
+                    if(response.data){
+                        console.log("修改成功");
+                        console.log(response);
+                        this.backToDevicePage();
+                    }
+                }).catch(err => {
+                    alert('修改一组设备资源失败');
+                })
             },
             //返回查看设备界面
             backToDevicePage(){

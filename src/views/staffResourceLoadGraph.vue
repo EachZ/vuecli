@@ -58,7 +58,7 @@
             <a-button type="primary" shape="circle" icon="to-top" size="large" style="left:560px" @click="toTop"/>
         </a-affix>
         <div class="date">
-            <a-date-picker
+            <el-date-picker
                     class="right-pick-btn"
 
                     :clearable="false"
