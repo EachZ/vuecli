@@ -21,7 +21,7 @@
                 <editable-cell :text="String(text)" @change="onCellChange(record.key, 'count', $event)" />
             </template>
             <template slot="deadline" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'deadline', $event)" />
+                <a-date-picker show-time placeholder="选择时间" :format="'YYYY/MM/DD HH:mm:ss'" @change="onChange" @ok="onOk(record.key,'deadline',$event)" />
             </template>
             <template slot="remainingCount" slot-scope="text, record">
                 <editable-cell :text="String(text)" @change="onCellChange(record.key, 'remainingCount', $event)" />
@@ -227,6 +227,18 @@
                 const target = dataSource.find(item => item.key === key);
                 if (target) {
                     target[dataIndex] = value;
+                    this.dataSource = dataSource;
+                }
+            },
+            onChange(value, dateString) {
+                console.log('Selected Time: ', value);
+                console.log('Formatted Selected Time: ', dateString);
+            },
+            onOk(key, dataIndex, value) {
+                const dataSource = [...this.dataSource];
+                const target = dataSource.find(item => item.key === key);
+                if (target) {
+                    target[dataIndex] = value.format("YYYY/MM/DD HH:mm:ss");
                     this.dataSource = dataSource;
                 }
             },

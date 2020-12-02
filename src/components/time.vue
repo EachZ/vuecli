@@ -253,11 +253,13 @@
 
                 let postDateString=postYear+"/"+postMonth+"/"+postDay+" 00:00:00";
 
-                this.$axios.post(this.target+'/schedule',{
-                    data:{
-                        date: postDateString
-                    }
-                }).then(response => {
+                const Qs = require('qs');
+
+                let dateParam={
+                    date: postDateString
+                };
+
+                this.$axios.post('/schedule', {data:dateParam}).then(response => {
                     console.log("发送时间");
                     console.log(postDateString);
                     console.log("成功");

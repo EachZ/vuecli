@@ -17,7 +17,7 @@ import axios from 'axios'
 Vue.config.productionTip = false;
 
 //配置请求的根路径
-// axios.defaults.baseURL="/api";
+axios.defaults.baseURL="/api";
 Vue.prototype.$axios=axios;
 
 //在main.js引入qs

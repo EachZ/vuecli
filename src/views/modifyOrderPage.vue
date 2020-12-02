@@ -12,7 +12,7 @@
                  :rowKey="item => item.orderId"
         >
             <template slot="orderNumber" slot-scope="text, record">
-                <editable-cell :text="text" @change="onCellChange(record.key, 'orderNumber', $event)" />
+                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'orderNumber', $event)" />
             </template>
             <template slot="materialCoding" slot-scope="text, record">
                 <editable-cell :text="String(text)" @change="onCellChange(record.key, 'materialCoding', $event)" />
@@ -21,7 +21,7 @@
                 <editable-cell :text="String(text)" @change="onCellChange(record.key, 'count', $event)" />
             </template>
             <template slot="deadline" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'deadline', $event)" />
+                <a-date-picker show-time placeholder="选择时间" :format="'YYYY/MM/DD HH:mm:ss'" :defaultValue="dataSource.find(nub => nub.orderId === record.orderId).deadline" @change="onChange" @ok="onOk(record.key,'deadline',$event)" />
             </template>
             <template slot="remainingCount" slot-scope="text, record">
                 <editable-cell :text="String(text)" @change="onCellChange(record.key, 'remainingCount', $event)" />
@@ -208,6 +208,18 @@
                 let DateString="?year="+DateYear+"&month="+DateMonth+"&day="+DateDay;
                 //?year=2020&month=11&day=19
                 this.$router.replace('/OrderPage'+DateString);
+            },
+            onChange(value, dateString) {
+                console.log('Selected Time: ', value);
+                console.log('Formatted Selected Time: ', dateString);
+            },
+            onOk(key, dataIndex, value) {
+                const dataSource = [...this.dataSource];
+                const target = dataSource.find(item => item.key === key);
+                if (target) {
+                    target[dataIndex] = value.format("YYYY/MM/DD HH:mm:ss");
+                    this.dataSource = dataSource;
+                }
             },
             //要把选择的值存进dataSource里
             handleSelectChange(value,key,dataIndex) {
