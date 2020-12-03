@@ -262,7 +262,7 @@
                 };
 
                 this.timeString="发送时间"+postDateString+"中……";
-                this.$axios.post('/schedule', {date:postDateString}).then(response => {
+                this.$axios.post(this.target+'/schedule', {date:postDateString}).then(response => {
                     console.log("发送时间");
                     console.log(postDateString);
                     console.log("成功");
