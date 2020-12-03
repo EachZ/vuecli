@@ -75,7 +75,7 @@
             </template>
         </a-table>
 
-        <a-button type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
+        <a-button id="yesDeleteStaff" type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
         <a-button @click="backToStaffPage">取消</a-button>
     </div>
 </template>
@@ -233,6 +233,7 @@
                 // }).catch(err => {
                 //     alert('删除一组人员资源失败')
                 // })
+                document.getElementById("loading").style.display="inline";
                 this.$axios.delete(this.target+'/resources', {
                     params: {
                         resourceIds: postIDs,
@@ -243,6 +244,7 @@
                     }}
                 ).then(response => {
                     console.log(response);
+                    document.getElementById("loading").style.display="none";
                     this.backToStaffPage();
                 }).catch(err => {
                     alert('删除一组人员资源失败')
@@ -296,6 +298,17 @@
                 };
                 this.abilities.push(tempJSON);
             }
+            const timer=window.setInterval(() => {
+                if(this.dataSource.length!==0){
+                    document.getElementById("yesDeleteStaff").removeAttribute("disabled");
+                }else{
+                    document.getElementById("yesDeleteStaff").setAttribute("disabled","disabled");
+                }
+            }, 980);
+
+            this.$once('hook:beforeDestroy', () => {
+                clearInterval(timer);
+            })
         }
     };
 </script>

@@ -61,7 +61,7 @@
             </template>
         </a-table>
 
-        <a-button type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
+        <a-button id="yesModifyDevice" type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
         <a-button @click="backToDevicePage">取消</a-button>
     </div>
 </template>
@@ -193,25 +193,27 @@
                 let sDateYear=tempStartDate.getFullYear();
                 let sDateMonth=tempStartDate.getMonth()+1;
                 let sDateDay=tempStartDate.getDate();
-                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+                let sDateString=sDateYear+"-"+sDateMonth+"-"+sDateDay+" 00:00:00";
 
                 for(let i =0;i<postData.length;i++){
                     postData[i].date=sDateString;
-                    postData[i].category=1;
+                    postData[i].category=0;
                     postData[i].manpower=Number(postData[i].manpower);
                     postData[i].workShift=Number(postData[i].workShift);
 
                 }
                 console.log(postData);
 
-                this.$axios.put(this.target+'/resources',{
-                    data:{
+                document.getElementById("loading").style.display="inline";
+                this.$axios.put(this.target+'/resources',
+                    {
                         resourceInfoParams:postData
-                    }},
+                    },
                 ).then(response => {
                     if(response.data){
                         console.log("修改成功");
                         console.log(response);
+                        document.getElementById("loading").style.display="none";
                         this.backToDevicePage();
                     }
                 }).catch(err => {
@@ -264,6 +266,17 @@
                 };
                 this.abilities.push(tempJSON);
             }
+            const timer=window.setInterval(() => {
+                if(this.dataSource.length!==0){
+                    document.getElementById("yesModifyDevice").removeAttribute("disabled");
+                }else{
+                    document.getElementById("yesModifyDevice").setAttribute("disabled","disabled");
+                }
+            }, 980);
+
+            this.$once('hook:beforeDestroy', () => {
+                clearInterval(timer);
+            })
         }
     };
 </script>

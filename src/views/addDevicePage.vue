@@ -61,7 +61,7 @@
             </template>
         </a-table>
 
-        <a-button type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
+        <a-button id="yesAddDevice" type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
         <a-button @click="backToDevicePage">取消</a-button>
     </div>
 </template>
@@ -199,7 +199,7 @@
                 let sDateYear=tempStartDate.getFullYear();
                 let sDateMonth=tempStartDate.getMonth()+1;
                 let sDateDay=tempStartDate.getDate();
-                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+                let sDateString=sDateYear+"-"+sDateMonth+"-"+sDateDay+" 00:00:00";
 
                 const Qs = require('qs');
 
@@ -216,16 +216,16 @@
                 console.log("[[");
                 console.log(postData);
 
-                //post传数组类型报错
-                //报400错误
-                //现在能够传递一个资源的数据
-                this.$axios.post(this.target+'/resources',{
-                    data:{
+
+                document.getElementById("loading").style.display="inline";
+                this.$axios.post(this.target+'/resources',
+                    {
                         resourceInfoParams:postData
-                    }}
+                    }
                 ).then(response => {
                     if(response.data){
                         console.log(response);
+                        document.getElementById("loading").style.display="none";
                         this.backToDevicePage();
                     }
                 }).catch(err => {
@@ -283,6 +283,18 @@
         },
         mounted(){
             document.getElementById("loading").style.display="none";
+            const timer=window.setInterval(() => {
+                if(this.dataSource.length!==0){
+                    document.getElementById("yesAddDevice").removeAttribute("disabled");
+                }else{
+                    document.getElementById("yesAddDevice").setAttribute("disabled","disabled");
+                }
+            }, 980);
+
+            this.$once('hook:beforeDestroy', () => {
+                clearInterval(timer);
+            })
+
         }
     };
 </script>

@@ -12,22 +12,22 @@
                  :rowKey="item => item.orderId"
         >
             <template slot="orderNumber" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'orderNumber', $event)" />
+                <editable-cell :text="String(text)" @change="onCellChange(record.orderId, 'orderNumber', $event)" />
             </template>
             <template slot="materialCoding" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'materialCoding', $event)" />
+                <editable-cell :text="String(text)" @change="onCellChange(record.orderId, 'materialCoding', $event)" />
             </template>
             <template slot="count" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'count', $event)" />
+                <editable-cell :text="String(text)" @change="onCellChange(record.orderId, 'count', $event)" />
             </template>
             <template slot="deadline" slot-scope="text, record">
-                <a-date-picker show-time placeholder="选择时间" :format="'YYYY/MM/DD HH:mm:ss'" :defaultValue="dataSource.find(nub => nub.orderId === record.orderId).deadline" @change="onChange" @ok="onOk(record.key,'deadline',$event)" />
+                <a-date-picker show-time placeholder="选择时间" :defaultValue="dataSource.find(nub => nub.orderId === record.orderId).deadline" @change="onChange" @ok="onOk(record.orderId,'deadline',$event)" />
             </template>
             <template slot="remainingCount" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'remainingCount', $event)" />
+                <editable-cell :text="String(text)" @change="onCellChange(record.orderId, 'remainingCount', $event)" />
             </template>
             <template slot="state" slot-scope="text, record">
-                <editable-cell :text="String(text)" @change="onCellChange(record.key, 'state', $event)" />
+                <editable-cell :text="String(text)" @change="onCellChange(record.orderId, 'state', $event)" />
             </template>
 
             <template slot="operation" slot-scope="text, record">
@@ -42,7 +42,7 @@
             
         </a-table>
 
-        <a-button type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
+        <a-button id="yesModifyOrder" type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
         <a-button @click="backToOrderPage">取消</a-button>
     </div>
 </template>
@@ -176,7 +176,7 @@
                 let sDateYear=tempStartDate.getFullYear();
                 let sDateMonth=tempStartDate.getMonth()+1;
                 let sDateDay=tempStartDate.getDate();
-                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+                let sDateString=sDateYear+"-"+sDateMonth+"-"+sDateDay+" 00:00:00";
 
                 for(let i =0;i<postData.length;i++){
                     postData[i].dateParam=sDateString;
@@ -184,14 +184,16 @@
                 }
                 console.log(postData);
 
-                this.$axios.put(this.target+'/orders',{
-                    data:{
+                document.getElementById("loading").style.display="inline";
+                this.$axios.put(this.target+'/orders',
+                    {
                         orderParams:postData
-                    }},
+                    },
                 ).then(response => {
                     if(response.data){
                         console.log("修改成功");
                         console.log(response);
+                        document.getElementById("loading").style.display="none";
                         this.backToOrderPage();
                     }
                 }).catch(err => {
@@ -215,11 +217,13 @@
             },
             onOk(key, dataIndex, value) {
                 const dataSource = [...this.dataSource];
-                const target = dataSource.find(item => item.key === key);
+                const target = dataSource.find(item => item.orderId === key);
                 if (target) {
-                    target[dataIndex] = value.format("YYYY/MM/DD HH:mm:ss");
+                    target[dataIndex] = value.format("YYYY-MM-DD HH:mm:ss");
                     this.dataSource = dataSource;
                 }
+                console.log("dataSource");
+                console.log(this.dataSource);
             },
             //要把选择的值存进dataSource里
             handleSelectChange(value,key,dataIndex) {
@@ -256,6 +260,17 @@
                 };
                 this.abilities.push(tempJSON);
             }
+            const timer=window.setInterval(() => {
+                if(this.dataSource.length!==0){
+                    document.getElementById("yesModifyOrder").removeAttribute("disabled");
+                }else{
+                    document.getElementById("yesModifyOrder").setAttribute("disabled","disabled");
+                }
+            }, 980);
+
+            this.$once('hook:beforeDestroy', () => {
+                clearInterval(timer);
+            })
         }
     };
 </script>

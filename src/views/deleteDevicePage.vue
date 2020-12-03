@@ -75,7 +75,7 @@
             </template>
         </a-table>
 
-        <a-button type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
+        <a-button id="yesDeleteDevice" type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
         <a-button @click="backToDevicePage">取消</a-button>
     </div>
 </template>
@@ -233,6 +233,7 @@
                 // }).catch(err => {
                 //     alert('删除一组设备资源失败')
                 // })
+                document.getElementById("loading").style.display="inline";
                 this.$axios.delete(this.target+'/resources', {
                     params: {
                         resourceIds: postIDs,
@@ -243,6 +244,7 @@
                     }}
                 ).then(response => {
                     console.log(response);
+                    document.getElementById("loading").style.display="none";
                     this.backToDevicePage();
                 }).catch(err => {
                     alert('删除一组设备资源失败')
@@ -295,6 +297,17 @@
                 };
                 this.abilities.push(tempJSON);
             }
+            const timer=window.setInterval(() => {
+                if(this.dataSource.length!==0){
+                    document.getElementById("yesDeleteDevice").removeAttribute("disabled");
+                }else{
+                    document.getElementById("yesDeleteDevice").setAttribute("disabled","disabled");
+                }
+            }, 980);
+
+            this.$once('hook:beforeDestroy', () => {
+                clearInterval(timer);
+            })
         }
     };
 </script>

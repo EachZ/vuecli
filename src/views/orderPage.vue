@@ -197,9 +197,9 @@
                     if (response.data) {
                         document.getElementById("loading").style.display="none";
                         this.data=response.data.data;
-                        for(let i=0;i<this.data.length;i++){
-                            this.data[i].deadline = moment(new Date(this.data[i].deadline)).format("YYYY/MM/DD HH:mm:ss");
-                        }
+                        // for(let i=0;i<this.data.length;i++){
+                        //     this.data[i].deadline = moment(new Date(this.data[i].deadline)).format("YYYY/MM/DD HH:mm:ss");
+                        // }
                     }
                 }).catch(err => {
                     alert('请求失败');

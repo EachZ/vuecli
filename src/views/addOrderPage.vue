@@ -21,7 +21,7 @@
                 <editable-cell :text="String(text)" @change="onCellChange(record.key, 'count', $event)" />
             </template>
             <template slot="deadline" slot-scope="text, record">
-                <a-date-picker show-time placeholder="选择时间" :format="'YYYY/MM/DD HH:mm:ss'" @change="onChange" @ok="onOk(record.key,'deadline',$event)" />
+                <a-date-picker show-time placeholder="选择时间" @change="onChange" @ok="onOk(record.key,'deadline',$event)" />
             </template>
             <template slot="remainingCount" slot-scope="text, record">
                 <editable-cell :text="String(text)" @change="onCellChange(record.key, 'remainingCount', $event)" />
@@ -41,7 +41,7 @@
             </template>
         </a-table>
 
-        <a-button type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
+        <a-button id="yesAddOrder" type="primary" style="margin-right: 30px" @click="axiosToBackend">确定</a-button>
         <a-button @click="backToOrderPage">取消</a-button>
     </div>
 </template>
@@ -181,7 +181,7 @@
                 let sDateYear=tempStartDate.getFullYear();
                 let sDateMonth=tempStartDate.getMonth()+1;
                 let sDateDay=tempStartDate.getDate();
-                let sDateString=sDateYear+"/"+sDateMonth+"/"+sDateDay+" 00:00:00";
+                let sDateString=sDateYear+"-"+sDateMonth+"-"+sDateDay+" 00:00:00";
 
                 const Qs = require('qs');
 
@@ -195,13 +195,15 @@
                 console.log("[[");
                 console.log(postData);
 
-                this.$axios.post(this.target+'/orders',{
-                    data:{
+                document.getElementById("loading").style.display="inline";
+                this.$axios.post(this.target+'/orders',
+                    {
                         orderParams:postData
-                    }}
+                    }
                 ).then(response => {
                     if(response.data){
                         console.log(response);
+                        document.getElementById("loading").style.display="none";
                         this.backToOrderPage();
                     }
                 }).catch(err => {
@@ -238,7 +240,7 @@
                 const dataSource = [...this.dataSource];
                 const target = dataSource.find(item => item.key === key);
                 if (target) {
-                    target[dataIndex] = value.format("YYYY/MM/DD HH:mm:ss");
+                    target[dataIndex] = value.format("YYYY-MM-DD HH:mm:ss");
                     this.dataSource = dataSource;
                 }
             },
@@ -272,6 +274,17 @@
         },
         mounted(){
             document.getElementById("loading").style.display="none";
+            const timer=window.setInterval(() => {
+                if(this.dataSource.length!==0){
+                    document.getElementById("yesAddOrder").removeAttribute("disabled");
+                }else{
+                    document.getElementById("yesAddOrder").setAttribute("disabled","disabled");
+                }
+            }, 980);
+
+            this.$once('hook:beforeDestroy', () => {
+                clearInterval(timer);
+            })
         }
     };
 </script>

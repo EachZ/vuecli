@@ -1,16 +1,17 @@
 <template>
     <div class="time">
         <br/>
-        <div v-show="current">
+        <div v-show="current" style="text-align: center">
             当前时间: {{time}}
             <!--      不自动更新秒的date:{{date}}-->
+
             <br/>
             <br/>
 
             <!--      开始时间：{{start_time}}-->
             <div v-show="setTime">
                 <a-button type="primary" size="small" @click="showOverlay" style="margin-right: 10px" v-show="visibleSet">设置时间</a-button>
-                <a-button type="primary" size="small" @click="showSpeed" v-show="visibleSpeed">设置流速</a-button>
+                <a-button type="primary" size="small" @click="showSpeed" style="margin-left: 10px" v-show="visibleSpeed">设置流速</a-button>
 <!--                <a-button type="primary" size="small" @click="reload" icon="reload">刷新</a-button>-->
             </div>
         </div>
@@ -47,6 +48,7 @@
         </div>
 
         <div v-show="setTime">
+            <br/>
 <!--            <a-button>测试零点传数据</a-button>-->
             <p>{{timeString}}</p>
         </div>
@@ -251,7 +253,7 @@
                 // let postMinute=this.currentVirtualTime.getMinutes();
                 // let postSecond=this.currentVirtualTime.getSeconds();
 
-                let postDateString=postYear+"/"+postMonth+"/"+postDay+" 00:00:00";
+                let postDateString=postYear+"-"+postMonth+"-"+postDay+" 00:00:00";
 
                 const Qs = require('qs');
 
@@ -259,7 +261,8 @@
                     date: postDateString
                 };
 
-                this.$axios.post('/schedule', {data:dateParam}).then(response => {
+                this.timeString="发送时间"+postDateString+"中……";
+                this.$axios.post('/schedule', {date:postDateString}).then(response => {
                     console.log("发送时间");
                     console.log(postDateString);
                     console.log("成功");
