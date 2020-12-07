@@ -36,6 +36,8 @@ import DeleteDevicePage from '../views/deleteDevicePage'
 
 import RoutingPage from '../views/routingPage'
 
+import LatePage from '../views/latePage'
+
 
 
 
@@ -200,6 +202,11 @@ const routes = [
     path:'/routing',
     name:'RoutingPage',
     component: () => import(/* webpackChunkName: "routingPage" */ '../views/routingPage.vue')
+  },
+  {
+    path:'/latePage',
+    name:'LatePage',
+    component: () => import(/* webpackChunkName: "latePage" */ '../views/latePage.vue')
   }
 ];
 
