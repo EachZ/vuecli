@@ -88,7 +88,7 @@
             key: 'workDate',
             scopedSlots: { customRender: 'workDate' },
         },{
-            title: '工作能力',
+            title: '工艺路线ID',
             dataIndex: 'ability',
             key: 'ability',
             scopedSlots: { customRender: 'ability' },
