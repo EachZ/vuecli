@@ -160,7 +160,6 @@
             },
             goToAddPage(){
                 let tempDate= new Date(this.newDate);
-
                 let DateYear=tempDate.getFullYear();
                 let DateMonth=tempDate.getMonth()+1;
                 let DateDay=tempDate.getDate();
