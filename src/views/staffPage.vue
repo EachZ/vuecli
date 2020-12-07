@@ -67,11 +67,11 @@
     import moment from "moment";
     const columns = [
         {
-            title: '人员ID',
+            title: '小组ID',
             dataIndex: 'resourceId',
             key: 'resourceId',
         },{
-            title: '人员名称',
+            title: '小组名称',
             dataIndex: 'name',
             key: 'name',
         },{
@@ -88,7 +88,7 @@
             key: 'workDate',
             scopedSlots: { customRender: 'workDate' },
         },{
-            title: '工作能力',
+            title: '工艺路线ID',
             dataIndex: 'ability',
             key: 'ability',
             scopedSlots: { customRender: 'ability' },

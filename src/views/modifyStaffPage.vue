@@ -144,14 +144,14 @@
                 count: 1,
                 columns: [
                     {
-                        title: '人员ID',
+                        title: '小组ID',
                         dataIndex: 'resourceId',
                         key: 'resourceId',
                         // width: '30%',
                         //下面这行很重要
                         scopedSlots: { customRender: 'resourceId' },
                     },{
-                        title: '人员名称',
+                        title: '小组名称',
                         dataIndex: 'name',
                         key: 'name',
                         scopedSlots: { customRender: 'name' },
