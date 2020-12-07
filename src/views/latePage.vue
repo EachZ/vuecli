@@ -1,18 +1,17 @@
 <template>
     <div>
-        <h1>zzzjr</h1>
+        <h2>订单号：{{name}}</h2>
+        <h3>该订单被限制在【装配】</h3>
     </div>
 </template>
 
 <script>
-    import moment from "moment";
-
     export default {
         name: "latePage",
         data() {
             return {
                 target: 'http://123.57.239.79:3180',
-                name:(this.$route.query.name),
+                name:window.location.href.split("=")[1],
             };
         },
     }

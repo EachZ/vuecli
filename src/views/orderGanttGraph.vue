@@ -509,14 +509,10 @@
                     let name1=param.name;
                     console.log(param.name);
                     //name变量获取到订单编号，下面是跳转的逻辑
-                    // let url1="/latePage?orderId="+name1;
-                    // window.location.href=url1;
-                    this.$router.replace({path:'/latePage',query:{
-                            name:name1
-                        }});
-
+                    let url1="/#/latePage?orderId="+name1;
+                    window.open(url1);
                 });
-                Gantt.on('click',eConsole);
+                // Gantt.on('click',eConsole);
             },
             // increase() {
             //     this.percentage += 10;
