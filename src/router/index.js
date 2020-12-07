@@ -1,8 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import ResourceLoadGraph from '../views/resourceLoadGraph.vue'
+import StaffResourceLoadGraph from '../views/staffResourceLoadGraph'
+import DeviceResourceLoadGraph from '../views/deviceResourceLoadGraph'
+
 import OrderGanttGraph from '../views/orderGanttGraph'
 import ResourceGanttGraph from '../views/resourceGanttGraph'
+import StaffResourceGanttGraph from '../views/staffResourceGanttGraph'
+import DeviceResourceGanttGraph from '../views/deviceResourceGanttGraph'
+
 import Page3 from '../views/page3'
 import Page5 from '../views/page5'
 import Page6 from '../views/page6'
@@ -13,8 +20,20 @@ import Table2 from '../views/table2'
 import Table3 from '../views/table3'
 import Table4 from '../views/table4'
 import OrderPage from '../views/orderPage'
+import AddOrderPage from '../views/addOrderPage';
+import ModifyOrderPage from '../views/modifyOrderPage'
+import DeleteOrderPage from '../views/deleteOrderPage'
+
 import StaffPage from '../views/staffPage'
+import AddStaffPage from '../views/addStaffPage';
+import ModifyStaffPage from '../views/modifyStaffPage'
+import DeleteStaffPage from '../views/deleteStaffPage'
+
 import DevicePage from '../views/devicePage'
+import AddDevicePage from '../views/addDevicePage';
+import ModifyDevicePage from '../views/modifyDevicePage'
+import DeleteDevicePage from '../views/deleteDevicePage'
+
 import RoutingPage from '../views/routingPage'
 
 
@@ -35,6 +54,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "ResourceLoadGraph" */ '../views/resourceLoadGraph.vue')
   },
   {
+    path: '/staffResourceLoadGraph',
+    name: 'StaffResourceLoadGraph',
+    component: () => import(/* webpackChunkName: "StaffResourceLoadGraph" */ '../views/staffResourceLoadGraph.vue')
+  },
+  {
+    path: '/deviceResourceLoadGraph',
+    name: 'DeviceResourceLoadGraph',
+    component: () => import(/* webpackChunkName: "DeviceResourceLoadGraph" */ '../views/deviceResourceLoadGraph.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -51,6 +80,16 @@ const routes = [
     path:'/resourceGanttGraph',
     name:'ResourceGanttGraph',
     component: () => import(/* webpackChunkName: "ResourceGanttGraph" */ '../views/resourceGanttGraph.vue')
+  },
+  {
+    path: '/staffResourceGanttGraph',
+    name: 'StaffResourceGanttGraph',
+    component: () => import(/* webpackChunkName: "StaffResourceGanttGraph" */ '../views/staffResourceGanttGraph.vue')
+  },
+  {
+    path: '/deviceResourceGanttGraph',
+    name: 'DeviceResourceGanttGraph',
+    component: () => import(/* webpackChunkName: "DeviceResourceGanttGraph" */ '../views/deviceResourceGanttGraph.vue')
   },
   {
     path:'/page3',
@@ -103,16 +142,60 @@ const routes = [
     component: () => import(/* webpackChunkName: "orderPage" */ '../views/orderPage.vue')
   },
   {
+    path:'/addOrderPage',
+    name:'AddOrderPage',
+    component: () => import(/* webpackChunkName: "addOrderPage" */ '../views/addOrderPage.vue')
+  },
+  {
+    path:'/modifyOrderPage',
+    name:'ModifyOrderPage',
+    component: () => import(/* webpackChunkName: "modifyOrderPage" */ '../views/modifyOrderPage.vue')
+  },
+  {
+    path:'/deleteOrderPage',
+    name:'DeleteOrderPage',
+    component: () => import(/* webpackChunkName: "deleteOrderPage" */ '../views/deleteOrderPage.vue')
+  },
+  {
     path:'/staffPage',
     name:'StaffPage',
     component: () => import(/* webpackChunkName: "staffPage" */ '../views/staffPage.vue')
   },
   {
+    path:'/addStaffPage',
+    name:'AddStaffPage',
+    component: () => import(/* webpackChunkName: "addStaffPage" */ '../views/addStaffPage.vue')
+  },
+  {
+    path:'/modifyStaffPage',
+    name:'ModifyStaffPage',
+    component: () => import(/* webpackChunkName: "modifyStaffPage" */ '../views/modifyStaffPage.vue')
+  },
+  {
+    path:'/deleteStaffPage',
+    name:'DeleteStaffPage',
+    component: () => import(/* webpackChunkName: "deleteStaffPage" */ '../views/deleteStaffPage.vue')
+  },
+  {
     path:'/devicePage',
     name:'DevicePage',
     component: () => import(/* webpackChunkName: "devicePage" */ '../views/devicePage.vue')
-  }
-  ,
+  },
+  {
+    path:'/addDevicePage',
+    name:'AddDevicePage',
+    component: () => import(/* webpackChunkName: "addDevicePage" */ '../views/addDevicePage.vue')
+  },
+  {
+    path:'/modifyDevicePage',
+    name:'ModifyDevicePage',
+    component: () => import(/* webpackChunkName: "modifyDevicePage" */ '../views/modifyDevicePage.vue')
+  },
+  {
+    path:'/deleteDevicePage',
+    name:'DeleteDevicePage',
+    component: () => import(/* webpackChunkName: "deleteDevicePage" */ '../views/deleteDevicePage.vue')
+  },
   {
     path:'/routing',
     name:'RoutingPage',

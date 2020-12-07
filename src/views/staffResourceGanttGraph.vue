@@ -485,7 +485,7 @@
                     //   buttons:
                     // },
                     title: {
-                        text: '资源甘特图'
+                        text: '人员资源甘特图'
                     },
                     xAxis: {
                         type: 'datetime',
@@ -780,6 +780,7 @@
                         // startDate: "2018/11/20 00:00:00",
                         // endDate: "2018/11/26 00:00:00"
                         currentDate: sDateString,
+                        category:1
                         // endDate: eDateString
                     }
                 }).then(response => {

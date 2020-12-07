@@ -28,10 +28,10 @@
                       <router-link :to="{path:'/resourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">人员&设备负载图</router-link>
                   </a-menu-item>
                   <a-menu-item key="graph:1-2">
-                      <router-link :to="{path:'/resourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">人员负载图</router-link>
+                      <router-link :to="{path:'/staffResourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">人员负载图</router-link>
                   </a-menu-item>
                   <a-menu-item key="graph:1-3">
-                      <router-link :to="{path:'/resourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">设备负载图</router-link>
+                      <router-link :to="{path:'/deviceResourceLoadGraph',query:{year:this.year,month:this.month,day:this.day}}">设备负载图</router-link>
                   </a-menu-item>
               </a-sub-menu>
             <a-menu-item key="graph:2">
@@ -42,35 +42,48 @@
                       <router-link :to="{path:'/resourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">人员&设备甘特图</router-link>
                   </a-menu-item>
                   <a-menu-item key="graph:3-2">
-                      <router-link :to="{path:'/resourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">人员甘特图</router-link>
+                      <router-link :to="{path:'/staffResourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">人员甘特图</router-link>
                   </a-menu-item>
                   <a-menu-item key="graph:3-3">
-                      <router-link :to="{path:'/resourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">设备甘特图</router-link>
+                      <router-link :to="{path:'/deviceResourceGanttGraph',query:{year:this.year,month:this.month,day:this.day}}">设备甘特图</router-link>
                   </a-menu-item>
               </a-sub-menu>
           </a-sub-menu>
-            <a-menu-item key="orderPage">
-                <router-link :to="{path:'/orderPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="schedule" />管理订单</router-link>
-            </a-menu-item>
-            <a-menu-item key="staffPage">
-                <router-link :to="{path:'/staffPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="team" />管理人员</router-link>
-            </a-menu-item>
-            <a-menu-item key="devicePage">
-                <router-link :to="{path:'/devicePage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="deployment-unit" />管理设备</router-link>
-            </a-menu-item>
             <a-menu-item key="routingPage">
                 <router-link :to="{path:'/routing'}"><a-icon type="cluster" />工艺路线</router-link>
             </a-menu-item>
+            <a-menu-item key="orderPage">
+                <router-link :to="{path:'/orderPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="schedule" />管理订单</router-link>
+            </a-menu-item>
+<!--            <a-sub-menu>-->
+<!--                <span slot="title" class="submenu-title-wrapper"><a-icon type="team" />管理人员</span>-->
+                <a-menu-item key="staff:1">
+                    <router-link :to="{path:'/staffPage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="team" />管理人员</router-link>
+                </a-menu-item>
+<!--                <a-menu-item key="staff:2">-->
+<!--                    <router-link :to="{path:'/addStaffPage',query:{year:this.year,month:this.month,day:this.day}}">新增人员</router-link>-->
+<!--                </a-menu-item>-->
+<!--                <a-menu-item key="staff:3" disabled>-->
+<!--                    <router-link :to="{path:'/modifyStaffPage',query:{year:this.year,month:this.month,day:this.day}}">修改人员</router-link>-->
+<!--                </a-menu-item>-->
+<!--                <a-menu-item key="staff:4" disabled>-->
+<!--                    <router-link :to="{path:'/deleteStaffPage',query:{year:this.year,month:this.month,day:this.day}}">删除人员</router-link>-->
+<!--                </a-menu-item>-->
+<!--            </a-sub-menu>-->
+            <a-menu-item key="devicePage">
+                <router-link :to="{path:'/devicePage',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="deployment-unit" />管理设备</router-link>
+            </a-menu-item>
+
 
 <!--          <a-menu-item key="try">-->
 <!--            <router-link :to="{path:'/page8',query:{year:this.year,month:this.month,day:this.day}}"><a-icon type="bulb" />实验页面</router-link>-->
 <!--          </a-menu-item>-->
-            <a-menu-item key="CRUD">
-                <router-link :to="{path:'/page3'}"><a-icon type="form" />增删改查废弃版本</router-link>
-            </a-menu-item>
-            <a-menu-item key="temp">
-                <router-link :to="{path:'/temp'}">temp</router-link>
-            </a-menu-item>
+<!--            <a-menu-item key="CRUD">-->
+<!--                <router-link :to="{path:'/page3'}"><a-icon type="form" />增删改查废弃版本</router-link>-->
+<!--            </a-menu-item>-->
+<!--            <a-menu-item key="temp">-->
+<!--                <router-link :to="{path:'/temp'}">temp</router-link>-->
+<!--            </a-menu-item>-->
 
         </a-menu>
       </a-affix>
