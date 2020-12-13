@@ -47,12 +47,17 @@
                 {{day}}
               </a-tag>
             </span>
-            <span slot="ability" slot-scope="ability">
-              <a-tag
-                      v-for="a in ability"
-                      :key="a">
-                {{a}}
-              </a-tag>
+            <span slot="ability" slot-scope="ability,record">
+                <a-tooltip placement="top"
+                           v-for="(a,i) in ability"
+                           :key="a">
+                    <template slot="title">
+                        {{data.find(item => item.resourceId === record.resourceId).infoOfAbility[i]}}
+                    </template>
+                    <a-tag>
+                        {{a}}
+                    </a-tag>
+                </a-tooltip>
             </span>
         </a-table>
         <!--        <ModifyStaffPage :selectedData="selectedData"/>-->

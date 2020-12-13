@@ -49,10 +49,10 @@
             </span>
             <span slot="ability" slot-scope="ability,record">
                 <a-tooltip placement="top"
-                    v-for="a in ability"
+                    v-for="(a,i) in ability"
                     :key="a">
                     <template slot="title">
-                        {{data.find(item => item.resourceId === record.resourceId).name}}
+                        {{data.find(item => item.resourceId === record.resourceId).infoOfAbility[i]}}
                     </template>
                     <a-tag>
                         {{a}}

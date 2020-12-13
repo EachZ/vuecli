@@ -30,8 +30,8 @@
                         placeholder="请选择工作日期"
                         @change="handleSelectChange($event, record.key,'workDate')"
                 >
-                    <a-select-option v-for="item in weekDays" :key="item.key">
-                        {{item.value}}
+                    <a-select-option v-for="(item,i) in abilities" :key="item.key">
+                        {{abilityInfo[i].name}}
                     </a-select-option>
                 </a-select>
             </template>
@@ -283,6 +283,14 @@
         },
         mounted(){
             document.getElementById("loading").style.display="none";
+            this.$axios.get(this.target+'/ability').then(response => {
+                if(response.data){
+                    console.log(response.data.data);
+                    this.abilityInfo=response.data.data;
+                }
+            }).catch(err => {
+                alert('获取ability');
+            });
             const timer=window.setInterval(() => {
                 if(this.dataSource.length!==0){
                     document.getElementById("yesAddDevice").removeAttribute("disabled");

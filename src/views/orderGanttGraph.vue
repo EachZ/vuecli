@@ -508,8 +508,18 @@
                 Gantt.on('click', function (param){
                     let name1=param.name;
                     console.log(param.name);
+
+                    let str= window.location.href.split("=");
+
+                    console.log(str);
+                    let DateYear=str[1].split("&")[0];
+                    let DateMonth=str[2].split("&")[0];
+                    let DateDay=str[3];
+                    let DateString="&year="+DateYear+"&month="+DateMonth+"&day="+DateDay;
+                    console.log(DateString);
+
                     //name变量获取到订单编号，下面是跳转的逻辑
-                    let url1="/#/latePage?orderId="+name1;
+                    let url1="/#/latePage?orderId="+name1+DateString;
                     window.open(url1);
                 });
                 // Gantt.on('click',eConsole);
