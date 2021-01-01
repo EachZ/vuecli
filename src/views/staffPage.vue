@@ -47,12 +47,17 @@
                 {{day}}
               </a-tag>
             </span>
-            <span slot="ability" slot-scope="ability">
-              <a-tag
-                      v-for="a in ability"
-                      :key="a">
-                {{a}}
-              </a-tag>
+            <span slot="ability" slot-scope="ability,record">
+                <a-tooltip placement="top"
+                    v-for="(a,i) in ability"
+                    :key="a">
+                    <template slot="title">
+                        {{data.find(item => item.resourceId === record.resourceId).infoOfAbility[i]}}
+                    </template>
+                    <a-tag>
+                        {{a}}
+                    </a-tag>
+                </a-tooltip>
             </span>
         </a-table>
 <!--        <ModifyStaffPage :selectedData="selectedData"/>-->
@@ -113,6 +118,7 @@
                 target: 'http://123.57.239.79:3180',
                 data,
                 columns,
+                yy:["装配123","撇哦111","偶排443"],
                 selectedRowKeys: [], // Check here to configure the default column
                 //被选中的行的数据
                 selectedData:[],
