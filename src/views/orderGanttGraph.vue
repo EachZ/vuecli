@@ -175,111 +175,111 @@
                 // orderId: 36
                 // orderNumber: 764098
                 // orderRecordId: 1
-                let data={
-                    order:["200001","200002","200003","200004"],
-                    data2:[0.1,0.2,0.3,0.4],//装配
-                    data3:[0.1,0.5,0.3,0.4],//测试
-                    data5:[0.1,0.7,0.3,0.4],
-                    data4:[0.1,0.2,0.3,0.2],
-                    data6:[0.1,0.2,0.1,0.2],
-                    exDateList:["2020-01-01","2020-02-02","2020-03-03","2020-04-04"],
-                    exDateList1:["2020-01-05","2020-02-05","2020-03-05","2020-04-05"],
-                    nameList: ["1","2","3","4"],
-                };
-                //上面的小方块的数组、y轴的数组、产品的series数组
-                this.drawLine(data);
+                // let data={
+                //     order:["200001","200002","200003","200004"],
+                //     data2:[0.1,0.2,0.3,0.4],//装配
+                //     data3:[0.1,0.5,0.3,0.4],//测试
+                //     data5:[0.1,0.7,0.3,0.4],
+                //     data4:[0.1,0.2,0.3,0.2],
+                //     data6:[0.1,0.2,0.1,0.2],
+                //     exDateList:["2020-01-01","2020-02-02","2020-03-03","2020-04-04"],
+                //     exDateList1:["2020-01-05","2020-02-05","2020-03-05","2020-04-05"],
+                //     nameList: ["1","2","3","4"],
+                // };
+                // //上面的小方块的数组、y轴的数组、产品的series数组
+                // this.drawLine(data);
 
-                // this.$axios.get(this.target+"/orders/gantt?date="+date1).then(response => {
-                //     console.log("GET请求发出了");
-                //     if (response.data) {
-                //         console.log(response.data.data);
-                //         document.getElementById("loading").style.display="none";
-                //         this.GETcontent=response.data.data;
-                //         let data=this.GETcontent;
-                //         console.log(data[0])
-                //
-                //
-                //         let orderList = data.map(function (item) {
-                //             return item.orderNumber;
-                //         });
-                //         let exDateList = data.map(function (item) {
-                //             return item.expectedDelivery;
-                //         });
-                //         let exDateList1 = data.map(function (item) {
-                //             return item.deadline;
-                //         });
-                //         let nameList = data.map(function (item) {
-                //             return item.materialCoding;
-                //         })
-                //         let stateList=data.map(function (item) {
-                //             if(item.finishState===0){
-                //                 return 0.1;
-                //             }else if(item.finishState===2){
-                //                 return 0.2;
-                //             }
-                //             return 0.3;
-                //         });
-                //         let yanList=data.map(function (item) {
-                //             if(item.isDelivery===0){
-                //                 return 0.1;
-                //             }
-                //             return 0.2;
-                //         });
-                //         console.log(orderList);
-                //         let dataList=data.map(function (item) {
-                //             let poetryArr = item.finishPercent.split(";")
-                //             let sub=poetryArr[0].substring(0,poetryArr[0].length-1);
-                //             return parseInt(sub)/100;
-                //         });
-                //         console.log(dataList);
-                //         let dataList2=data.map(function (item) {
-                //             let poetryArr1 = item.finishPercent.split(";")
-                //             console.log(poetryArr1);
-                //             console.log(poetryArr1.length);
-                //             if(poetryArr1.length===1){
-                //                 console.log("第二项没有");
-                //                 return 0;
-                //             }
-                //             else{
-                //                 let sub=poetryArr1[1].substring(0,poetryArr1[1].length-1);
-                //                 console.log(sub);
-                //                 return parseInt(sub)/100;
-                //             }
-                //         });
-                //         console.log(dataList2);
-                //
-                //
-                //         let dataList3=data.map(function (item) {
-                //             let poetryArr3 = item.finishPercent.split(";")
-                //             if(poetryArr3.length!==3){
-                //                 console.log("第三项没有");
-                //                 return 0;
-                //             }
-                //             else{
-                //                 let sub=poetryArr3[2].substring(0,poetryArr3[1].length-1);
-                //                 console.log(sub);
-                //                 return parseInt(sub)/100;
-                //             }
-                //         });
-                //
-                //         let data1={
-                //             order:orderList,
-                //             data2:dataList,//装配
-                //             data3:dataList2,//测试
-                //             data5:dataList3,
-                //             //data4:[1,1.5,0.5,1,1.5,1.5]//状态
-                //             data4:stateList,
-                //             data6:yanList,
-                //             exDateList:exDateList,
-                //             exDateList1:exDateList1,
-                //             nameList: nameList,
-                //         };
-                //         //上面的小方块的数组、y轴的数组、产品的series数组
-                //         this.drawLine(data1);
-                //     }
-                // }).catch(err => {
-                //     alert('请求1失败')
-                // })
+                this.$axios.get(this.target+"/orders/gantt?date="+date1).then(response => {
+                    console.log("GET请求发出了");
+                    if (response.data) {
+                        console.log(response.data.data);
+                        document.getElementById("loading").style.display="none";
+                        this.GETcontent=response.data.data;
+                        let data=this.GETcontent;
+                        console.log(data[0])
+
+
+                        let orderList = data.map(function (item) {
+                            return item.orderNumber;
+                        });
+                        let exDateList = data.map(function (item) {
+                            return item.expectedDelivery;
+                        });
+                        let exDateList1 = data.map(function (item) {
+                            return item.deadline;
+                        });
+                        let nameList = data.map(function (item) {
+                            return item.materialCoding;
+                        })
+                        let stateList=data.map(function (item) {
+                            if(item.finishState===0){
+                                return 0.1;
+                            }else if(item.finishState===2){
+                                return 0.2;
+                            }
+                            return 0.3;
+                        });
+                        let yanList=data.map(function (item) {
+                            if(item.isDelivery===0){
+                                return 0.1;
+                            }
+                            return 0.2;
+                        });
+                        console.log(orderList);
+                        let dataList=data.map(function (item) {
+                            let poetryArr = item.finishPercent.split(";")
+                            let sub=poetryArr[0].substring(0,poetryArr[0].length-1);
+                            return parseInt(sub)/100;
+                        });
+                        console.log(dataList);
+                        let dataList2=data.map(function (item) {
+                            let poetryArr1 = item.finishPercent.split(";")
+                            console.log(poetryArr1);
+                            console.log(poetryArr1.length);
+                            if(poetryArr1.length===1){
+                                console.log("第二项没有");
+                                return 0;
+                            }
+                            else{
+                                let sub=poetryArr1[1].substring(0,poetryArr1[1].length-1);
+                                console.log(sub);
+                                return parseInt(sub)/100;
+                            }
+                        });
+                        console.log(dataList2);
+
+
+                        let dataList3=data.map(function (item) {
+                            let poetryArr3 = item.finishPercent.split(";")
+                            if(poetryArr3.length!==3){
+                                console.log("第三项没有");
+                                return 0;
+                            }
+                            else{
+                                let sub=poetryArr3[2].substring(0,poetryArr3[1].length-1);
+                                console.log(sub);
+                                return parseInt(sub)/100;
+                            }
+                        });
+
+                        let data1={
+                            order:orderList,
+                            data2:dataList,//装配
+                            data3:dataList2,//测试
+                            data5:dataList3,
+                            //data4:[1,1.5,0.5,1,1.5,1.5]//状态
+                            data4:stateList,
+                            data6:yanList,
+                            exDateList:exDateList,
+                            exDateList1:exDateList1,
+                            nameList: nameList,
+                        };
+                        //上面的小方块的数组、y轴的数组、产品的series数组
+                        this.drawLine(data1);
+                    }
+                }).catch(err => {
+                    alert('请求1失败')
+                })
             },
             getData(){
                 this.dateView=(this.newDate).toString();
