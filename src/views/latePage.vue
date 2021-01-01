@@ -39,7 +39,7 @@
         name: "latePage",
         data() {
             return {
-                target: 'http://123.57.239.79:3180',
+                target: 'http://172.17.237.22:3180',
                 name:window.location.href.split("=")[1].split("&")[0],
                 // name:100002,
                 year:window.location.href.split("=")[2].split("&")[0],

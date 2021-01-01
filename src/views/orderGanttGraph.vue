@@ -52,7 +52,7 @@
         },
         data() {
             return {
-                target: 'http://123.57.239.79:3180',
+                target: 'http://172.17.237.22:3180',
                 dateView:"2020-11-07",
                 percentages:50,
                 GETcontent :'',

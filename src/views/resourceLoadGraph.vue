@@ -174,7 +174,7 @@
         },
         data() {
             return {
-                target: 'http://123.57.239.79:3180',
+                target: 'http://172.17.237.22:3180',
                 text: '',
                 loadData:[
                     // {

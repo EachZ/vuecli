@@ -115,7 +115,7 @@
         name: "staffPage",
         data() {
             return {
-                target: 'http://123.57.239.79:3180',
+                target: 'http://172.17.237.22:3180',
                 data,
                 columns,
                 yy:["装配123","撇哦111","偶排443"],

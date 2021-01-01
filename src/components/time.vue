@@ -62,7 +62,7 @@
         name:"time",
         data(){
             return{
-                target: 'http://123.57.239.79:3180',
+                target: 'http://172.17.237.22:3180',
                 date:new Date().toLocaleString(),
                 timeString:"",
                 // date: new Date("2019/9/9 12:20:05").toLocaleString(),

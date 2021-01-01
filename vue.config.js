@@ -12,7 +12,7 @@ module.exports = {
             '/api': {
                 // 此处的写法，目的是为了 将 /api 替换成 target中的网址
                 //服务器上
-                target: 'http://123.57.239.79:3180',
+                target: 'http://172.17.237.22:3180',
                 //校园网内
                 // target:'http://172.17.237.22:3180',
                 // target: 'http://localhost:8080/',

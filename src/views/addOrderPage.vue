@@ -54,7 +54,7 @@
         },
         data() {
             return {
-                target: 'http://123.57.239.79:3180',
+                target: 'http://172.17.237.22:3180',
                 newDate: moment(new Date(this.$route.query.year,this.$route.query.month-1,this.$route.query.day)).format("YYYY-MM-DD"),
                 value: [],
                 weekDays:[

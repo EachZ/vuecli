@@ -18,7 +18,7 @@
         // components: {Gantt},
         data() {
             return {
-                target: 'http://123.57.239.79:3180',
+                target: 'http://172.17.237.22:3180',
                 //各种图例的颜色
                 colorData:["red","yellow","green","blue","skyblue","black","pink","purple"],
                 //产品，各种图例
