@@ -136,7 +136,7 @@
                     </div>
                     </a-affix>
 
-                        <div id="theResources">
+                        <div id="theResources" style="width: 100%; overflow-x: scroll">
 
                         </div>
 
