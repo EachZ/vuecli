@@ -4,7 +4,7 @@
             <!--            按期交货率-->
             <h3>按期交货率</h3>
             <h4>{{dateView}}<span>之前</span></h4>
-            <a-progress type="circle" :percentage=percentages></a-progress>
+            <el-progress type="circle" :percentage=percentages></el-progress>
 
         </div>
         <br/>
@@ -149,6 +149,7 @@
                             this.percentages=Number(100);
                         else{
                             this.percentages= Number(parseFloat((data*100).toString()).toFixed(2));
+                            console.log(this.percentages);
                         }
                     }
                 }).catch(err => {

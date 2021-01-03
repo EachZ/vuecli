@@ -47,7 +47,7 @@
                 day:window.location.href.split("=")[4],
                 tempIDs:[],
                 orderId:0,
-                orderNumber: 0,
+                orderNumber: window.location.href.split("=")[1].split("&")[0],
                 delayStep: 0,
                 materialCoding: "",
                 craft: "",

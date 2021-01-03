@@ -10,7 +10,7 @@
                 <!--              设备总负载-->
                 <h3>设备总负载</h3>
                 <h5>{{timeString}}</h5>
-                <a-progress type="circle" :percentage=percentages></a-progress>
+                <el-progress type="circle" :percentage=percentages></el-progress>
             </div>
         </div>
 
